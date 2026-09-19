@@ -31,15 +31,10 @@ export default function Home() {
       <SiteHeader />
 
       <section className="brand-hero" id="top">
-        <div className="hero-intro-line">
-          <span>Design engineer · AI product builder</span>
-        </div>
-
         <div className="hero-composition">
           <h1>
-            <span>Thoughtful</span>
-            <span>experiences.</span>
-            <span>Working systems.</span>
+            <span>Designing the experience.</span>
+            <span>Engineering the product.</span>
           </h1>
           <img
             className="hero-figure"
@@ -49,9 +44,9 @@ export default function Home() {
           <span className="hero-inline-spark" aria-hidden="true">✦</span>
           <div className="hero-editorial-side">
             <p>
-              I design and build AI-powered products from ambiguous idea to
-              production—connecting interaction design, intelligent behavior,
-              and code.
+              I turn ambiguous ideas into working products—from mobile apps to
+              conversational AI—combining interaction design, intelligent
+              behavior, and code.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#work">
@@ -64,8 +59,22 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-footnote brand-hero-footnote">
-          <span>Texas, USA</span><span className="hero-footnote-line" /><span>React Native · TypeScript · Agentic AI</span>
+        <div
+          className="hero-ticker"
+          role="group"
+          aria-label="Areas of practice: Mobile apps, conversational AI, product design, design engineering, and intelligent systems"
+        >
+          <div className="hero-ticker-track" aria-hidden="true">
+            {[0, 1].map((group) => (
+              <div className="hero-ticker-group" key={group}>
+                <span>Mobile apps</span>
+                <span>Conversational AI</span>
+                <span>Product design</span>
+                <span>Design engineering</span>
+                <span>Intelligent systems</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

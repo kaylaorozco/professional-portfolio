@@ -445,24 +445,6 @@ a { color: inherit; text-decoration: none; }
   padding: clamp(1.75rem, 3vw, 3rem) 4vw 2.5rem;
 }
 
-.hero-intro-line {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
-  padding-bottom: 1.5rem;
-}
-
-.hero-intro-line span {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 0.65rem 0.9rem;
-  text-transform: uppercase;
-}
-
 .hero-composition {
   min-height: clamp(36rem, 55vw, 50rem);
   position: relative;
@@ -470,10 +452,10 @@ a { color: inherit; text-decoration: none; }
 
 .hero-composition h1 {
   font-family: var(--display);
-  font-size: clamp(5.4rem, 10.3vw, 11rem);
+  font-size: clamp(4.8rem, 7.65vw, 8.6rem);
   font-weight: 500;
-  letter-spacing: -0.075em;
-  line-height: 0.79;
+  letter-spacing: -0.07em;
+  line-height: 0.84;
   margin: 0;
   position: relative;
   z-index: 1;
@@ -481,18 +463,14 @@ a { color: inherit; text-decoration: none; }
 
 .hero-composition h1 span {
   display: block;
-  width: max-content;
-}
-
-.hero-composition h1 span:nth-child(2) {
-  margin-left: 0.6ch;
+  white-space: nowrap;
 }
 
 .hero-composition h1 span:last-child {
   color: var(--clay);
   font-style: italic;
-  margin-left: 0.08ch;
-  margin-top: 0.22em;
+  margin-left: 0.18ch;
+  margin-top: 0.2em;
 }
 
 .hero-figure {
@@ -532,8 +510,48 @@ a { color: inherit; text-decoration: none; }
   margin-top: 1.6rem;
 }
 
-.brand-hero-footnote {
-  padding-top: 0;
+.hero-ticker {
+  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  margin: 0 -4vw -2.5rem;
+  overflow: hidden;
+  padding: 0.85rem 0;
+}
+
+.hero-ticker-track {
+  animation: hero-ticker-scroll 34s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.hero-ticker:hover .hero-ticker-track { animation-play-state: paused; }
+
+.hero-ticker-group {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.hero-ticker-group span {
+  align-items: center;
+  display: inline-flex;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero-ticker-group span::after {
+  color: var(--ochre);
+  content: '✦';
+  font-size: 0.9rem;
+  margin: 0 1.45rem;
+}
+
+@keyframes hero-ticker-scroll {
+  to { transform: translateX(-50%); }
 }
 
 .work-preview { background: var(--paper-light); border-top: 1px solid var(--line); padding: clamp(5rem, 8vw, 8rem) 4vw; }
@@ -570,7 +588,7 @@ a { color: inherit; text-decoration: none; }
   .section-heading, .project-feature { grid-template-columns: 1fr; }
   .section-heading { gap: 0.5rem; }
   .hero-composition { min-height: 46rem; }
-  .hero-composition h1 { font-size: clamp(4.6rem, 13vw, 7rem); }
+  .hero-composition h1 { font-size: clamp(4.2rem, 11.5vw, 6.5rem); }
   .hero-figure { left: 40%; top: 1.5rem; width: 65%; }
 }
 
@@ -673,11 +691,9 @@ a { color: inherit; text-decoration: none; }
   .hero-footnote { align-items: flex-start; flex-direction: column; }
   .hero-footnote-line { width: 100%; }
   .brand-hero { padding-left: 1.15rem; padding-right: 1.15rem; }
-  .hero-intro-line { align-items: flex-start; flex-direction: column; gap: 0.9rem; }
-  .hero-intro-line span { font-size: 0.58rem; }
   .hero-composition { min-height: auto; padding-bottom: 2.5rem; }
-  .hero-composition h1 { font-size: clamp(3.85rem, 18vw, 5.5rem); padding-top: 12.5rem; }
-  .hero-composition h1 span:nth-child(2) { margin-left: 0; }
+  .hero-composition h1 { font-size: clamp(3.55rem, 16.5vw, 5rem); padding-top: 12.5rem; }
+  .hero-composition h1 span { white-space: normal; }
   .hero-composition h1 span:last-child { margin-left: 0; }
   .hero-figure {
     left: 12%;
@@ -686,7 +702,8 @@ a { color: inherit; text-decoration: none; }
   }
   .hero-inline-spark { right: 1%; top: 1rem; }
   .hero-editorial-side { margin-top: 2rem; max-width: none; position: static; }
-  .brand-hero-footnote { margin-top: 0; }
+  .hero-ticker { margin-left: -1.15rem; margin-right: -1.15rem; }
+  .hero-ticker-track { animation-duration: 28s; }
 }
 
 @keyframes mobile-menu-reveal {
@@ -711,6 +728,7 @@ a { color: inherit; text-decoration: none; }
   .wordmark-name { display: block; }
   .logo-final-layer { clip-path: none; opacity: 1; transform: none; }
   .logo-final-stars { transform: translateY(-0.2rem); }
+  .hero-ticker-track { animation: none; transform: none; }
 }
 
 /* Shared editorial links and footer */
