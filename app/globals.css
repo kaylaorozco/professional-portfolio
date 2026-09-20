@@ -446,7 +446,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-composition {
-  min-height: clamp(36rem, 55vw, 50rem);
+  min-height: clamp(38rem, 48vw, 46rem);
   position: relative;
 }
 
@@ -475,20 +475,21 @@ a { color: inherit; text-decoration: none; }
 
 .hero-figure {
   display: block;
-  left: clamp(31rem, 48vw, 52rem);
   position: absolute;
-  top: -0.5rem;
-  width: min(50vw, 48rem);
+  right: -4vw;
+  top: clamp(8rem, 11vw, 10.5rem);
+  width: min(41vw, 41rem);
   z-index: 2;
 }
 
 .hero-inline-spark {
+  animation: brand-spark-sway 4.8s ease-in-out infinite;
   color: var(--ochre);
   font-size: clamp(2.5rem, 4vw, 4.5rem);
   position: absolute;
   right: 2%;
   top: 4%;
-  transform: rotate(12deg);
+  transform-origin: center;
 }
 
 .hero-editorial-side > p {
@@ -499,10 +500,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-editorial-side {
-  bottom: 2rem;
-  max-width: 30rem;
+  bottom: clamp(2.5rem, 5vw, 4.75rem);
+  left: 0.2rem;
+  max-width: 38rem;
   position: absolute;
-  right: 0;
   z-index: 3;
 }
 
@@ -554,6 +555,24 @@ a { color: inherit; text-decoration: none; }
   to { transform: translateX(-50%); }
 }
 
+.section-spark {
+  animation: brand-spark-sway 4.8s ease-in-out infinite;
+  color: var(--ochre);
+  display: inline-block;
+  font-size: 1.05rem;
+  margin-left: 0.45rem;
+  transform-origin: center;
+}
+
+.capabilities .section-spark { animation-delay: -1.6s; }
+.about-preview .section-spark { animation-delay: -3.2s; }
+
+@keyframes brand-spark-sway {
+  0%, 100% { transform: rotate(-7deg) scale(0.96); }
+  45% { transform: rotate(8deg) scale(1.08); }
+  60% { transform: rotate(4deg) scale(1.02); }
+}
+
 .work-preview { background: var(--paper-light); border-top: 1px solid var(--line); padding: clamp(5rem, 8vw, 8rem) 4vw; }
 .section-heading { display: grid; gap: 2rem; grid-template-columns: 0.42fr 1fr; margin-bottom: 4rem; }
 .section-heading h2 {
@@ -589,7 +608,7 @@ a { color: inherit; text-decoration: none; }
   .section-heading { gap: 0.5rem; }
   .hero-composition { min-height: 46rem; }
   .hero-composition h1 { font-size: clamp(4.2rem, 11.5vw, 6.5rem); }
-  .hero-figure { left: 40%; top: 1.5rem; width: 65%; }
+  .hero-figure { left: 40%; right: auto; top: 1.5rem; width: 65%; }
 }
 
 @media (max-width: 560px) {
@@ -696,8 +715,10 @@ a { color: inherit; text-decoration: none; }
   .hero-composition h1 span { white-space: normal; }
   .hero-composition h1 span:last-child { margin-left: 0; }
   .hero-figure {
-    left: 12%;
+    left: 50%;
+    right: auto;
     top: 0.2rem;
+    transform: translateX(-50%);
     width: 100%;
   }
   .hero-inline-spark { right: 1%; top: 1rem; }

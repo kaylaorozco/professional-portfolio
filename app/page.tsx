@@ -80,7 +80,7 @@ export default function Home() {
 
       <section className="work-preview" id="work">
         <div className="section-heading">
-          <p className="eyebrow">Selected work</p>
+          <p className="eyebrow">Selected work <span className="section-spark" aria-hidden="true">✦</span></p>
           <div>
             <h2>Products and systems built for real-world complexity.</h2>
             <a className="text-link" href="/work">View all five projects <ArrowUpRight aria-hidden="true" size={18} /></a>
@@ -104,7 +104,7 @@ export default function Home() {
       </section>
 
       <section className="capabilities">
-        <p className="eyebrow">One product mind · multiple layers</p>
+        <p className="eyebrow">One product mind · multiple layers <span className="section-spark" aria-hidden="true">✦</span></p>
         <div className="capability-grid">
           <article><span>01</span><h2>Product + interaction</h2><p>Turning ambiguous needs into clear flows, interfaces, and testable product decisions.</p></article>
           <article><span>02</span><h2>AI system design</h2><p>Designing prompts, orchestration, guardrails, and recovery around how models behave in production.</p></article>
@@ -117,7 +117,7 @@ export default function Home() {
           <img src="/images/kayla-about.png" alt="Illustration of Kayla standing beside a laptop" />
         </div>
         <div className="about-preview-copy">
-          <p className="eyebrow">The human in the loop</p>
+          <p className="eyebrow">The human in the loop <span className="section-spark" aria-hidden="true">✦</span></p>
           <h2>I build technology around how people actually think, decide, and live.</h2>
           <p>I&apos;m a Texas-based design engineer and founder of Mesquite &amp; Thorn Digital. My work spans mobile products, enterprise agentic systems, and the design infrastructure connecting them.</p>
           <a className="text-link" href="/about">More about how I work <ArrowUpRight aria-hidden="true" size={18} /></a>
