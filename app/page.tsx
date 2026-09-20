@@ -2,6 +2,7 @@ import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
+import { HeroCharacter } from '@/components/hero-character';
 import { projects } from '@/lib/projects';
 
 const testimonials = [
@@ -36,11 +37,7 @@ export default function Home() {
             <span>Designing the experience.</span>
             <span>Engineering the product.</span>
           </h1>
-          <img
-            className="hero-figure"
-            src="/images/kayla-hero-v2.png"
-            alt="Illustration of Kayla building an app on a laptop"
-          />
+          <HeroCharacter />
           <span className="hero-inline-spark" aria-hidden="true">✦</span>
           <div className="hero-editorial-side">
             <p>
