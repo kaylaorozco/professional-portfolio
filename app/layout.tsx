@@ -5,7 +5,12 @@ export const metadata: Metadata = {
   title: 'Kayla Orozco — Design Engineer & AI Product Builder',
   description:
     'Design engineer building thoughtful AI-powered products, mobile apps, and enterprise interaction systems from prototype to production.',
-  icons: { icon: '/favicon.svg' },
+  icons: {
+    icon: {
+      url: '/images/ko-logo-transparent.png',
+      type: 'image/png',
+    },
+  },
 };
 
 export default function RootLayout({
