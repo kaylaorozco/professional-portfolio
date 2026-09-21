@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <a className="wordmark" href="/" aria-label="Kayla Orozco, home">
+      <a className="wordmark" href="/#top" aria-label="Kayla Orozco, home">
         <span className="wordmark-name" aria-hidden="true">
           <span className="brand-glyph glyph-k morph-anchor" />
           <span className="brand-glyph glyph-a morph-away morph-1" />
@@ -24,10 +24,10 @@ export function SiteHeader() {
         </span>
       </a>
       <nav className="site-nav" aria-label="Primary navigation">
-        <a href="/work">Work</a>
         <a href="/about">About</a>
+        <a href="/work">Work</a>
         <a className="nav-contact" href="mailto:kaylamarieorozco@gmail.com">
-          Let&apos;s talk <ArrowUpRight aria-hidden="true" size={16} />
+          Let&apos;s chat <ArrowUpRight aria-hidden="true" size={16} />
         </a>
       </nav>
       <details className="mobile-nav">
@@ -39,10 +39,10 @@ export function SiteHeader() {
           </span>
         </summary>
         <nav className="mobile-nav-panel" aria-label="Mobile navigation">
-          <a href="/work">Work</a>
           <a href="/about">About</a>
+          <a href="/work">Work</a>
           <a href="mailto:kaylamarieorozco@gmail.com">
-            Let&apos;s talk <ArrowUpRight aria-hidden="true" size={16} />
+            Let&apos;s chat <ArrowUpRight aria-hidden="true" size={16} />
           </a>
         </nav>
       </details>

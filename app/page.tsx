@@ -5,6 +5,16 @@ import { SiteHeader } from '@/components/site-header';
 import { HeroCharacter } from '@/components/hero-character';
 import { projects } from '@/lib/projects';
 
+const areasOfPractice = [
+  'Human-computer interaction',
+  'Artificial intelligence',
+  'Mobile apps',
+  'Product design',
+  'Design engineering',
+  'Intelligent systems',
+  'Conversational AI',
+];
+
 const testimonials = [
   {
     quote:
@@ -28,10 +38,10 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <main>
+    <main id="top">
       <SiteHeader />
 
-      <section className="brand-hero" id="top">
+      <section className="brand-hero">
         <div className="hero-composition">
           <h1>
             <span>Designing the experience.</span>
@@ -59,16 +69,14 @@ export default function Home() {
         <div
           className="hero-ticker"
           role="group"
-          aria-label="Areas of practice: Mobile apps, conversational AI, product design, design engineering, and intelligent systems"
+          aria-label={`Areas of practice: ${areasOfPractice.join(', ')}`}
         >
           <div className="hero-ticker-track" aria-hidden="true">
-            {[0, 1].map((group) => (
-              <div className="hero-ticker-group" key={group}>
-                <span>Mobile apps</span>
-                <span>Conversational AI</span>
-                <span>Product design</span>
-                <span>Design engineering</span>
-                <span>Intelligent systems</span>
+            {[0, 1].map((sequence) => (
+              <div className="hero-ticker-sequence" key={sequence}>
+                {areasOfPractice.map((area) => (
+                  <span key={area}>{area}</span>
+                ))}
               </div>
             ))}
           </div>
