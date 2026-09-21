@@ -74,8 +74,12 @@ export default function Home() {
           <div className="hero-ticker-track" aria-hidden="true">
             {[0, 1].map((sequence) => (
               <div className="hero-ticker-sequence" key={sequence}>
-                {areasOfPractice.map((area) => (
-                  <span key={area}>{area}</span>
+                {[0, 1].map((repeat) => (
+                  <div className="hero-ticker-group" key={repeat}>
+                    {areasOfPractice.map((area) => (
+                      <span key={area}>{area}</span>
+                    ))}
+                  </div>
                 ))}
               </div>
             ))}

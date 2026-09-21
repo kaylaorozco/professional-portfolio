@@ -549,7 +549,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-ticker-track {
-  animation: hero-ticker-scroll 34s linear infinite;
+  animation: hero-ticker-scroll 68s linear infinite;
   display: flex;
   width: max-content;
 }
@@ -560,22 +560,27 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   display: flex;
   flex-shrink: 0;
-  justify-content: space-around;
-  min-width: 100vw;
 }
 
-.hero-ticker-sequence span {
+.hero-ticker-group {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.hero-ticker-group span {
   align-items: center;
   display: inline-flex;
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.11em;
+  line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-.hero-ticker-sequence span::after {
+.hero-ticker-group span::after {
   color: var(--ochre);
   content: '✦';
   font-size: 0.9rem;
@@ -756,7 +761,7 @@ a { color: inherit; text-decoration: none; }
   .hero-character { --character-scale: 0.76; top: 1rem; }
   .hero-editorial-side { margin-top: 2rem; max-width: none; position: static; }
   .hero-ticker { margin-left: -1.15rem; margin-right: -1.15rem; }
-  .hero-ticker-track { animation-duration: 28s; }
+  .hero-ticker-track { animation-duration: 56s; }
 }
 
 @keyframes mobile-menu-reveal {
