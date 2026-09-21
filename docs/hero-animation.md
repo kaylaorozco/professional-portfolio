@@ -1,20 +1,24 @@
 # Hero character animation — local prototype
 
-Uses the original seated illustration, followed by generated closing, standing,
+Uses the first closing-sheet pose as the seated illustration, followed by generated closing, standing,
 and walking poses. The current motion is a frame-by-frame prototype, not a smooth
 rigged character. Pose consistency and the transition from the original illustration
 should be reviewed before publication.
 
-The automatic sequence starts after 2.5 seconds in view, once per page load.
+The automatic sequence starts after 2 seconds in view, once per page load.
 There are no playback controls or automatic loops; refresh starts it again.
-Six extra hand-reach and laptop-closing poses play over two seconds, followed by
+Twelve hand-reach and laptop-closing poses play over two seconds, followed by
 1.4 seconds standing and 4.4 seconds walking. The rise has eight poses;
 the walk has twelve poses advancing every 90ms, maintaining a relaxed gait.
 Each frame renders at full opacity, with no crossfades or ghosted overlapping poses.
-Frames align to the dark crown of the head rather than the changing silhouette
-width; the rise follows a continuous head-position path. The generated poses are still a prototype
+All seated frames use one fixed cell scale and baseline. Face/hair registration
+against the first cell supplies horizontal corrections of 0–2 source pixels;
+there is no per-frame resizing or silhouette-dependent placement.
+The waiting illustration and first canvas frame use the same sprite cell, so
+playback does not switch skin palettes or drawings at the start.
+The rise follows a continuous head-position path. The generated poses are still a prototype
 and can have small drawing differences; they are not a rigged animation.
-All poses share a crown-to-chin scale, with a smaller seated opening on mobile
+Standing/walking poses share a crown-to-chin scale, with a smaller seated opening on mobile
 to reserve the standing height. No per-pose viewport fitting is applied.
 Reduced-motion visitors retain the static illustration. Failed sprite loads
 also leave the static illustration visible. Playback pauses out of view or in
@@ -24,7 +28,61 @@ Generated with the built-in image-generation tool, using
 `public/images/kayla-hero-v2.png` as the character/style reference.
 Selected assets: `public/images/kayla-rise-sprites-v2.png` and
 `public/images/kayla-walk-sprites-v2.png`.
-Additional closing asset: `public/images/kayla-close-sprites-v1.png`.
+Active closing asset: `public/images/kayla-close-sprites-v3.png` (3 columns × 4 rows).
+Frame 8 uses `public/images/kayla-close-corrections-v4.png`.
+Frames 9 and 10 use `public/images/kayla-lid-corrections-v5.png`.
+All share the same grid. Other frames, including the waiting pose, still use v3.
+
+The v5 built-in image-generation edit corrects the lid shortening identified in
+the user's annotations. Its final prompt specifies full-length rigid screen
+panels rotating about a fixed hinge, with the free edge extending left rather
+than the panel compressing. Approximate cell-local quadrilaterals were supplied:
+frame 9 [(290,150),(265,128),(185,80),(210,102)]; frame 10
+[(290,150),(265,128),(185,130),(210,152)]. It requests fingertips following the
+free edge, unchanged keyboard footprint/character/other frames, and preserved
+1536×1024 resolution and transparency. Only those two generated cells are used.
+
+The targeted built-in image-generation edit requested only third-row middle/right
+keyboard decks be shortened 18%, keeping the front corner near local (210, 181),
+moving the hinge toward (280, 151), and matching the partly open lid to that deck.
+The prompt required unchanged character, colors, other ten cells, resolution,
+and transparent alpha. Only the two requested cells are consumed by the renderer.
+
+The final upright rise pose now derives its size from the first walking pose's
+rendered crown-to-floor height, including the 8% walking adjustment. Both use
+the same ground baseline, eliminating the smaller upright frame at the handoff.
+
+## Hair, walking scale, and laptop refinements
+
+Standing/walking hair uses the opening palette, RGB (19, 7, 42), applied once
+to the dark pixels in the head/hair area when loading each pose. Skin and
+clothing fills are unchanged. Walking poses render 8% larger, anchored to the
+existing ground baseline; timing and travel speed are unchanged.
+
+The v3 closing sheet was edited with built-in image generation. The final prompt
+requested: “Edit ONLY the laptops in bottom two rows of this 3x4 sprite sheet.
+They are TOO LONG compared to row1. Shorten the keyboard deck and closed laptop
+by 20 percent horizontally in row3 column2, row3 column3, and ALL THREE bottom-row
+frames. Keep LEFT corner of each laptop fixed near the woman's lower hand; move
+its RIGHT corner LEFT by approximately 20 pixels within each 512px cell. Move
+the hinge and lid with right corner. Preserve physical width of deck, rigid shape.
+Adjust touching fingers naturally minimally. DO NOT modify first two rows or any
+faces hair skin bodies legs cushion socks sizes positions. Preserve exact alpha
+transparency of original PNG, no background. Important actual visible correction:
+laptop's rightmost orange corner on bottom row should be around local x290 rather
+than local x310. This is a precise geometry correction; no new composition. Same
+1536x1024 dimensions.” The initial broader geometry edit was not selected.
+
+## September 20 closing revision
+
+Built-in image generation used the original illustration and previous closing
+sheet as references to generate twelve poses: typing, fingers releasing, hand
+lifting in small increments, reaching the lid, then closing it through 75°, 55°,
+35°, 15°, and fully closed. The prompt required fixed head position, proportions,
+legs, torso and cushion, with only hands, arms and lid moving; transparent gutters,
+no labels, and the original illustration style. A second built-in edit requested
+background extraction only, preserving all twelve figures and their positions.
+Transparency was verified from the PNG alpha channel.
 
 ## Final generation prompt
 

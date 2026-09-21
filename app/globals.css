@@ -494,6 +494,10 @@ a { color: inherit; text-decoration: none; }
 
 .hero-character { --character-scale: 1; aspect-ratio: 2 / 1; }
 .hero-character-still {
+  aspect-ratio: 2 / 1;
+  background-image: url('/images/kayla-close-sprites-v3.png');
+  background-size: 300% 400%;
+  background-repeat: no-repeat;
   bottom: 0;
   display: block;
   left: 50%;
