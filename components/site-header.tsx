@@ -27,7 +27,7 @@ export function SiteHeader() {
         <a href="/about">About</a>
         <a href="/work">Work</a>
         <a className="nav-contact" href="mailto:kaylamarieorozco@gmail.com">
-          Let&apos;s chat <ArrowUpRight aria-hidden="true" size={16} />
+          Let&apos;s Chat <ArrowUpRight aria-hidden="true" size={16} />
         </a>
       </nav>
       <details className="mobile-nav">
@@ -42,7 +42,7 @@ export function SiteHeader() {
           <a href="/about">About</a>
           <a href="/work">Work</a>
           <a href="mailto:kaylamarieorozco@gmail.com">
-            Let&apos;s chat <ArrowUpRight aria-hidden="true" size={16} />
+            Let&apos;s Chat <ArrowUpRight aria-hidden="true" size={16} />
           </a>
         </nav>
       </details>
