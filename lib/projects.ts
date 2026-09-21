@@ -74,17 +74,17 @@ export const projects: Project[] = [
   {
     slug: 'handsful',
     number: '02',
-    title: 'Handsful',
+    title: 'Designing a Calmer Baby Tracker for Multiples',
     shortTitle: 'Handsful',
     type: 'Mobile app · Multi-entity UX',
-    status: 'In development',
+    status: 'Shipped nationwide',
     summary:
-      'A calmer way for parents of multiples to log, compare, and share the daily details that are otherwise easy to lose.',
+      'Handsful is a mobile app that gives parents of multiples a calmer way to log, compare, and share the daily details that are otherwise easy to lose.',
     outcome:
       'A product architecture designed around multiple children, simultaneous events, and shared caregiver context from the start.',
     role: 'Founder, product designer, and full-stack engineer',
     timeline: '2026 – present',
-    tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'Product strategy', 'Localization'],
+    tags: ['Mobile app', 'Design engineering', 'Applied AI'],
     metrics: [
       { value: '2+', label: 'children in one action' },
       { value: '2', label: 'planned languages' },
@@ -127,12 +127,12 @@ export const projects: Project[] = [
     type: 'Enterprise AI · Voice',
     status: 'Shipped nationwide',
     summary:
-      'Transforming a constrained product lookup flow into an intent-driven shopping conversation powered by a generative LLM.',
+      'For a Fortune 50 retailer, the IVR knew how to look up a product. It didn’t know how to understand one. I redesigned the experience from the ground up; weaving LLM-powered intent recognition and prompt engineering into a legacy system to turn a dead-end lookup into a revenue-driving discovery moment.',
     outcome:
       'Containment rose from 15% to 43%, and the successful pilot expanded to stores nationwide.',
     role: 'AI product designer, prompt experience designer, and analyst',
     timeline: 'Initial launch in 1 month · ongoing optimization',
-    tags: ['Agentic AI', 'Prompt engineering', 'Voice UX', 'Production analysis', 'Legacy modernization'],
+    tags: ['Conversational design', 'Prompt engineering', 'Legacy system modernization'],
     metrics: [
       { value: '+28pt', label: 'containment increase' },
       { value: '43%', label: 'post-launch containment' },
