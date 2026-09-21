@@ -22,21 +22,51 @@ const featuredProjects = projects.filter(({ slug }) =>
 const testimonials = [
   {
     quote:
-      'She doesn’t just design flows; she builds intelligent systems.',
-    name: 'Bobby Nair',
-    context: 'Sr. Software Engineering Manager',
-  },
-  {
-    quote:
-      'Her ability to move fluidly between technical and functional discussions made collaboration with engineering teams highly efficient.',
-    name: 'Ashish Gupta',
-    context: 'Senior Software Engineer',
-  },
-  {
-    quote:
-      'She shows up in ambiguity—owning prioritization and stakeholder communication while keeping delivery momentum and quality high.',
+      'What truly sets Kayla apart is how she shows up in ambiguity: she stepped in to lead our design team for 10 weeks during a planned leave, owning prioritization and stakeholder communication while keeping delivery momentum and quality high. She’s also an exceptional strategic partner—most recently authoring a thorough, data-driven proposal to evolve a “Product Availability” IVR into a more effective “Product Help” experience, with a clear approach and rationale.',
     name: 'Brett Knight',
-    context: 'Director of Product Management',
+    context: 'Director of Product Management @ Lowe’s',
+  },
+  {
+    quote:
+      `Kayla is exceptionally thorough, ensuring that every edge case in both IVR and SMS channels is accounted for. Her deep knowledge of conversational design allowed us to move away from rigid menus toward a more fluid, autonomous AI experience that truly understands user intent. She doesn't just design flows; she builds intelligent systems.`,
+    name: 'Bobby Nair',
+    context: 'Sr. Software Engineering Manager @ Lowe’s',
+  },
+  {
+    quote:
+      'Kayla thinks beyond the obvious and asks the most thoughtful questions, ensuring that all the unknowns of a project are accounted for. She communicates clearly, confidently and logically; everyone who interacts with her is inspired by her knowledge and confidence.',
+    name: 'Katie Brake',
+    context: 'Lead Conversation Designer @ Lowe’s',
+  },
+  {
+    quote:
+      'She is extremely organized, thoughtful in her approach, and brings a strong sense of ownership to her work. Whenever there was an opportunity, she naturally stepped into a leadership role and handled it very impressively, helping the team move forward with clarity and confidence.',
+    name: 'Romit Jain',
+    context: 'Lead Product Manager @ Lowe’s',
+  },
+  {
+    quote:
+      "Kayla's an absolute rockstar. She's got the attitude and drive as a great conversational designer and team player. She's often the first to volunteer for new challenges and is often our go-to for new projects. She goes above and beyond to coach and inspire those around her.",
+    name: 'Julia Thayer',
+    context: 'VP of Product @ SmartAction',
+  },
+  {
+    quote:
+      'She quickly grasped both functional requirements and technical bottlenecks, often identifying root causes and helping streamline solutions with impressive speed. Her ability to move fluidly between technical and functional discussions made collaboration with engineering teams highly efficient and productive.',
+    name: 'Ashish Gupta',
+    context: 'Senior Software Engineer @ Lowe’s',
+  },
+  {
+    quote:
+      'One of Kayla’s standout strengths is her talent for writing clear, effective agentic instructions. Her work brings order and consistency to complex conversational flows, making them more intuitive for users and more reliable for the teams who maintain them. She is methodical, dependable, and always focused on delivering high-quality results.',
+    name: 'Melanie Wells',
+    context: 'Product Manager @ Lowe’s',
+  },
+  {
+    quote:
+      'Kayla is not only knowledgeable, but always striving to be better. Whatever she doesn’t know, she’s excited to learn.',
+    name: 'Celeste Fondeur',
+    context: 'Senior Conversation Designer @ Allstate',
   },
 ];
 
@@ -115,35 +145,36 @@ export default function Home() {
       </section>
 
       <section className="capabilities">
-        <p className="eyebrow">One product mind · multiple layers <span className="section-spark" aria-hidden="true">✦</span></p>
+        <div className="capabilities-intro">
+          <h2>
+            <span>Systems-first.</span>
+            <span>Human-focused.</span>
+            <span>AI-enabled.</span>
+          </h2>
+          <p>Designing intelligent systems that solve real-world problems at scale.</p>
+        </div>
         <div className="capability-grid">
-          <article><span>01</span><h2>Product + interaction</h2><p>Turning ambiguous needs into clear flows, interfaces, and testable product decisions.</p></article>
-          <article><span>02</span><h2>AI system design</h2><p>Designing prompts, orchestration, guardrails, and recovery around how models behave in production.</p></article>
-          <article><span>03</span><h2>Implementation</h2><p>Shipping mobile and web products with React Native, TypeScript, Firebase, and modern front-end systems.</p></article>
-        </div>
-      </section>
-
-      <section className="about-preview" id="about">
-        <div className="about-image-wrap">
-          <img src="/images/kayla-about.png" alt="Illustration of Kayla standing beside a laptop" />
-        </div>
-        <div className="about-preview-copy">
-          <p className="eyebrow">The human in the loop <span className="section-spark" aria-hidden="true">✦</span></p>
-          <h2>I build technology around how people actually think, decide, and live.</h2>
-          <p>I&apos;m a Texas-based design engineer and founder of Mesquite &amp; Thorn Digital. My work spans mobile products, enterprise agentic systems, and the design infrastructure connecting them.</p>
-          <a className="text-link" href="/about">More about how I work <ArrowUpRight aria-hidden="true" size={18} /></a>
+          <article><span className="section-spark" aria-hidden="true">✦</span><h2>Product + interaction</h2><p>Turning real human needs into clear flows, interfaces, and product decisions.</p></article>
+          <article><span className="section-spark" aria-hidden="true">✦</span><h2>AI system design</h2><p>Designing prompts, orchestration, guardrails, and recovery for production systems.</p></article>
+          <article><span className="section-spark" aria-hidden="true">✦</span><h2>Design engineering</h2><p>Translating product decisions into working mobile, web, and voice experiences.</p></article>
         </div>
       </section>
 
       <section className="testimonials">
-        <p className="eyebrow">From the teams behind the systems</p>
-        <div className="testimonial-grid">
-          {testimonials.map((item) => (
-            <figure key={item.name}>
-              <blockquote>“{item.quote}”</blockquote>
-              <figcaption><strong>{item.name}</strong><span>{item.context}</span></figcaption>
-            </figure>
-          ))}
+        <p className="eyebrow">Voices from the teams behind the systems <span className="section-spark" aria-hidden="true">✦</span></p>
+        <div className="testimonial-marquee" role="region" aria-label="Recommendations from collaborators" tabIndex={0}>
+          <div className="testimonial-track">
+            {[0, 1].map((sequence) => (
+              <div className="testimonial-sequence" aria-hidden={sequence === 1} key={sequence}>
+                {testimonials.map((item) => (
+                  <figure key={item.name}>
+                    <blockquote>“{item.quote}”</blockquote>
+                    <figcaption><strong>{item.name}</strong><span>{item.context}</span></figcaption>
+                  </figure>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,8 @@
 import { ArrowUpRight } from 'lucide-react';
 
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
       <div>
@@ -14,11 +16,17 @@ export function SiteFooter() {
         <a href="https://www.linkedin.com/in/kaylaorozco/" target="_blank" rel="noreferrer">
           LinkedIn <ArrowUpRight aria-hidden="true" size={17} />
         </a>
+        <a href="https://github.com/kaylaorozco" target="_blank" rel="noreferrer">
+          GitHub <ArrowUpRight aria-hidden="true" size={17} />
+        </a>
         <a href="/kayla-orozco-resume.pdf" target="_blank">
           Résumé <ArrowUpRight aria-hidden="true" size={17} />
         </a>
       </div>
-      <p className="footer-note">Designed and built by Kayla Orozco · Texas</p>
+      <div className="footer-meta">
+        <p>© 2020–{currentYear} Kayla Orozco</p>
+        <a href="/privacy">Privacy</a>
+      </div>
     </footer>
   );
 }
