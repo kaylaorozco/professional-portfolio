@@ -30,10 +30,12 @@ export function ProjectVisual({ project }: { project: Project }) {
 
   if (project.visual === 'discovery') {
     return (
-      <div className="project-visual visual-discovery" aria-label="Product discovery conversation">
-        <p className="voice-input">“I need something safe for a damp basement.”</p>
-        <div className="intent-line"><span>context</span><span>intent</span><span>constraints</span></div>
-        <p className="voice-output">Three relevant options, explained clearly.</p>
+      <div className="project-visual visual-discovery visual-discovery-art"
+        aria-label="Lowe’s intelligent product discovery system, from natural voice request through AI interpretation to relevant results">
+        <img className="discovery-overview-image" src="/images/product-discovery-overview.png" alt="" />
+        <span className="discovery-client-mark" aria-hidden="true">
+          <img src="/experience-logos/lowes.png" alt="" />
+        </span>
       </div>
     );
   }
