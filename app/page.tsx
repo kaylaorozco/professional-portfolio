@@ -1,8 +1,8 @@
-import { ArrowUpRight } from 'lucide-react';
 import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { HeroCharacter } from '@/components/hero-character';
+import { TestimonialMarquee } from '@/components/testimonial-marquee';
 import { projects } from '@/lib/projects';
 
 const areasOfPractice = [
@@ -122,7 +122,6 @@ export default function Home() {
         <div className="section-heading section-heading-work">
           <div>
             <h2>Products and systems built for real-world complexity.</h2>
-            <a className="text-link" href="/work">View all projects <ArrowUpRight aria-hidden="true" size={18} /></a>
           </div>
         </div>
 
@@ -136,12 +135,13 @@ export default function Home() {
                 <div className="project-tags" aria-label="Project disciplines">
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
-                <a href={`/work/${project.slug}`}>Explore the project <ArrowUpRight aria-hidden="true" size={18} /></a>
+                <a href={`/work/${project.slug}`}>Explore the project</a>
               </div>
               <ProjectVisual project={project} />
             </article>
           ))}
         </div>
+        <a className="text-link projects-all-link" href="/work">View all projects</a>
       </section>
 
       <section className="capabilities">
@@ -162,20 +162,7 @@ export default function Home() {
 
       <section className="testimonials">
         <p className="eyebrow">Voices from the teams behind the systems <span className="section-spark" aria-hidden="true">✦</span></p>
-        <div className="testimonial-marquee" role="region" aria-label="Recommendations from collaborators" tabIndex={0}>
-          <div className="testimonial-track">
-            {[0, 1].map((sequence) => (
-              <div className="testimonial-sequence" aria-hidden={sequence === 1} key={sequence}>
-                {testimonials.map((item) => (
-                  <figure key={item.name}>
-                    <blockquote>“{item.quote}”</blockquote>
-                    <figcaption><strong>{item.name}</strong><span>{item.context}</span></figcaption>
-                  </figure>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
+        <TestimonialMarquee testimonials={testimonials} />
       </section>
 
       <SiteFooter />

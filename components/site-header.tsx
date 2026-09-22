@@ -1,5 +1,3 @@
-import { ArrowUpRight } from 'lucide-react';
-
 export function SiteHeader() {
   return (
     <header className="site-header">
@@ -27,7 +25,7 @@ export function SiteHeader() {
         <a href="/about">About</a>
         <a href="/work">Work</a>
         <a className="nav-contact" href="mailto:kaylamarieorozco@gmail.com">
-          Let&apos;s Chat <ArrowUpRight aria-hidden="true" size={16} />
+          Let&apos;s Chat
         </a>
       </nav>
       <details className="mobile-nav">
@@ -42,7 +40,7 @@ export function SiteHeader() {
           <a href="/about">About</a>
           <a href="/work">Work</a>
           <a href="mailto:kaylamarieorozco@gmail.com">
-            Let&apos;s Chat <ArrowUpRight aria-hidden="true" size={16} />
+            Let&apos;s Chat
           </a>
         </nav>
       </details>

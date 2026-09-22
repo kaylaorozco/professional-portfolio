@@ -13,7 +13,7 @@ const riseRegions: Region[] = [
 ];
 // Crown-to-chin measurements keep scale independent of the pose's height.
 const riseHeadHeights = [87, 90, 90, 90, 79, 80, 79, 87];
-const delay = 2000;
+const delay = 500;
 const closingDuration = 2000;
 const standingDuration = 1400;
 const walkingDuration = 4400;
