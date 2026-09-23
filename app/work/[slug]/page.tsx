@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { HandsfulCaseStudy } from '@/components/handsful-case-study';
 import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
@@ -34,13 +35,23 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <p className="eyebrow">{project.type} · {project.status}</p>
             <h1>{project.title}</h1>
             <p className="case-deck">{project.summary}</p>
+            {project.links && (
+              <nav className="case-links" aria-label={`${project.shortTitle} links`}>
+                {project.links.map((link) => (
+                  <a href={link.href} key={link.href} rel="noreferrer" target="_blank">
+                    {link.label}<ArrowUpRight aria-hidden="true" size={16} />
+                  </a>
+                ))}
+              </nav>
+            )}
           </div>
           <ProjectVisual project={project} />
         </header>
 
-        <dl className="case-facts">
+        <dl className={`case-facts${project.platform ? ' case-facts-four' : ''}`}>
           <div><dt>Role</dt><dd>{project.role}</dd></div>
           <div><dt>Timeline</dt><dd>{project.timeline}</dd></div>
+          {project.platform && <div><dt>Platform</dt><dd>{project.platform}</dd></div>}
           <div><dt>Scope</dt><dd>{project.tags.slice(0, 3).join(' · ')}</dd></div>
         </dl>
 
@@ -52,18 +63,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        <div className="case-body">
-          {project.sections.map((section, sectionIndex) => (
-            <section className="case-section" key={section.heading}>
-              <span className="case-section-number">0{sectionIndex + 1}</span>
-              <div>
-                <h2>{section.heading}</h2>
-                {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
-              </div>
-            </section>
-          ))}
-        </div>
+        {project.slug === 'handsful' ? (
+          <HandsfulCaseStudy />
+        ) : (
+          <div className="case-body">
+            {project.sections.map((section, sectionIndex) => (
+              <section className="case-section" key={section.heading}>
+                <span className="case-section-number">0{sectionIndex + 1}</span>
+                <div>
+                  <h2>{section.heading}</h2>
+                  {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
 
         <section className="case-tags"><p className="eyebrow">Tools + disciplines</p><div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></section>
 

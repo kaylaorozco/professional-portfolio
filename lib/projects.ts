@@ -15,6 +15,8 @@ export type Project = {
   outcome: string;
   role: string;
   timeline: string;
+  platform?: string;
+  links?: { label: string; href: string }[];
   tags: string[];
   metrics: { value: string; label: string }[];
   sections: ProjectSection[];
@@ -74,29 +76,34 @@ export const projects: Project[] = [
   {
     slug: 'handsful',
     number: '02',
-    title: 'Designing a Calmer Baby Tracker for Multiples',
+    title: 'Handsful — Designing a Baby Tracker for Multiples',
     shortTitle: 'Handsful',
-    type: 'Mobile app · Multi-entity UX',
-    status: 'Shipped nationwide',
+    type: 'Mobile app · Local-first product',
+    status: 'Live on the App Store',
     summary:
-      'Handsful is a mobile app that gives parents of multiples a calmer way to log, compare, and share the daily details that are otherwise easy to lose.',
+      'Handsful is a baby tracker designed from the ground up for families raising twins, triplets, and other multiples—centering shared caregiving, simultaneous logging, and fewer decisions in the moment.',
     outcome:
-      'A product architecture designed around multiple children, simultaneous events, and shared caregiver context from the start.',
-    role: 'Founder, product designer, and full-stack engineer',
+      'I designed and shipped a shared family system where caring for multiple babies is the starting point—not an extra profile added later.',
+    role: 'Founder & Design Engineer',
     timeline: '2026 – present',
-    tags: ['Mobile app', 'Design engineering', 'Applied AI'],
+    platform: 'iOS shipped · shared iOS/Android codebase',
+    links: [
+      { label: 'Website', href: 'https://handsful.app' },
+      { label: 'App Store', href: 'https://apps.apple.com/us/app/handsful-multiples-tracker/id6797077032' },
+      { label: 'Technical showcase', href: 'https://github.com/kaylaorozco/handsful-showcase' },
+    ],
+    tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'RevenueCat', 'Applied AI'],
     metrics: [
-      { value: '2+', label: 'children in one action' },
-      { value: '2', label: 'planned languages' },
-      { value: '1', label: 'shared source of truth' },
+      { value: '2+', label: 'babies in one action' },
+      { value: '1', label: 'shared family space' },
+      { value: '2', label: 'supported languages' },
     ],
     visual: 'care',
     sections: [
       {
-        heading: 'Designed from lived experience',
+        heading: 'Designed around the family',
         body: [
-          'Most baby trackers assume one child, one event, and one primary user. For parents of multiples, that model turns routine logging into repetitive administrative work.',
-          'Handsful starts with a different mental model: several children can share a schedule without becoming indistinguishable, and several caregivers can contribute without losing context.',
+          'Most baby trackers assume one child, one event, and one primary user. Handsful starts with a family managing multiple babies at once.',
         ],
       },
       {
