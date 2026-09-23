@@ -127,7 +127,7 @@ export default function Home() {
           <div
             className="work-heading-laptop"
             role="img"
-            aria-label="Coral laptop decorated with Lowe’s, NiCE, Allstate, motorcycle, and four paw-print stickers"
+            aria-label="Coral laptop decorated with Lowe’s, NiCE, Allstate, motorcycle, paw-print, and Texas stickers"
           >
             <img className="work-laptop-art" src="/images/projects-laptop.png" alt="" />
             <span className="laptop-sticker laptop-sticker-lowes" aria-hidden="true">
@@ -148,6 +148,12 @@ export default function Home() {
             <img
               className="laptop-personal-sticker laptop-sticker-paws"
               src="/images/stickers/fur-babies.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <img
+              className="laptop-personal-sticker laptop-sticker-texas"
+              src="/images/stickers/texas-brownsville.png"
               alt=""
               aria-hidden="true"
             />
