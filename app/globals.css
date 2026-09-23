@@ -705,11 +705,18 @@ a { color: inherit; text-decoration: none; }
   transform: rotate(-7deg);
   width: 12%;
 }
+.laptop-sticker-texas {
+  left: 81%;
+  top: 40%;
+  transform: rotate(5deg);
+  width: 12%;
+}
 .work-heading-laptop:hover .laptop-sticker-lowes { transform: rotate(-6deg) translateY(-.2rem); }
 .work-heading-laptop:hover .laptop-sticker-nice { transform: rotate(6deg) translateY(-.15rem); }
 .work-heading-laptop:hover .laptop-sticker-allstate { transform: rotate(3deg) translateY(-.2rem); }
 .work-heading-laptop:hover .laptop-sticker-motorcycle { transform: rotate(-5deg) translateY(-.2rem); }
 .work-heading-laptop:hover .laptop-sticker-paws { transform: rotate(-4deg) translateY(-.18rem); }
+.work-heading-laptop:hover .laptop-sticker-texas { transform: rotate(8deg) translateY(-.18rem); }
 .project-feature {
   border-bottom: 1px solid var(--ink);
   border-top: 1px solid var(--ink);
@@ -844,10 +851,10 @@ a { color: inherit; text-decoration: none; }
   .hero-composition h1 span { white-space: normal; }
   .hero-composition h1 span:last-child { margin-left: 0; }
   .hero-figure {
-    left: 50%;
+    left: 12%;
     right: auto;
     top: 0.2rem;
-    transform: translateX(-50%);
+    transform: none;
     width: 100%;
   }
   .hero-inline-spark { right: 1%; top: 1rem; }
