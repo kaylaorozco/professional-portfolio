@@ -162,7 +162,7 @@ export default function Home() {
 
         <div className="project-stack">
           {featuredProjects.map((project) => (
-            <article className="project-row" key={project.slug}>
+            <article className={`project-row${project.slug === 'handsful' ? ' project-row-handsful' : ''}`} key={project.slug}>
               <div className="project-copy">
                 <p className="project-status">{project.status}</p>
                 <h3><a href={`/work/${project.slug}`}>{project.title}</a></h3>

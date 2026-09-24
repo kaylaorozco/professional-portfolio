@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { Project } from '@/lib/projects';
 
 export function ProjectVisual({ project }: { project: Project }) {
@@ -20,10 +21,19 @@ export function ProjectVisual({ project }: { project: Project }) {
 
   if (project.visual === 'care') {
     return (
-      <div className="project-visual visual-care" aria-label="Side-by-side child activity view">
-        <div><span>A</span><strong>8:42</strong><small>Fed</small></div>
-        <div><span>B</span><strong>8:45</strong><small>Fed</small></div>
-        <p>One action · individual context</p>
+      <div
+        className="project-visual visual-care"
+        aria-label="Handsful Today and Quick Actions screens for tracking care across multiple babies"
+      >
+        <Image className="handsful-hero-blob handsful-hero-blob-a" src="/images/handsful/blob-a.svg" alt="" width={100} height={100} />
+        <Image className="handsful-hero-blob handsful-hero-blob-b" src="/images/handsful/blob-b.svg" alt="" width={100} height={100} />
+        <Image className="handsful-hero-wordmark" src="/images/handsful/wordmark.svg" alt="" width={800} height={317} />
+        <div className="handsful-hero-phone handsful-hero-phone-secondary">
+          <Image src="/images/handsful/log-diaper-light-device.webp" alt="" width={1200} height={2356} />
+        </div>
+        <div className="handsful-hero-phone handsful-hero-phone-primary">
+          <Image src="/images/handsful/today-light-device.webp" alt="" width={1200} height={2356} />
+        </div>
       </div>
     );
   }
