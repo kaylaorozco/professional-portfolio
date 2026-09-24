@@ -1001,34 +1001,6 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   width: 100%;
 }
-.visual-list { background: #dda268; gap: 1rem; }
-.paper-list {
-  background: var(--paper-light);
-  box-shadow: .35rem .35rem 0 rgba(42,22,18,.2);
-  display: flex;
-  flex-direction: column;
-  gap: .55rem;
-  padding: 1.2rem .9rem;
-  transform: rotate(-5deg);
-  width: 6rem;
-}
-.paper-list span { background: #b7a79a; height: .35rem; }
-.paper-list span:nth-child(2) { width: 72%; }
-.paper-list span:nth-child(3) { width: 88%; }
-.visual-arrow { font-family: var(--display); font-size: 2rem; }
-.phone-list {
-  background: var(--ink);
-  border: .32rem solid #5d3229;
-  border-radius: 1.1rem;
-  color: var(--paper-light);
-  display: flex;
-  flex-direction: column;
-  gap: .45rem;
-  padding: 1rem .8rem;
-  width: 8rem;
-}
-.phone-list p { color: #f2c189; font-family: var(--display); margin: 0 0 .35rem; }
-.phone-list span { background: rgba(255,255,255,.1); border-radius: .3rem; font-size: .62rem; padding: .35rem; }
 .visual-care {
   aspect-ratio: 4 / 3;
   background: linear-gradient(155deg, #3ea6c2 0%, #2f7d6b 58%, #ffcb57 122%);
