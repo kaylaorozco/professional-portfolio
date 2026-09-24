@@ -1,23 +1,6 @@
 import type { Project } from '@/lib/projects';
 
 export function ProjectVisual({ project }: { project: Project }) {
-  if (project.visual === 'list') {
-    return (
-      <div className="project-visual visual-list" aria-label="School list processing model">
-        <div className="paper-list">
-          <span /> <span /> <span /> <span />
-        </div>
-        <div className="visual-arrow">→</div>
-        <div className="phone-list">
-          <p>All supplies</p>
-          <span>2 × notebooks</span>
-          <span>1 × crayons</span>
-          <span>3 × folders</span>
-        </div>
-      </div>
-    );
-  }
-
   if (project.visual === 'care') {
     return (
       <div

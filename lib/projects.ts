@@ -20,62 +20,13 @@ export type Project = {
   tags: string[];
   metrics: { value: string; label: string }[];
   sections: ProjectSection[];
-  visual: 'list' | 'care' | 'discovery' | 'reschedule' | 'callout';
+  visual: 'care' | 'discovery' | 'reschedule' | 'callout';
 };
 
 export const projects: Project[] = [
   {
-    slug: 'school-supplied',
-    number: '01',
-    title: 'School Supplied',
-    shortTitle: 'School Supplied',
-    type: 'Mobile app · OCR + LLM',
-    status: 'In development',
-    summary:
-      'Turning photographed school supply lists into one clear, consolidated shopping list for busy families.',
-    outcome:
-      'A mobile workflow that translates inconsistent, image-based lists into structured items families can understand and act on.',
-    role: 'Founder, product designer, and full-stack engineer',
-    timeline: '2026 – present',
-    tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'Apple Vision', 'LLM orchestration'],
-    metrics: [
-      { value: '1', label: 'photo to begin' },
-      { value: '2', label: 'AI processing stages' },
-      { value: 'E2E', label: 'design + engineering ownership' },
-    ],
-    visual: 'list',
-    sections: [
-      {
-        heading: 'The problem',
-        body: [
-          'School supply lists arrive as PDFs, screenshots, photos, and documents with inconsistent naming. Families shopping for multiple children have to interpret, compare, and combine them manually.',
-          'The opportunity was not another checklist. It was a translation layer between the list a school publishes and the decisions a parent needs to make in a store.',
-        ],
-      },
-      {
-        heading: 'Designing the pipeline',
-        body: [
-          'I designed the capture flow around imperfect real-world inputs: glare, skewed pages, handwriting, multi-page lists, and category headings that can be mistaken for items.',
-        ],
-        bullets: [
-          'Apple Vision OCR extracts the source text on device.',
-          'A multi-step LLM pipeline cleans, classifies, and normalizes the list.',
-          'The interface preserves source context so users can verify uncertain results.',
-          'Duplicate items can be consolidated without hiding child-specific requirements.',
-        ],
-      },
-      {
-        heading: 'What I own',
-        body: [
-          'I own the product end to end: research, interaction design, design system, data model, implementation, authentication, cloud functions, analytics, and deployment.',
-          'That full-stack perspective lets design decisions account for model behavior, latency, failure recovery, privacy, and the actual shape of the data—not just the happy-path interface.',
-        ],
-      },
-    ],
-  },
-  {
     slug: 'handsful',
-    number: '02',
+    number: '01',
     title: 'Handsful — Building a Baby Tracker for Multiples',
     shortTitle: 'Handsful',
     type: 'Mobile product · Design + engineering',
@@ -128,7 +79,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'intelligent-product-discovery',
-    number: '03',
+    number: '02',
     title: 'From Static Lookup to Intelligent Product Discovery',
     shortTitle: 'Intelligent Product Discovery',
     type: 'Enterprise AI · Voice',
@@ -176,7 +127,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'enterprise-rescheduling',
-    number: '04',
+    number: '03',
     title: 'Rebuilding Enterprise Rescheduling as an Intelligent System',
     shortTitle: 'Enterprise Rescheduling',
     type: 'Agentic AI · API orchestration',
@@ -223,7 +174,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'associate-call-out',
-    number: '05',
+    number: '04',
     title: 'Automated Associate Call-Out',
     shortTitle: 'Automated Associate Call-Out',
     type: 'Conversational system · Voice + SMS',
