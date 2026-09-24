@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 const workflowShots = [
   {
     title: 'Timeline',
@@ -35,7 +33,7 @@ function WorkflowShot({ title, detail, image, width, height, className = '' }: (
         <small>{detail}</small>
       </figcaption>
       <div className="handsful-workflow-device">
-        <Image src={image} alt="" width={width} height={height} />
+        <img src={image} alt="" width={width} height={height} />
       </div>
     </figure>
   );
@@ -48,7 +46,7 @@ function AiProductGraphic() {
       aria-label="Handsful structured AI visit-prep summary"
     >
       <div className="handsful-ai-summary-device">
-        <Image src="/images/handsful/ai-summary-light-device.webp" alt="" width={1200} height={2481} />
+        <img src="/images/handsful/ai-summary-light-device.webp" alt="" width={1200} height={2481} />
       </div>
     </figure>
   );
