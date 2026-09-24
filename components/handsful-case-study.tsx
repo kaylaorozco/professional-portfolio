@@ -1,29 +1,53 @@
-const workflowSlots = [
+const workflowShots = [
   {
     title: 'Timeline',
-    detail: 'Show simultaneous entries, identity colors, and side-by-side history.',
+    detail: 'Side-by-side history makes patterns and simultaneous care visible without switching profiles.',
+    image: '/images/handsful/timeline-light-device.webp',
+    width: 1200,
+    height: 2481,
     className: 'handsful-shot-wide',
   },
   {
     title: 'Log for everyone',
-    detail: 'Show all babies pre-selected and a shared action in progress.',
+    detail: 'Both babies are selected by default, turning a repeated task into one shared action.',
+    image: '/images/handsful/log-diaper-light-device.webp',
+    width: 1200,
+    height: 2356,
     className: '',
   },
   {
     title: 'Today view',
-    detail: 'Show at-a-glance status, quick actions, and live timers.',
+    detail: 'Status, live care, and recent activity stay visible in one shared family view.',
+    image: '/images/handsful/today-light-device.webp',
+    width: 1200,
+    height: 2356,
     className: '',
   },
 ];
 
-function ScreenshotSlot({ title, detail, className = '' }: { title: string; detail: string; className?: string }) {
+function WorkflowShot({ title, detail, image, width, height, className = '' }: (typeof workflowShots)[number]) {
   return (
-    <figure className={`handsful-shot-slot ${className}`.trim()}>
-      <span aria-hidden="true">+</span>
+    <figure className={`handsful-workflow-shot ${className}`.trim()}>
       <figcaption>
-        <strong>Screenshot needed · {title}</strong>
+        <strong>{title}</strong>
         <small>{detail}</small>
       </figcaption>
+      <div className="handsful-workflow-device">
+        <img src={image} alt="" width={width} height={height} />
+      </div>
+    </figure>
+  );
+}
+
+function AiProductGraphic() {
+  return (
+    <figure
+      className="handsful-ai-visual"
+      aria-label="Handsful structured AI visit-prep summary"
+    >
+      <div className="handsful-ai-summary-device">
+        <img src="/images/handsful/ai-summary-light-device.webp" alt="" width={1200} height={2481} />
+      </div>
     </figure>
   );
 }
@@ -82,7 +106,7 @@ export function HandsfulCaseStudy() {
         </div>
       </section>
 
-      <section className="case-section handsful-workflows">
+      <section className="case-section handsful-workflows" id="key-workflows">
         <span className="case-section-number">04</span>
         <div>
           <p className="eyebrow">Key workflows</p>
@@ -91,7 +115,7 @@ export function HandsfulCaseStudy() {
             The core experience brings feeding, sleep, diaper, and pumping logs into the Today view and Timeline. Family sharing, onboarding, bilingual English and Spanish support, light and dark modes, and a doctor-visit PDF export extend that shared record.
           </p>
           <div className="handsful-shot-grid">
-            {workflowSlots.map((slot) => <ScreenshotSlot key={slot.title} {...slot} />)}
+            {workflowShots.map((shot) => <WorkflowShot key={shot.title} {...shot} />)}
           </div>
         </div>
       </section>
@@ -119,7 +143,7 @@ export function HandsfulCaseStudy() {
         </div>
       </section>
 
-      <section className="case-section">
+      <section className="case-section" id="applied-ai">
         <span className="case-section-number">06</span>
         <div>
           <p className="eyebrow">Applied AI</p>
@@ -127,12 +151,15 @@ export function HandsfulCaseStudy() {
           <p>
             AI supports weekly insights, visit-prep summaries, and translate-on-view. It is not the primary interaction and it does not turn caregiving into a chat experience.
           </p>
+          <p>
+            Before the first insight, each caregiver must give informed consent on their own device. The plain-language flow explains what data is sent, what is never shared, how long generated summaries are retained, and where AI can make mistakes—so participation is an explicit choice rather than a hidden product default.
+          </p>
           <div className="handsful-ai-split">
             <div>
               <h3>Why structured summaries</h3>
               <p>Fixed sections are more predictable, easier to constrain, and easier to evaluate than an open conversation. They keep the experience focused on caregiving rather than model interaction.</p>
             </div>
-            <ScreenshotSlot title="AI summary + consent" detail="Show one structured insight and the caregiver consent state." />
+            <AiProductGraphic />
           </div>
         </div>
       </section>
