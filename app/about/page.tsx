@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
@@ -9,11 +10,18 @@ export const metadata: Metadata = {
   description: 'About Kayla Orozco, a Texas-based conversational designer and design engineer creating AI experiences across chat, voice, and mobile.',
 };
 
-const skills = [
-  ['Design', 'Design systems, interaction design, responsive UI, prototyping, accessibility'],
-  ['AI', 'Prompt engineering, LLM orchestration, agentic dialogue, RAG, batch testing'],
-  ['Engineering', 'React Native, Expo, TypeScript, Next.js, Firebase, APIs, HTML/CSS'],
-  ['Leadership', '0-to-1 ownership, technical discovery, workshops, mentoring, cross-functional alignment'],
+const tools = [
+  { name: 'Figma', logo: '/tool-logos/figma.svg' },
+  { name: 'Miro', logo: '/tool-logos/miro.svg' },
+  { name: 'Axure', logo: '/tool-logos/axure.svg', wide: true },
+  { name: 'Lucid', logo: '/tool-logos/lucid.svg' },
+  { name: 'Voiceflow', logo: '/tool-logos/voiceflow.png' },
+  { name: 'OneReach', logo: '/tool-logos/onereach.svg' },
+  { name: 'Cognigy', logo: '/tool-logos/cognigy.svg', wide: true },
+  { name: 'Claude', logo: '/tool-logos/claude.svg' },
+  { name: 'OpenAI / Codex', logo: '/tool-logos/openai.png' },
+  { name: 'Expo', logo: '/tool-logos/expo.svg' },
+  { name: 'Xcode', logo: '/tool-logos/xcode.png' },
 ];
 
 export default function AboutPage() {
@@ -33,18 +41,15 @@ export default function AboutPage() {
         <AboutCharacter />
       </section>
 
-      <section className="principles">
-        <p className="eyebrow">How I work</p>
-        <div className="principle-grid">
-          <article><span>01</span><h2>Start with behavior</h2><p>I look past the requested interface to understand the decisions, constraints, and work happening around it.</p></article>
-          <article><span>02</span><h2>Design the whole system</h2><p>Prompts, state, data, APIs, recovery, and UI are all parts of one experience—not separate implementation concerns.</p></article>
-          <article><span>03</span><h2>Learn from production</h2><p>Real behavior exposes what prototypes cannot. I treat launch as the beginning of the next design cycle.</p></article>
-        </div>
-      </section>
-
-      <section className="toolkit">
-        <div><p className="eyebrow">Toolkit</p><h2>Broad enough to own the outcome.</h2></div>
-        <div className="skill-list">{skills.map(([title, content]) => <div key={title}><h3>{title}</h3><p>{content}</p></div>)}</div>
+      <section className="toolkit" aria-labelledby="toolkit-heading">
+        <h2 className="eyebrow" id="toolkit-heading">Selected tools</h2>
+        <ul className="tool-logo-grid">
+          {tools.map(({ name, logo, wide }) => (
+            <li className={`tool-logo-card${wide ? ' tool-logo-card-wide' : ''}`} key={name}>
+              <Image src={logo} alt={name} width={140} height={84} unoptimized />
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="personal-note">
