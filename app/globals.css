@@ -1374,7 +1374,7 @@ a { color: inherit; text-decoration: none; }
 .about-character canvas { display: block; height: 100%; position: absolute; inset: 0; visibility: hidden; width: 100%; }
 .about-character[data-ready='true'] canvas { visibility: visible; }
 .about-character[data-ready='true'] .about-character-still { visibility: hidden; }
-.about-spark { color: var(--clay); font-family: Georgia, serif; font-size: clamp(2rem, 4.5vw, 4.5rem); left: 8%; line-height: 1; position: absolute; top: 5%; transform: rotate(-10deg); z-index: -1; }
+.about-spark { color: var(--ochre); font-family: Georgia, serif; font-size: clamp(2rem, 4.5vw, 4.5rem); left: 8%; line-height: 1; position: absolute; top: 5%; transform: rotate(-10deg); z-index: -1; }
 .about-dots { background-image: radial-gradient(var(--olive) 1.6px, transparent 1.6px); background-size: 13px 13px; height: 6rem; opacity: .3; position: absolute; right: -1rem; top: 37%; transform: rotate(12deg); width: 4rem; z-index: -1; }
 @media (prefers-reduced-motion: reduce) {
   .about-character canvas { display: none; }

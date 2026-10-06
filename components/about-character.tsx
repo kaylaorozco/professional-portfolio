@@ -71,15 +71,15 @@ export function AboutCharacter() {
         timer = setTimeout(advance, wait);
       } else {
         step = 0;
-        // A long, slightly varied rest avoids an insistent metronomic loop.
-        timer = setTimeout(advance, 6500 + Math.random() * 2500);
+        // Keep the gesture easy to notice without making the pauses mechanical.
+        timer = setTimeout(advance, 1200 + Math.random() * 600);
       }
     };
     const sync = () => {
       clearTimeout(timer);
       step = 0;
       if (ready) paint(0);
-      if (canPlay()) timer = setTimeout(advance, 2400);
+      if (canPlay()) timer = setTimeout(advance, 150);
     };
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
