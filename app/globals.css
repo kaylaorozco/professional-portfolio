@@ -1400,8 +1400,17 @@ a { color: inherit; text-decoration: none; }
   .tool-logo-card:nth-child(7) { grid-column: 2 / span 2; }
   .tool-logo-card-wide img { max-width: 100%; }
 }
-.personal-note { background: var(--paper-light); padding: clamp(5rem, 8vw, 8rem) 18vw; }
-.personal-note > p:last-child { font-family: var(--display); font-size: clamp(2rem, 4vw, 4rem); letter-spacing: -.04em; line-height: 1.18; margin: 0; }
+.about-faq { background: var(--paper-light); display: grid; gap: clamp(3rem, 7vw, 8rem); grid-template-columns: .7fr 1fr; padding: clamp(5rem, 9vw, 9rem) 4vw; }
+.about-faq h2 { font-family: var(--display); font-size: clamp(3rem, 5vw, 5.5rem); font-weight: 500; letter-spacing: -.055em; line-height: .98; margin: 0; max-width: 10ch; }
+.about-faq-list details { border-top: 1px solid var(--line); }
+.about-faq-list details:last-child { border-bottom: 1px solid var(--line); }
+.about-faq-list summary { align-items: center; cursor: pointer; display: flex; gap: 1.5rem; justify-content: space-between; list-style: none; padding: 1.6rem 0; }
+.about-faq-list summary::-webkit-details-marker { display: none; }
+.about-faq-list summary:focus-visible { outline: 2px solid var(--clay); outline-offset: 4px; }
+.about-faq-list summary > span:first-child { font-family: var(--display); font-size: clamp(1.35rem, 2vw, 2rem); line-height: 1.2; }
+.about-faq-toggle { align-items: center; border: 1px solid var(--line); border-radius: 50%; display: flex; flex: 0 0 2rem; font-family: var(--font-geist-mono), monospace; font-size: 1.1rem; height: 2rem; justify-content: center; transition: transform .25s ease; }
+.about-faq-list details[open] .about-faq-toggle { transform: rotate(45deg); }
+.about-faq-list details p { color: var(--muted-ink); line-height: 1.75; margin: 0 2.5rem 1.75rem 0; max-width: 42rem; }
 
 @media (max-width: 900px) {
   .project-row { grid-template-columns: 1fr; }
@@ -1417,6 +1426,8 @@ a { color: inherit; text-decoration: none; }
   .capability-grid article:nth-child(2) .section-spark,
   .capability-grid article:nth-child(3) .section-spark { left: auto; right: .25rem; top: 1rem; }
   .about-hero, .case-hero { grid-template-columns: 1fr; }
+  .about-faq { grid-template-columns: 1fr; }
+  .about-faq h2 { max-width: none; }
   .case-hero-handsful .visual-care {
     aspect-ratio: 4 / 3;
     min-height: 0;
@@ -1476,5 +1487,5 @@ a { color: inherit; text-decoration: none; }
   .next-project { grid-template-columns: 1fr auto; }
   .next-project strong { text-align: left; }
   .next-project span { grid-column: 1 / -1; }
-  .personal-note { padding-left: 1.15rem; padding-right: 1.15rem; }
+  .about-faq { padding-left: 1.15rem; padding-right: 1.15rem; }
 }

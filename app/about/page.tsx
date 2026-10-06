@@ -24,6 +24,29 @@ const tools = [
   { name: 'Xcode', logo: '/tool-logos/xcode.png' },
 ];
 
+const faqs = [
+  {
+    question: 'How long have I been in the conversational AI space?',
+    answer: "More than five years. I started at a startup with a blank canvas and a lot to figure out. Since then, I've designed conversations for some of the world's largest companies. The space grew, and so did I.",
+  },
+  {
+    question: 'How hands-on am I with the build?',
+    answer: "Very. I work across experience design, system logic, prototypes, and implementation. On my mobile products, I use AI tools to help write code, then review and refine it myself. On larger teams, I partner closely with engineering to make sure the experience works in production, not just in a design file.",
+  },
+  {
+    question: 'How long have I been working with LLMs?',
+    answer: 'A few years. What began with a single response from a single model and a small experiment with a borrowed team has become regular work transforming legacy IVRs into agentic voice experiences. The models got smarter, and so did the work.',
+  },
+  {
+    question: 'How do I approach a project?',
+    answer: "I start with what people need, what the business needs, and what engineering can support. I map the logic before designing the words, flows, or prompts, bringing product and engineering into the work early. After launch, I watch where people get stuck and keep improving the experience.",
+  },
+  {
+    question: 'What got me into conversational AI in the first place?',
+    answer: "It started with people. In UX, I learned to obsess over how someone feels when they interact with a product: every click, every moment of confusion, every small win. Then AI entered the picture, and something clicked. Here was a medium where the interface wasn't a button or a screen; it was language itself. The most natural thing humans do. I wanted to be in that space, making something that didn't just work, but felt effortless for the person on the other end. That mission hasn't changed.",
+  },
+];
+
 export default function AboutPage() {
   return (
     <main>
@@ -42,7 +65,7 @@ export default function AboutPage() {
       </section>
 
       <section className="toolkit" aria-labelledby="toolkit-heading">
-        <h2 className="eyebrow" id="toolkit-heading">Selected tools</h2>
+        <h2 className="eyebrow" id="toolkit-heading">Tools I&apos;ve used</h2>
         <ul className="tool-logo-grid">
           {tools.map(({ name, logo, wide }) => (
             <li className={`tool-logo-card${wide ? ' tool-logo-card-wide' : ''}`} key={name}>
@@ -52,9 +75,19 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="personal-note">
-        <p className="eyebrow">Outside the work</p>
-        <p>I&apos;m a mother of three navigating <strong>beautiful chaos</strong>, a caretaker to three fur babies, and a motorcycle rider who finds clarity on open roads. That balance of precision and freedom, structure and story, shapes how I design and build: thoughtfully engineered, always alive with personality.</p>
+      <section className="about-faq" aria-labelledby="about-faq-heading">
+        <div className="about-faq-heading">
+          <p className="eyebrow">A little more context</p>
+          <h2 id="about-faq-heading">Questions about me.</h2>
+        </div>
+        <div className="about-faq-list">
+          {faqs.map(({ question, answer }) => (
+            <details key={question} name="about-faq">
+              <summary><span>{question}</span><span className="about-faq-toggle" aria-hidden="true">+</span></summary>
+              <p>{answer}</p>
+            </details>
+          ))}
+        </div>
       </section>
       <SiteFooter />
     </main>
