@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { AboutCharacter } from '@/components/about-character';
 
 export const metadata: Metadata = {
   title: 'About — Kayla Orozco',
-  description: 'About Kayla Orozco, a Texas-based design engineer and AI product builder.',
+  description: 'About Kayla Orozco, a Texas-based conversational designer and design engineer creating AI experiences across chat, voice, and mobile.',
 };
 
 const skills = [
@@ -23,12 +23,11 @@ export default function AboutPage() {
       <section className="about-hero">
         <div className="about-hero-copy">
           <p className="eyebrow">The human in the loop</p>
-          <h1>Equal parts product thinker, interaction designer, <em>and builder.</em></h1>
-          <p>I&apos;m a Texas-based design engineer who owns both the experience and the implementation of what I ship—from early product framing to production code.</p>
-          <p>As founder of Mesquite &amp; Thorn Digital, I design and build mobile products with React Native, TypeScript, Firebase, OCR, and LLM-powered workflows. My enterprise background taught me how to make AI useful inside systems where the edge cases are real and the stakes extend well beyond the interface.</p>
+          <h1>Equal parts systems thinker, interaction designer, <em>and builder.</em></h1>
+          <p>I&apos;m a <strong>Texas-based</strong> conversational designer and design engineer building AI experiences across chat, voice, and mobile. I translate complex business needs into natural interactions people can trust, bringing together language, product strategy, and the systems behind the interface.</p>
+          <p>I&apos;ve led enterprise-scale transformations alongside product and engineering teams, and now build mobile products through Mesquite &amp; Thorn Digital. I use AI tools to help write code, then review and refine the result. Whether I&apos;m shaping the experience or writing the code, I ground the work in real human behavior and carry it through to something people can use.</p>
           <div className="hero-actions">
-            <a className="button button-primary" href="mailto:kaylamarieorozco@gmail.com">Start a conversation <ArrowUpRight aria-hidden="true" size={17} /></a>
-            <a className="button button-secondary" href="/kayla-orozco-resume.pdf" target="_blank">View résumé <ArrowUpRight aria-hidden="true" size={17} /></a>
+            <Link className="button button-primary" href="/work">View my work</Link>
           </div>
         </div>
         <AboutCharacter />
@@ -50,7 +49,7 @@ export default function AboutPage() {
 
       <section className="personal-note">
         <p className="eyebrow">Outside the work</p>
-        <p>I&apos;m a mother of three—including twins—a caretaker to three fur babies, and a motorcycle rider who finds clarity on open roads. That balance of precision and freedom, structure and story, shapes how I build: thoughtfully engineered, but always alive with personality.</p>
+        <p>I&apos;m a mother of three navigating <strong>beautiful chaos</strong>, a caretaker to three fur babies, and a motorcycle rider who finds clarity on open roads. That balance of precision and freedom, structure and story, shapes how I design and build: thoughtfully engineered, always alive with personality.</p>
       </section>
       <SiteFooter />
     </main>
