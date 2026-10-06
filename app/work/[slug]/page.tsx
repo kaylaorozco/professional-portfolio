@@ -30,7 +30,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <main>
       <SiteHeader />
       <article className="case-study">
-        <Link className="back-link" href="/work"><ArrowLeft aria-hidden="true" size={17} /> All work</Link>
+        <Link className="back-link" href="/work" prefetch={false}><ArrowLeft aria-hidden="true" size={17} /> All work</Link>
         <header className={`case-hero${project.slug === 'handsful' ? ' case-hero-handsful' : ''}`}>
           <div className="case-hero-copy">
             <p className="eyebrow">{project.type} · {project.status}</p>
@@ -83,7 +83,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <section className="case-tags"><p className="eyebrow">Tools + disciplines</p><div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></section>
 
-        <Link className="next-project" href={`/work/${next.slug}`}>
+        <Link className="next-project" href={`/work/${next.slug}`} prefetch={false}>
           <span>Next project</span><strong>{next.shortTitle}</strong><ArrowRight aria-hidden="true" size={28} />
         </Link>
       </article>

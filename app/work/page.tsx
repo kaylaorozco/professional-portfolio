@@ -30,7 +30,7 @@ export default function WorkPage() {
               <h2>{project.shortTitle}</h2>
               <p>{project.summary}</p>
               <div className="tag-list">{project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</div>
-              <Link href={`/work/${project.slug}`}>Read the case study <ArrowUpRight aria-hidden="true" size={18} /></Link>
+              <Link href={`/work/${project.slug}`} prefetch={false}>Read the case study <ArrowUpRight aria-hidden="true" size={18} /></Link>
             </div>
           </article>
         ))}

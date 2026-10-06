@@ -26,7 +26,7 @@ export function SiteFooter() {
       </div>
       <div className="footer-meta">
         <p>© 2020–{currentYear} Kayla Orozco</p>
-        <Link href="/privacy">Privacy</Link>
+        <Link href="/privacy" prefetch={false}>Privacy</Link>
       </div>
     </footer>
   );

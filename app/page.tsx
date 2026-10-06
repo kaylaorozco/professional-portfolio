@@ -91,7 +91,7 @@ export default function Home() {
               behavior, and code.
             </p>
             <div className="hero-actions">
-              <Link className="button button-primary" href="/work">
+              <Link className="button button-primary" href="/work" prefetch={false}>
                 See selected work
               </Link>
             </div>
@@ -166,18 +166,18 @@ export default function Home() {
             <article className={`project-row${project.slug === 'handsful' ? ' project-row-handsful' : ''}`} key={project.slug}>
               <div className="project-copy">
                 <p className="project-status">{project.status}</p>
-                <h3><Link href={`/work/${project.slug}`}>{project.title}</Link></h3>
+                <h3><Link href={`/work/${project.slug}`} prefetch={false}>{project.title}</Link></h3>
                 <p>{project.summary}</p>
                 <div className="project-tags" aria-label="Project disciplines">
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
-                <Link href={`/work/${project.slug}`}>Explore the project</Link>
+                <Link href={`/work/${project.slug}`} prefetch={false}>Explore the project</Link>
               </div>
               <ProjectVisual project={project} />
             </article>
           ))}
         </div>
-        <Link className="text-link projects-all-link" href="/work">View all projects</Link>
+        <Link className="text-link projects-all-link" href="/work" prefetch={false}>View all projects</Link>
       </section>
 
       <section className="capabilities">

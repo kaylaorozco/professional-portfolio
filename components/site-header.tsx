@@ -3,7 +3,7 @@ import Link from 'next/link';
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <Link className="wordmark" href="/#top" aria-label="Kayla Orozco, home">
+      <Link className="wordmark" href="/#top" prefetch={false} aria-label="Kayla Orozco, home">
         <span className="wordmark-name" aria-hidden="true">
           <span className="brand-glyph glyph-k morph-anchor" />
           <span className="brand-glyph glyph-a morph-away morph-1" />
@@ -24,8 +24,8 @@ export function SiteHeader() {
         </span>
       </Link>
       <nav className="site-nav" aria-label="Primary navigation">
-        <Link href="/about">About</Link>
-        <Link href="/work">Work</Link>
+        <Link href="/about" prefetch={false}>About</Link>
+        <Link href="/work" prefetch={false}>Work</Link>
         <a className="nav-contact" href="mailto:kaylamarieorozco@gmail.com">
           Let&apos;s Chat
         </a>
@@ -39,8 +39,8 @@ export function SiteHeader() {
           </span>
         </summary>
         <nav className="mobile-nav-panel" aria-label="Mobile navigation">
-          <Link href="/about">About</Link>
-          <Link href="/work">Work</Link>
+          <Link href="/about" prefetch={false}>About</Link>
+          <Link href="/work" prefetch={false}>Work</Link>
           <a href="mailto:kaylamarieorozco@gmail.com">
             Let&apos;s Chat
           </a>
