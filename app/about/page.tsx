@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ArrowUpRight } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
+import { AboutCharacter } from '@/components/about-character';
 
 export const metadata: Metadata = {
   title: 'About — Kayla Orozco',
@@ -22,7 +23,7 @@ export default function AboutPage() {
       <section className="about-hero">
         <div className="about-hero-copy">
           <p className="eyebrow">The human in the loop</p>
-          <h1>Equal parts product thinker, interaction designer, and builder.</h1>
+          <h1>Equal parts product thinker, interaction designer, <em>and builder.</em></h1>
           <p>I&apos;m a Texas-based design engineer who owns both the experience and the implementation of what I ship—from early product framing to production code.</p>
           <p>As founder of Mesquite &amp; Thorn Digital, I design and build mobile products with React Native, TypeScript, Firebase, OCR, and LLM-powered workflows. My enterprise background taught me how to make AI useful inside systems where the edge cases are real and the stakes extend well beyond the interface.</p>
           <div className="hero-actions">
@@ -30,7 +31,7 @@ export default function AboutPage() {
             <a className="button button-secondary" href="/kayla-orozco-resume.pdf" target="_blank">View résumé <ArrowUpRight aria-hidden="true" size={17} /></a>
           </div>
         </div>
-        <div className="about-portrait"><img src="/images/kayla-about.png" alt="Illustration of Kayla standing beside a laptop" /></div>
+        <AboutCharacter />
       </section>
 
       <section className="principles">
