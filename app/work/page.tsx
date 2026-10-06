@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
@@ -29,7 +30,7 @@ export default function WorkPage() {
               <h2>{project.shortTitle}</h2>
               <p>{project.summary}</p>
               <div className="tag-list">{project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</div>
-              <a href={`/work/${project.slug}`}>Read the case study <ArrowUpRight aria-hidden="true" size={18} /></a>
+              <Link href={`/work/${project.slug}`}>Read the case study <ArrowUpRight aria-hidden="true" size={18} /></Link>
             </div>
           </article>
         ))}

@@ -265,6 +265,72 @@ a { color: inherit; text-decoration: none; }
 
 .mobile-nav { display: none; }
 
+.sound-toggle {
+  align-items: center;
+  background: var(--paper-light);
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+  border-radius: 999px;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  box-shadow: 0 0.65rem 1.8rem rgba(42, 22, 18, 0.18);
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 0.83rem;
+  font-weight: 750;
+  gap: 0;
+  height: 3.8rem;
+  overflow: hidden;
+  padding: 0 0.78rem;
+  position: fixed;
+  right: calc(1.25rem + env(safe-area-inset-right));
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, gap 280ms ease, width 280ms ease;
+  white-space: nowrap;
+  width: 3.8rem;
+  z-index: 30;
+}
+.sound-toggle.is-expanded { gap: 0.55rem; width: 9.75rem; }
+.sound-toggle:hover { box-shadow: 0 0.75rem 2rem rgba(42, 22, 18, 0.23); }
+.sound-toggle:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
+.sound-toggle.is-on { background: color-mix(in srgb, var(--ochre) 20%, var(--paper-light)); border-color: var(--ochre); }
+.sound-toggle-label { max-width: 0; opacity: 0; overflow: hidden; transition: max-width 280ms ease, opacity 160ms ease; }
+.sound-toggle.is-expanded .sound-toggle-label { max-width: 5rem; opacity: 1; }
+.sound-vinyl {
+  animation: sound-vinyl-spin 2.8s linear infinite paused;
+  background: repeating-radial-gradient(circle, #2a1612 0 1px, #4d332d 1px 2px, #2a1612 2px 3px);
+  border: 1px solid #2a1612;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), 0 1px 2px rgba(42, 22, 18, 0.22);
+  display: block;
+  flex: 0 0 2.2rem;
+  height: 2.2rem;
+  position: relative;
+}
+.sound-vinyl::before {
+  background: conic-gradient(var(--ochre) 0 120deg, #d7784a 120deg 240deg, var(--paper-light) 240deg 360deg);
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  content: '';
+  inset: 0.54rem;
+  position: absolute;
+}
+.sound-vinyl::after {
+  background: var(--ink);
+  border-radius: 50%;
+  content: '';
+  height: 0.24rem;
+  left: calc(50% - 0.12rem);
+  position: absolute;
+  top: calc(50% - 0.12rem);
+  width: 0.24rem;
+}
+.sound-toggle.is-on .sound-vinyl { animation-play-state: running; }
+@keyframes sound-vinyl-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .sound-vinyl { animation: none; }
+  .sound-toggle, .sound-toggle-label { transition: none; }
+}
+
 .nav-contact, .button {
   align-items: center;
   border-radius: 999px;
@@ -750,6 +816,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 560px) {
   .site-header { padding-inline: 1.15rem; }
   .site-nav { display: none; }
+  .sound-toggle { bottom: calc(1rem + env(safe-area-inset-bottom)); right: calc(1rem + env(safe-area-inset-right)); }
   .mobile-nav {
     animation: mobile-menu-reveal 0.42s ease forwards;
     display: block;

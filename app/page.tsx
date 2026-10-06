@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
@@ -90,9 +91,9 @@ export default function Home() {
               behavior, and code.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="/work">
+              <Link className="button button-primary" href="/work">
                 See selected work
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -165,18 +166,18 @@ export default function Home() {
             <article className={`project-row${project.slug === 'handsful' ? ' project-row-handsful' : ''}`} key={project.slug}>
               <div className="project-copy">
                 <p className="project-status">{project.status}</p>
-                <h3><a href={`/work/${project.slug}`}>{project.title}</a></h3>
+                <h3><Link href={`/work/${project.slug}`}>{project.title}</Link></h3>
                 <p>{project.summary}</p>
                 <div className="project-tags" aria-label="Project disciplines">
                   {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
-                <a href={`/work/${project.slug}`}>Explore the project</a>
+                <Link href={`/work/${project.slug}`}>Explore the project</Link>
               </div>
               <ProjectVisual project={project} />
             </article>
           ))}
         </div>
-        <a className="text-link projects-all-link" href="/work">View all projects</a>
+        <Link className="text-link projects-all-link" href="/work">View all projects</Link>
       </section>
 
       <section className="capabilities">

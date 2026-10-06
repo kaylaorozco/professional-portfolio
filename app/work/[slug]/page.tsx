@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { HandsfulCaseStudy } from '@/components/handsful-case-study';
@@ -29,7 +30,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <main>
       <SiteHeader />
       <article className="case-study">
-        <a className="back-link" href="/work"><ArrowLeft aria-hidden="true" size={17} /> All work</a>
+        <Link className="back-link" href="/work"><ArrowLeft aria-hidden="true" size={17} /> All work</Link>
         <header className={`case-hero${project.slug === 'handsful' ? ' case-hero-handsful' : ''}`}>
           <div className="case-hero-copy">
             <p className="eyebrow">{project.type} · {project.status}</p>
@@ -82,9 +83,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         <section className="case-tags"><p className="eyebrow">Tools + disciplines</p><div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></section>
 
-        <a className="next-project" href={`/work/${next.slug}`}>
+        <Link className="next-project" href={`/work/${next.slug}`}>
           <span>Next project</span><strong>{next.shortTitle}</strong><ArrowRight aria-hidden="true" size={28} />
-        </a>
+        </Link>
       </article>
       <SiteFooter />
     </main>

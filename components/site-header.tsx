@@ -1,7 +1,9 @@
+import Link from 'next/link';
+
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <a className="wordmark" href="/#top" aria-label="Kayla Orozco, home">
+      <Link className="wordmark" href="/#top" aria-label="Kayla Orozco, home">
         <span className="wordmark-name" aria-hidden="true">
           <span className="brand-glyph glyph-k morph-anchor" />
           <span className="brand-glyph glyph-a morph-away morph-1" />
@@ -20,10 +22,10 @@ export function SiteHeader() {
           <span className="logo-final-layer logo-final-swoosh" />
           <span className="logo-final-layer logo-final-stars" />
         </span>
-      </a>
+      </Link>
       <nav className="site-nav" aria-label="Primary navigation">
-        <a href="/about">About</a>
-        <a href="/work">Work</a>
+        <Link href="/about">About</Link>
+        <Link href="/work">Work</Link>
         <a className="nav-contact" href="mailto:kaylamarieorozco@gmail.com">
           Let&apos;s Chat
         </a>
@@ -37,8 +39,8 @@ export function SiteHeader() {
           </span>
         </summary>
         <nav className="mobile-nav-panel" aria-label="Mobile navigation">
-          <a href="/about">About</a>
-          <a href="/work">Work</a>
+          <Link href="/about">About</Link>
+          <Link href="/work">Work</Link>
           <a href="mailto:kaylamarieorozco@gmail.com">
             Let&apos;s Chat
           </a>
