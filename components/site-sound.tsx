@@ -1,12 +1,29 @@
 'use client';
 
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 const TRACK = '/audio/lofi-chill-vlog-beats.mp3';
 const MUSIC_VOLUME = 0.09;
 
-type SoundContextValue = { enabled: boolean; toggle: () => void };
+type SoundContextValue = {
+  enabled: boolean;
+  toggle: () => void;
+  getMusicTime: () => number | null;
+};
 const SoundContext = createContext<SoundContextValue | null>(null);
+const silentClock = () => null;
+
+// Read the real playback clock without rerendering on every animation frame.
+export function useMusicTime() {
+  return useContext(SoundContext)?.getMusicTime ?? silentClock;
+}
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
   const [enabled, setEnabled] = useState(false);
@@ -14,6 +31,12 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const musicRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const fadeRef = useRef<number | null>(null);
+  const getMusicTime = useCallback(() => {
+    const music = musicRef.current;
+    return enabledRef.current && music && !music.paused
+      ? music.currentTime
+      : null;
+  }, []);
 
   useEffect(() => {
     const music = new Audio(TRACK);
@@ -34,7 +57,12 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     function playClick(event: MouseEvent) {
       if (!enabledRef.current || !(event.target instanceof Element)) return;
       const control = event.target.closest('a, button, summary');
-      if (!control || control.closest('.sound-toggle') || control.hasAttribute('disabled')) return;
+      if (
+        !control ||
+        control.closest('.sound-toggle') ||
+        control.hasAttribute('disabled')
+      )
+        return;
 
       const context = audioContextRef.current;
       if (!context || context.state !== 'running') return;
@@ -58,7 +86,11 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener('click', playClick);
   }, []);
 
-  function fadeTo(music: HTMLAudioElement, target: number, onComplete?: () => void) {
+  function fadeTo(
+    music: HTMLAudioElement,
+    target: number,
+    onComplete?: () => void,
+  ) {
     if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
     const startVolume = music.volume;
     const startTime = performance.now();
@@ -90,22 +122,26 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (typeof AudioContext !== 'undefined') {
-      if (!audioContextRef.current) audioContextRef.current = new AudioContext();
+      if (!audioContextRef.current)
+        audioContextRef.current = new AudioContext();
       void audioContextRef.current.resume().catch(() => {});
     }
     // play() is called directly in the button's click handler to satisfy browser gesture rules.
-    void music.play().then(() => {
-      enabledRef.current = true;
-      setEnabled(true);
-      fadeTo(music, MUSIC_VOLUME);
-    }).catch(() => {
-      enabledRef.current = false;
-      setEnabled(false);
-    });
+    void music
+      .play()
+      .then(() => {
+        enabledRef.current = true;
+        setEnabled(true);
+        fadeTo(music, MUSIC_VOLUME);
+      })
+      .catch(() => {
+        enabledRef.current = false;
+        setEnabled(false);
+      });
   }
 
   return (
-    <SoundContext.Provider value={{ enabled, toggle }}>
+    <SoundContext.Provider value={{ enabled, toggle, getMusicTime }}>
       {children}
       <SoundToggle />
     </SoundContext.Provider>
@@ -143,7 +179,9 @@ function SoundToggle() {
       onClick={handleToggle}
     >
       <span className="sound-vinyl" aria-hidden="true" />
-      <span className="sound-toggle-label" aria-hidden="true">Sound {sound.enabled ? 'on' : 'off'}</span>
+      <span className="sound-toggle-label" aria-hidden="true">
+        Sound {sound.enabled ? 'on' : 'off'}
+      </span>
     </button>
   );
 }

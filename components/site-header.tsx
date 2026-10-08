@@ -26,9 +26,9 @@ export function SiteHeader() {
       <nav className="site-nav" aria-label="Primary navigation">
         <Link href="/about" prefetch={false}>About</Link>
         <Link href="/work" prefetch={false}>Work</Link>
-        <a className="nav-contact" href="mailto:kaylamarieorozco@gmail.com">
+        <Link className="nav-contact" href="/contact" prefetch={false}>
           Let&apos;s Chat
-        </a>
+        </Link>
       </nav>
       <details className="mobile-nav">
         <summary aria-label="Open navigation menu">
@@ -41,9 +41,9 @@ export function SiteHeader() {
         <nav className="mobile-nav-panel" aria-label="Mobile navigation">
           <Link href="/about" prefetch={false}>About</Link>
           <Link href="/work" prefetch={false}>Work</Link>
-          <a href="mailto:kaylamarieorozco@gmail.com">
+          <Link href="/contact" prefetch={false}>
             Let&apos;s Chat
-          </a>
+          </Link>
         </nav>
       </details>
     </header>

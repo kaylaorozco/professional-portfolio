@@ -1031,6 +1031,90 @@ a { color: inherit; text-decoration: none; }
 }
 .privacy-page > p:not(.eyebrow) { color: var(--muted-ink); line-height: 1.75; max-width: 42rem; }
 
+/* Contact */
+.contact-hero {
+  align-items: center;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: calc(76svh - 5rem);
+  overflow: hidden;
+  padding: clamp(3.5rem, 6vw, 6rem) 4vw;
+  position: relative;
+}
+.contact-hero::before {
+  background-image: radial-gradient(circle, rgba(42, 22, 18, .22) 1.25px, transparent 1.25px);
+  background-size: 13px 13px;
+  content: '';
+  height: 9rem;
+  opacity: .5;
+  position: absolute;
+  right: -1.5rem;
+  top: 2.5rem;
+  transform: rotate(8deg);
+  width: 10rem;
+}
+.contact-intro { position: relative; z-index: 1; }
+.contact-intro h1 {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 6.4vw, 7rem);
+  font-weight: 500;
+  letter-spacing: -.07em;
+  line-height: .87;
+  margin: 0;
+  max-width: 10ch;
+}
+.contact-intro > p:last-child {
+  color: var(--muted-ink);
+  font-size: clamp(1.05rem, 1.45vw, 1.25rem);
+  line-height: 1.7;
+  margin: 2rem 0 0;
+  max-width: 42rem;
+}
+.contact-character {
+  aspect-ratio: 1056 / 976;
+  align-self: center;
+  justify-self: center;
+  max-width: 42rem;
+  position: relative;
+  width: 100%;
+}
+.contact-character-still { background: url('/images/kayla-contact-base-v1.png') no-repeat 50% 41.6667% / 145.4545% 104.918%; inset: 0; position: absolute; }
+.contact-character canvas { display: block; height: 100%; inset: 0; position: absolute; visibility: hidden; width: 100%; }
+.contact-character[data-ready='true'] canvas { visibility: visible; }
+.contact-character[data-ready='true'] .contact-character-still { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .contact-character canvas { display: none; }
+  .contact-character[data-ready='true'] .contact-character-still { visibility: visible; }
+}
+.contact-options {
+  background: var(--paper-light);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 0 4vw clamp(5rem, 9vw, 9rem);
+}
+.contact-card {
+  border-bottom: 1px solid var(--ink);
+  border-top: 1px solid var(--ink);
+  display: grid;
+  min-height: 27rem;
+  padding: clamp(2rem, 4vw, 4rem);
+  position: relative;
+  transition: background 220ms ease, color 220ms ease;
+}
+.contact-card + .contact-card { border-left: 1px solid var(--ink); }
+.contact-card .eyebrow { align-self: start; margin: 0 0 2rem; }
+.contact-card strong { align-self: end; font-family: var(--display); font-size: clamp(2.5rem, 4.5vw, 5rem); font-weight: 500; letter-spacing: -.05em; line-height: .95; max-width: 9ch; }
+.contact-card-description { color: var(--muted-ink); line-height: 1.65; margin-top: 1.2rem; max-width: 30rem; }
+.contact-card-link { align-items: center; display: inline-flex; font-size: .86rem; font-weight: 750; gap: .45rem; margin-top: 2rem; text-decoration: underline; text-decoration-color: var(--clay); text-underline-offset: .35rem; }
+.contact-card-icon { align-items: center; border: 1px solid var(--line); border-radius: 50%; display: flex; height: 3.25rem; justify-content: center; position: absolute; right: clamp(2rem, 4vw, 4rem); top: clamp(2rem, 4vw, 4rem); width: 3.25rem; }
+.contact-card:hover, .contact-card:focus-visible { background: var(--ink); color: var(--paper-light); outline: none; }
+.contact-card:hover .eyebrow, .contact-card:focus-visible .eyebrow { color: var(--ochre); }
+.contact-card:hover .contact-card-description, .contact-card:focus-visible .contact-card-description { color: rgba(255,255,255,.65); }
+.contact-card:hover .contact-card-icon, .contact-card:focus-visible .contact-card-icon { border-color: rgba(255,255,255,.35); }
+
 /* Project cards and diagrams */
 .project-stack { border-top: 1px solid var(--ink); }
 .projects-all-link { margin-top: 1.5rem; }
@@ -1513,6 +1597,8 @@ a { color: inherit; text-decoration: none; }
   .work-index-copy { grid-column: 2; }
   .site-footer { grid-template-columns: 1fr; }
   .footer-links { max-width: 28rem; }
+  .contact-hero { align-items: start; grid-template-columns: 1fr; }
+  .contact-character { max-width: 34rem; }
 }
 
 @media (max-width: 640px) {
@@ -1555,4 +1641,10 @@ a { color: inherit; text-decoration: none; }
   .next-project strong { text-align: left; }
   .next-project span { grid-column: 1 / -1; }
   .about-faq { padding-left: 1.15rem; padding-right: 1.15rem; }
+  .contact-hero { min-height: auto; padding: 4.5rem 1.15rem; }
+  .contact-intro h1 { font-size: clamp(3.65rem, 17vw, 5.5rem); }
+  .contact-options { grid-template-columns: 1fr; padding: 0 1.15rem 5rem; }
+  .contact-card { min-height: 23rem; padding: 2rem 0; }
+  .contact-card + .contact-card { border-left: 0; border-top: 0; }
+  .contact-card-icon { right: 0; top: 2rem; }
 }
