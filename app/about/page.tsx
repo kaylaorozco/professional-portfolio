@@ -38,13 +38,9 @@ export default function AboutPage() {
       <SiteHeader />
       <AboutToolkit>
         <div className="about-hero-copy">
-          <p className="eyebrow">The human in the loop</p>
-          <h1>Equal parts systems thinker, interaction designer, <em>and builder.</em></h1>
+          <h1 className="eyebrow about-hero-kicker">The human in the loop</h1>
           <p>I&apos;m a <strong>Texas-based</strong> conversational designer and design engineer building AI experiences across chat, voice, and mobile. I translate complex business needs into natural interactions people can trust, bringing together language, product strategy, and the systems behind the interface.</p>
-          <p>I&apos;ve led enterprise-scale transformations alongside product and engineering teams, and now build mobile products through Mesquite &amp; Thorn Digital. I use AI tools to help write code, then review and refine the result. Whether I&apos;m shaping the experience or writing the code, I ground the work in real human behavior and carry it through to something people can use.</p>
-          <div className="hero-actions">
-            <Link className="button button-primary" href="/work" prefetch={false}>View my work</Link>
-          </div>
+          <p>I&apos;ve led enterprise-scale transformations with product and engineering teams, and now build mobile products through my studio, Mesquite &amp; Thorn Digital. I use AI tools to help write code, then review and refine it myself. Whether designing or building, I ground the work in real human behavior.</p>
         </div>
       </AboutToolkit>
 
@@ -60,6 +56,9 @@ export default function AboutPage() {
               <p>{answer}</p>
             </details>
           ))}
+        </div>
+        <div className="about-faq-action">
+          <Link className="button button-primary" href="/work" prefetch={false}>View my work</Link>
         </div>
       </section>
       <SiteFooter />

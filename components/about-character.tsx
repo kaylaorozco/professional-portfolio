@@ -229,7 +229,6 @@ export function AboutCharacter({ onOpenToolkit, toolkitOpen, laptopFrame, explor
   return (
     <div className="about-portrait" data-laptop-open={laptopFrame > 0}>
       <span className="about-spark" aria-hidden="true">✦</span>
-      <span className="about-dots" aria-hidden="true" />
       <button className="toolkit-invitation" type="button" onClick={onOpenToolkit}
         ref={triggerRef} aria-haspopup="dialog" aria-expanded={toolkitOpen} aria-controls="about-toolkit" data-explored={explored}>
         <span>Psst—see what<br />I build with</span>

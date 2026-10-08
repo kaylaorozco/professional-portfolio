@@ -16,6 +16,7 @@ const tools = [
   { name: 'OpenAI / Codex', logo: 'openai.png', category: 'Think & build with AI', description: 'Experimenting with language models and turning ideas into working code.' },
   { name: 'Expo', logo: 'expo.svg', category: 'Build for mobile', description: 'Building and iterating on mobile app experiences.' },
   { name: 'Xcode', logo: 'xcode.png', category: 'Build for mobile', description: 'Testing, refining, and preparing iOS apps for release.' },
+  { name: 'GitHub', logo: 'github.svg', category: 'Code & project management', description: 'Managing code, tracking changes, and organizing project work.' },
 ];
 
 export function AboutToolkit({ children }: { children: ReactNode }) {
@@ -101,7 +102,6 @@ export function AboutToolkit({ children }: { children: ReactNode }) {
       <dialog className="toolkit-modal" id="about-toolkit" aria-labelledby="toolkit-heading"
         ref={dialogRef} onCancel={(event) => { event.preventDefault(); closeToolkit(); }}>
             <div className="toolkit-menubar">
-              <span><span aria-hidden="true">✳</span> Kayla&apos;s toolkit</span>
               <button type="button" className="toolkit-close" onClick={closeToolkit}>Close <span aria-hidden="true">×</span></button>
             </div>
             <div className="toolkit-desktop">
