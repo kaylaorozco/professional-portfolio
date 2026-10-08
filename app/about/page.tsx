@@ -1,28 +1,13 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
-import { AboutCharacter } from '@/components/about-character';
+import { AboutToolkit } from '@/components/about-toolkit';
 
 export const metadata: Metadata = {
   title: 'About — Kayla Orozco',
   description: 'About Kayla Orozco, a Texas-based conversational designer and design engineer creating AI experiences across chat, voice, and mobile.',
 };
-
-const tools = [
-  { name: 'Figma', logo: '/tool-logos/figma.svg' },
-  { name: 'Miro', logo: '/tool-logos/miro.svg' },
-  { name: 'Axure', logo: '/tool-logos/axure.svg', wide: true },
-  { name: 'Lucid', logo: '/tool-logos/lucid.svg' },
-  { name: 'Voiceflow', logo: '/tool-logos/voiceflow.png' },
-  { name: 'OneReach', logo: '/tool-logos/onereach.svg' },
-  { name: 'Cognigy', logo: '/tool-logos/cognigy.svg', wide: true },
-  { name: 'Claude', logo: '/tool-logos/claude.svg' },
-  { name: 'OpenAI / Codex', logo: '/tool-logos/openai.png' },
-  { name: 'Expo', logo: '/tool-logos/expo.svg' },
-  { name: 'Xcode', logo: '/tool-logos/xcode.png' },
-];
 
 const faqs = [
   {
@@ -51,7 +36,7 @@ export default function AboutPage() {
   return (
     <main>
       <SiteHeader />
-      <section className="about-hero">
+      <AboutToolkit>
         <div className="about-hero-copy">
           <p className="eyebrow">The human in the loop</p>
           <h1>Equal parts systems thinker, interaction designer, <em>and builder.</em></h1>
@@ -61,19 +46,7 @@ export default function AboutPage() {
             <Link className="button button-primary" href="/work" prefetch={false}>View my work</Link>
           </div>
         </div>
-        <AboutCharacter />
-      </section>
-
-      <section className="toolkit" aria-labelledby="toolkit-heading">
-        <h2 className="eyebrow" id="toolkit-heading">Tools I&apos;ve used</h2>
-        <ul className="tool-logo-grid">
-          {tools.map(({ name, logo, wide }) => (
-            <li className={`tool-logo-card${wide ? ' tool-logo-card-wide' : ''}`} key={name}>
-              <Image src={logo} alt={name} width={140} height={84} unoptimized />
-            </li>
-          ))}
-        </ul>
-      </section>
+      </AboutToolkit>
 
       <section className="about-faq" aria-labelledby="about-faq-heading">
         <div className="about-faq-heading">
