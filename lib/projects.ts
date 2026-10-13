@@ -92,7 +92,7 @@ export const projects: Project[] = [
     outcome:
       'Containment rose from 15% to 43%, and the successful pilot expanded to stores nationwide.',
     role: 'AI product designer, prompt experience designer, and analyst',
-    timeline: 'Initial launch in 1 month · ongoing optimization',
+    timeline: '1 month to pilot · expanded nationwide',
     tags: ['Conversational design', 'Prompt engineering', 'Legacy system modernization'],
     metrics: [
       { value: '+28pt', label: 'containment increase' },
