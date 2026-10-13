@@ -1,5 +1,35 @@
 # Work illustration
 
+## Current motion: simple blink
+
+The user paused the finger-tap experiment and rejected the head nod because it stretched the artwork. Work now uses only an occasional 240ms blink, with 5.4–6.8 seconds of rest between blinks. The head, face outline, body and selected new hand remain completely still. There is no music sync; the sound provider, Home, About and Chat are unchanged. The original clean v1 illustration is retained, and only the selected hand detail is composited from these built-in image-edit outputs:
+
+- `public/images/kayla-work-seated-desktop-v2.png` (`exec-57fc8f26-4660-4eed-9d03-c6f8a5182256.png`)
+- `public/images/kayla-work-seated-mobile-v2.png` (`exec-9dcdf834-e9dd-4c69-9593-6ddebd3d2f1e.png`)
+
+These v2 images are hand-source plates, not full replacements: their outside alpha contains generation artifacts. A cached, feathered mask follows the palm interior, fully includes the selected fingers, and softly fades back to the original skin before the wrist. This replaces the earlier rectangular crop, which cut through the upper hand outline and exposed a skin-color seam. The mask avoids the edited plate's offset outer wrist edge, and `source-atop` preserves the original silhouette. The v1 face and body remain the source artwork.
+
+Only the dot eye is animated: a tiny matching skin patch covers it while the original eye closes smoothly into a small lid and reopens. No head deformation or hand-movement frames are active. A project interaction, reduced motion, a hidden tab, or an offscreen character holds the original open-eye pose. Sound can be on or off.
+
+### Selected still-hand source prompt
+
+Use case: precise-object-edit. Correct the raised hand ONLY. The hand currently has a hooked thumb on its image-RIGHT lower edge, making it read as a left hand attached to her right arm. Redraw this as a clearly anatomically RIGHT hand, palm angled slightly toward the viewer, with the thumb rooted on the IMAGE-LEFT edge of the palm and gently folded inward. Remove the erroneous hooked thumb on the image-right bottom. The INDEX finger is the uppermost digit, extended gently toward her chin. Below it, the middle, ring and little fingers are three softly curled fingers on the image-right side of the palm; thumb is separate on the image-left side. Use an anatomically natural relaxed right wrist connecting to the existing raised right forearm. Keep forearm and elbow fixed. Simple cartoon hand, five digits total, no extra details or fingernails. Change nothing outside the hand and wrist: preserve face, rounded chin, tiny dot eye, smile, hair, body, other arm, dress, seated legs, sage socks, stool and transparent background exactly. Same full 1024x1536 image composition and original line style. Do not mirror the figure or alter facial features.
+
+## Chin-tapping idle animation
+
+Status: paused at the user's request, superseded by the simple blink above. The user identified ambiguous handedness and unwanted middle-finger movement. Intermediate tap frames were not adopted; their source outputs remain in the generated-images directory. The original approved seated assets remain unchanged.
+
+The approved seated artwork remains the base. A feathered fingertip-only mask composites a second frame, leaving the rest of the original illustration untouched. Two gentle taps occur during each ten-second idle cycle, with a long rest. Opening an overview, playing or dragging a record, leaving the viewport, or hiding the browser tab returns to the still pose. Reduced-motion preferences disable the animation.
+
+Versioned assets created with the built-in image-generation tool:
+
+- `public/images/kayla-work-chin-tap-desktop-v1.png` (original: `exec-965670ea-fba6-4321-9892-36aa7542270e.png`)
+- `public/images/kayla-work-chin-tap-mobile-v1.png` (original: `exec-3e2f1d44-f651-41c7-ad74-de45b88a4873.png`)
+
+### Finger-frame editing prompt (both variants)
+
+Use case: precise-object-edit. Create ONE very subtle animation frame from this exact illustration. Change ONLY the raised hand's index finger beside her chin: lift its fingertip upward by about 12 pixels so it lightly touches the underside of her chin, bending gently at the knuckle. Keep the palm, wrist, other fingers, forearm and elbow absolutely fixed in place. This is a tiny thoughtful finger tap, not a different gesture. Everything else must remain pixel-aligned with the reference: same exact face, dot eye, rounded chin, smile, head, hair, dress, body, legs, socks, stool, colors, outlines, scale, positioning and 1024x1536 canvas. Do not redraw or improve the face. No movement of head or body. Preserve transparent alpha background. Return the entire original image with only that one fingertip adjusted, not a crop, not multiple frames, no added details or motion lines.
+
 ## Current seated assets
 
 - `public/images/kayla-work-seated-desktop-v1.png`

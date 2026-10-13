@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import type { Project } from '@/lib/projects';
 import { prepareCaseStudyArrival } from './case-study-arrival';
+import { KaylaCharacter } from './kayla-character';
 import styles from './listening-room.module.css';
 
 const VINYL_DURATION = 3600;
@@ -283,22 +284,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         }
       >
         <RoomOutline />
-        <div className={styles.character} aria-hidden="true">
-          <picture>
-            <source
-              media="(max-width: 700px)"
-              srcSet="/images/kayla-work-seated-mobile-v1.png"
-            />
-            <Image
-              src="/images/kayla-work-seated-desktop-v1.png"
-              alt=""
-              width={1024}
-              height={1536}
-              unoptimized
-              priority
-            />
-          </picture>
-        </div>
+        <KaylaCharacter
+          paused={flipped !== null || playing || dragged !== null}
+        />
         <svg
           className={styles.table}
           viewBox="0 0 1200 800"
