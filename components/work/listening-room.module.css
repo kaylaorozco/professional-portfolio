@@ -193,6 +193,11 @@
   background: #308884;
   color: #fff8e9;
 }
+.coverClientLogo {
+  display: block;
+  height: auto;
+  width: 24%;
+}
 .coverTitle {
   left: 7%;
   position: absolute;
@@ -344,6 +349,15 @@
   line-height: 1.4;
   margin: 0;
   padding-top: 2%;
+}
+.overviewSummary {
+  color: inherit;
+  font-size: max(12px, 3.4cqw);
+  line-height: 1.4;
+  margin: 0;
+}
+.back:has(.overviewSummary) {
+  gap: 0.6cqw;
 }
 .result {
   color: inherit;
@@ -608,7 +622,9 @@
     transition:
       transform 1500ms cubic-bezier(0.4, 0, 0.2, 1),
       width 1500ms cubic-bezier(0.4, 0, 0.2, 1),
-      left 1500ms cubic-bezier(0.4, 0, 0.2, 1);
+      left 1500ms cubic-bezier(0.4, 0, 0.2, 1),
+      top 1500ms cubic-bezier(0.4, 0, 0.2, 1),
+      z-index 0ms linear 750ms;
   }
   .flipShell {
     transition-duration: 1500ms;
@@ -627,17 +643,18 @@
   .sleeve[data-front='true']:has(.front:focus-visible) {
     transform: rotateX(25deg) rotateZ(-9deg);
   }
-  .scene[data-flipped='true'] .sleeve:not([data-flipped='true']) {
+  .scene[data-upright='true'] .sleeve:not([data-upright='true']) {
     left: 95%;
   }
-  .scene .sleeve[data-flipped='true'],
-  .scene .sleeve[data-flipped='true']:has(.front:hover),
-  .scene .sleeve[data-flipped='true']:has(.front:focus-visible) {
+  .scene .sleeve[data-upright='true'],
+  .scene .sleeve[data-upright='true']:has(.front:hover),
+  .scene .sleeve[data-upright='true']:has(.front:focus-visible) {
     left: calc(59% - min(44vw, 175px));
     top: -10%;
     transform: rotateX(0) rotateZ(0);
     width: min(88vw, 350px);
     z-index: 7;
+    transition-delay: 0ms;
   }
   .backToCover {
     min-height: 36px;

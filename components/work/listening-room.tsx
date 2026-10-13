@@ -32,6 +32,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const router = useRouter();
   const [selected, setSelected] = useState(0);
   const [flipped, setFlipped] = useState<number | null>(null);
+  const [lifted, setLifted] = useState<number | null>(null);
   const [playing, setPlaying] = useState(false);
   const [flight, setFlight] = useState<Flight | null>(null);
   const [dragged, setDragged] = useState<number | null>(null);
@@ -49,6 +50,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const flipStartedAt = useRef(0);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const swiped = useRef(false);
+  const upright = flipped ?? lifted;
 
   useEffect(
     () => () => {
@@ -68,7 +70,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   }, [flipped, playing, selected]);
 
   useEffect(() => {
-    if (flipped === null || !window.matchMedia('(max-width: 700px)').matches)
+    if (upright === null || !window.matchMedia('(max-width: 700px)').matches)
       return;
     let frame = 0;
     let cancelled = false;
@@ -78,7 +80,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     };
     frame = requestAnimationFrame(() => {
       const layer = recordLayerRef.current;
-      const sleeve = sleevesRef.current[flipped];
+      const sleeve = sleevesRef.current[upright];
       if (!layer || !sleeve) return;
       // Use the final square size, not the rotating sleeve's transient bounds.
       const size = Math.min(window.innerWidth * 0.88, 350);
@@ -125,22 +127,23 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       window.removeEventListener('pointerdown', cancel);
       window.removeEventListener('keydown', cancel);
     };
-  }, [flipped]);
+  }, [upright]);
 
   useEffect(() => {
-    if (flipped === null) return;
+    if (upright === null) return;
     function dismiss(event: PointerEvent) {
       if (busy.current || !(event.target instanceof Node)) return;
       if (
-        sleevesRef.current[flipped!]?.contains(event.target) ||
+        sleevesRef.current[upright!]?.contains(event.target) ||
         playerRef.current?.contains(event.target)
       )
         return;
       setFlipped(null);
+      setLifted(null);
     }
     document.addEventListener('pointerdown', dismiss);
     return () => document.removeEventListener('pointerdown', dismiss);
-  }, [flipped]);
+  }, [upright]);
 
   useEffect(() => {
     function keyboard(event: KeyboardEvent) {
@@ -152,6 +155,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setPlaying(false);
         setFlight(null);
         setFlipped(null);
+        setLifted(null);
         frontRefs.current[selected]?.focus({ preventScroll: true });
       } else if (
         !busy.current &&
@@ -163,6 +167,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
           projects.length;
         setSelected(next);
         setFlipped(null);
+        setLifted(null);
         setInteracted(true);
         frontRefs.current[next]?.focus({ preventScroll: true });
       }
@@ -175,6 +180,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     if (busy.current) return;
     setSelected((index + projects.length) % projects.length);
     setFlipped(null);
+    setLifted(null);
     setInteracted(true);
   }
 
@@ -275,6 +281,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         className={styles.scene}
         data-interacted={interacted}
         data-flipped={flipped !== null}
+        data-upright={upright !== null}
         data-playing={playing}
         data-flight={flight !== null}
         style={
@@ -350,6 +357,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
               key={project.slug}
               data-front={selected === index}
               data-flipped={flipped === index}
+              data-upright={upright === index}
               data-dragged={dragged === index}
               data-project={project.slug}
             >
@@ -376,8 +384,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                     if (busy.current) return;
                     const mobile =
                       window.matchMedia('(max-width: 700px)').matches;
-                    if (mobile && selected !== index) {
+                    if (mobile && lifted !== index) {
                       browse(index);
+                      setLifted(index);
                       return;
                     }
                     setSelected(index);
@@ -417,18 +426,23 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   </h2>
                   <p className={styles.tension}>
                     {project.slug === 'handsful'
-                      ? 'A baby tracker built around families raising multiples.'
-                      : 'Natural product questions, understood by a legacy IVR.'}
+                      ? 'A baby tracker designed for families raising multiples.'
+                      : 'From rigid product lookup to natural conversation.'}
+                  </p>
+                  <p className={styles.overviewSummary}>
+                    {project.slug === 'handsful'
+                      ? 'Built from concept to launch around the realities of caring for more than one baby—bringing product design and engineering together in one shared caregiving experience.'
+                      : 'A legacy retail IVR redesigned with LLM-powered intent recognition and prompt engineering—helping callers find products using their own words.'}
                   </p>
                   <p className={styles.role}>
                     {project.slug === 'handsful'
-                      ? 'Founder & Design Engineer'
+                      ? 'Design Engineer'
                       : 'AI product + prompt design'}
                   </p>
                   <p className={styles.result}>
                     {project.slug === 'handsful'
-                      ? 'Built independently. Live on iOS.'
-                      : '15% → 43% containment.'}
+                      ? 'Live on iOS and Android.'
+                      : 'Resolved 43% of calls without a transfer, up from 15%.'}
                   </p>
                   <a
                     ref={(node) => {
@@ -567,6 +581,17 @@ function RecordCover({ project }: { project: Project }) {
     >
       <div className={styles.coverMeta}>
         <span>KO · {project.number}</span>
+        {!handsful && (
+          <Image
+            className={styles.coverClientLogo}
+            src="/experience-logos/lowes.png"
+            alt=""
+            draggable={false}
+            width={1357}
+            height={623}
+            unoptimized
+          />
+        )}
       </div>
       {handsful ? (
         <>
