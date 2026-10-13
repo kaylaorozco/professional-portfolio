@@ -98,10 +98,12 @@
 }
 .sleeve {
   left: 0;
+  perspective: 1200px;
   position: absolute;
   top: 0;
   transform: rotateX(65deg) rotateZ(-14deg);
   transform-origin: center 75%;
+  transform-style: preserve-3d;
   transition:
     transform 950ms cubic-bezier(0.4, 0, 0.2, 1),
     width 950ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -134,9 +136,11 @@
 .flipShell {
   aspect-ratio: 1;
   position: relative;
+  transform: rotateY(0deg);
   transform-style: preserve-3d;
   transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
+  will-change: transform;
 }
 .sleeve[data-flipped='true'] .flipShell {
   transform: rotateY(180deg);
@@ -144,6 +148,7 @@
 .front {
   background: none;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border: 0;
   color: inherit;
   cursor: grab;
@@ -151,6 +156,7 @@
   height: 100%;
   padding: 0;
   position: absolute;
+  transform: translateZ(0.5px);
   width: 100%;
 }
 .front:active {
@@ -218,6 +224,17 @@
   font-size: 3.8cqw;
   margin-top: 3%;
 }
+.handsfulCover .coverTitle {
+  top: 15%;
+  text-align: center;
+}
+.handsfulWordmark {
+  display: block;
+  height: 20cqw;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
 .coverOrbit {
   background: #f4c259;
   border-radius: 50%;
@@ -232,7 +249,7 @@
   height: auto;
   pointer-events: none;
   position: absolute;
-  top: 41%;
+  top: 53%;
   width: 35%;
   z-index: 2;
 }
@@ -242,7 +259,7 @@
 }
 .phoneTwo {
   left: 53%;
-  top: 48%;
+  top: 58%;
   transform: rotate(12deg);
 }
 .coverFoot {
@@ -255,7 +272,11 @@
 }
 .handsfulCover .coverFoot {
   background: #2b6863;
+  left: 50%;
   padding: 1.5% 2%;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
 }
 .discoveryCover {
   background: #df9c54;
@@ -304,6 +325,7 @@
 .back {
   aspect-ratio: 1;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   background: #fbf4e8;
   border: 1px solid #715440;
   box-shadow:
@@ -318,7 +340,7 @@
   padding: 5%;
   position: absolute;
   text-align: left;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(0.5px);
   width: 100%;
 }
 .backCatalog {

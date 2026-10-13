@@ -263,7 +263,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     <section className={styles.work} aria-labelledby="work-title">
       <header className={styles.intro}>
         <div>
-          <p className={styles.eyebrow}>KO · Selected work</p>
+          <p className={styles.eyebrow}>Selected work</p>
           <h1 id="work-title">
             Good work.
             <br />
@@ -424,11 +424,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                       ? 'Handsful'
                       : 'Product Discovery'}
                   </h2>
-                  <p className={styles.tension}>
-                    {project.slug === 'handsful'
-                      ? 'A baby tracker designed for families raising multiples.'
-                      : 'From rigid product lookup to natural conversation.'}
-                  </p>
+                  {project.slug === 'handsful' && (
+                    <p className={styles.tension}>
+                      A baby tracker designed for families raising multiples.
+                    </p>
+                  )}
                   <p className={styles.overviewSummary}>
                     {project.slug === 'handsful'
                       ? 'Built from concept to launch around the realities of caring for more than one baby—bringing product design and engineering together in one shared caregiving experience.'
@@ -597,7 +597,15 @@ function RecordCover({ project }: { project: Project }) {
         <>
           <span className={styles.coverOrbit} />
           <div className={styles.coverTitle}>
-            <strong>Handsful</strong>
+            <Image
+              className={styles.handsfulWordmark}
+              src="/images/handsful/wordmark.svg"
+              alt=""
+              draggable={false}
+              width={1024}
+              height={406}
+              unoptimized
+            />
             <span>A little less juggling.</span>
           </div>
           <Image
