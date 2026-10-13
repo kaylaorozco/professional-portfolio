@@ -4,6 +4,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { HeroCharacter } from '@/components/hero-character';
 import { TestimonialMarquee } from '@/components/testimonial-marquee';
+import { WorkRoomLink } from '@/components/work-room-transition';
 import { projects } from '@/lib/projects';
 
 const areasOfPractice = [
@@ -73,7 +74,7 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <main id="top">
+    <main className="home-page" id="top">
       <SiteHeader />
 
       <section className="brand-hero">
@@ -91,9 +92,7 @@ export default function Home() {
               behavior, and code.
             </p>
             <div className="hero-actions">
-              <Link className="button button-primary" href="/work" prefetch={false}>
-                See selected work
-              </Link>
+              <WorkRoomLink />
             </div>
           </div>
         </div>
