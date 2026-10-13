@@ -284,41 +284,64 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       >
         <RoomOutline />
         <div className={styles.character} aria-hidden="true">
-          <svg viewBox="1490 425 220 450" width="220" height="450">
-            <image
-              href="/images/kayla-rise-sprites-v2.png"
-              width="1774"
-              height="887"
+          <picture>
+            <source
+              media="(max-width: 700px)"
+              srcSet="/images/kayla-work-seated-mobile-v1.png"
             />
-          </svg>
+            <Image
+              src="/images/kayla-work-seated-desktop-v1.png"
+              alt=""
+              width={1024}
+              height={1536}
+              unoptimized
+              priority
+            />
+          </picture>
         </div>
         <svg
           className={styles.table}
-          viewBox="0 0 1200 640"
+          viewBox="0 0 1200 800"
           fill="none"
           aria-hidden="true"
         >
           <g stroke="#957966" strokeWidth="1.7" strokeLinejoin="round">
+            <g fill="#e1ccb0">
+              <path d="M72 516H114L92 790H68Z" />
+              <path d="M1074 523H1116L1140 790H1116Z" />
+              <path d="m62 514 1070 8-2 26-1066-8Z" />
+            </g>
+            <path
+              d="m104 542-20 231m1001-225 38 225"
+              stroke="#b79b7c"
+              opacity=".5"
+            />
             <path d="m134 372 861 8 155 130-1120-8Z" fill="#eee1cf" />
             <path d="m30 502 1120 8v15L30 517Z" fill="#dfc9ac" />
-            <path d="m72 518 8 122m34-122-2 122m965-116-8 116m35-116 5 116" />
             <path d="m145 389 806 8m-839 91 942 8" opacity=".25" />
           </g>
         </svg>
         <svg
           className={styles.mobileTable}
-          viewBox="0 0 400 510"
+          viewBox="0 0 400 470"
           preserveAspectRatio="none"
           fill="none"
           aria-hidden="true"
         >
           <g stroke="#957966" strokeWidth="1.5" strokeLinejoin="round">
-            <path d="m-60 210 490 0 70 240-600 0Z" fill="#eee1cf" />
-            <path d="M-100 450H500v12H-100Z" fill="#dfc9ac" />
+            <g fill="#e1ccb0">
+              <path d="M20 362H42L27 466H13Z" />
+              <path d="M358 362H380L387 466H373Z" />
+              <path d="M-10 362H410v16H-10Z" />
+            </g>
             <path
-              d="M18 462v48m14-48v48m336-48v48m14-48v48M-30 226h460M-70 435h540"
-              opacity=".4"
+              d="m35 381-13 75m343-75 13 75"
+              stroke="#b79b7c"
+              opacity=".5"
             />
+            <path d="M-60 180H430L500 355H-100Z" fill="#eee1cf" />
+            <path d="M-100 355H500v10H-100Z" fill="#dfc9ac" />
+            <path d="M-30 194h460M-70 342h540" opacity=".4" />
           </g>
         </svg>
         <div

@@ -38,7 +38,7 @@
 }
 .scene {
   aspect-ratio: 1200 / 640;
-  margin: 0.75rem auto 0;
+  margin: 0.75rem auto clamp(88px, 12vw, 160px);
   max-width: 1200px;
   position: relative;
   width: min(100%, calc(max(350px, 100svh - 300px) * 1.875));
@@ -55,23 +55,23 @@
   color: #947d6a;
 }
 .table {
+  height: 125%;
   z-index: 2;
 }
 .mobileTable {
   display: none;
 }
 .character {
-  clip-path: inset(0 0 38% 0);
-  height: 95%;
   left: 65%;
+  pointer-events: none;
   position: absolute;
-  top: -1%;
-  width: 27%;
+  top: 17%;
+  width: 35.55%;
   z-index: 1;
 }
-.character svg {
+.character img {
   display: block;
-  height: 100%;
+  height: auto;
   width: 100%;
 }
 .sleeves {
@@ -389,10 +389,10 @@
   border-radius: 12px;
   color: var(--muted-ink);
   cursor: pointer;
-  left: 74%;
+  left: 70%;
   padding: 0;
   position: absolute;
-  top: 48%;
+  top: 46%;
   width: 25%;
   z-index: 3;
 }
@@ -544,7 +544,7 @@
   }
   .scene {
     aspect-ratio: auto;
-    height: 570px;
+    height: 490px;
     margin: 1.4rem -1.2rem 0;
     width: calc(100% + 2.4rem);
   }
@@ -560,30 +560,30 @@
   }
   .mobileTable {
     display: block;
-    height: 510px;
-    inset: 0;
+    height: 470px;
+    left: 0;
     pointer-events: none;
     position: absolute;
+    top: 0;
     width: 100%;
     z-index: 2;
   }
   .character {
-    height: 340px;
     left: auto;
-    right: 2%;
-    top: -2px;
-    width: 167px;
+    right: -5%;
+    top: 8px;
+    width: 272px;
   }
   .playerTarget {
     display: none;
   }
   .sleeves {
     height: 215px;
-    left: 20.5%;
+    left: calc(50% - min(21.24%, 84.96px));
     perspective: 900px;
-    top: 230px;
+    top: 195px;
     touch-action: pan-y;
-    width: 50%;
+    width: min(36%, 144px);
   }
   .sleeve,
   .sleeve:nth-child(2) {
