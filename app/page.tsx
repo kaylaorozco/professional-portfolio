@@ -124,40 +124,6 @@ export default function Home() {
           <div className="work-heading-copy">
             <h2>Products and systems built for real-world complexity.</h2>
           </div>
-          <div
-            className="work-heading-laptop"
-            role="img"
-            aria-label="Coral laptop decorated with Lowe’s, NiCE, Allstate, motorcycle, paw-print, and Texas stickers"
-          >
-            <img className="work-laptop-art" src="/images/projects-laptop.png" alt="" />
-            <span className="laptop-sticker laptop-sticker-lowes" aria-hidden="true">
-              <img src="/experience-logos/lowes.png" alt="" />
-            </span>
-            <span className="laptop-sticker laptop-sticker-nice" aria-hidden="true">
-              <img src="/experience-logos/nice.svg" alt="" />
-            </span>
-            <span className="laptop-sticker laptop-sticker-allstate" aria-hidden="true">
-              <img src="/experience-logos/allstate.png" alt="" />
-            </span>
-            <img
-              className="laptop-personal-sticker laptop-sticker-motorcycle"
-              src="/images/stickers/motorcycle-sage.png"
-              alt=""
-              aria-hidden="true"
-            />
-            <img
-              className="laptop-personal-sticker laptop-sticker-paws"
-              src="/images/stickers/fur-babies.png"
-              alt=""
-              aria-hidden="true"
-            />
-            <img
-              className="laptop-personal-sticker laptop-sticker-texas"
-              src="/images/stickers/texas-brownsville.png"
-              alt=""
-              aria-hidden="true"
-            />
-          </div>
         </div>
 
         <div className="project-stack">

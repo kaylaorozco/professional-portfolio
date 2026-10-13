@@ -752,7 +752,7 @@ html[data-work-room-transition='leaving'] .home-page {
 .section-heading-work {
   align-items: center;
   gap: clamp(.75rem, 2vw, 2.25rem);
-  grid-template-columns: minmax(0, 1fr) minmax(22rem, .7fr);
+  grid-template-columns: minmax(0, 1fr);
   margin-bottom: clamp(3.5rem, 7vw, 7rem);
 }
 .section-heading-work .work-heading-copy {
@@ -778,84 +778,6 @@ html[data-work-room-transition='leaving'] .home-page {
   max-width: 14ch;
   text-align: left;
 }
-.work-heading-laptop {
-  isolation: isolate;
-  justify-self: start;
-  margin-left: clamp(-4rem, -3vw, -2rem);
-  max-width: 39rem;
-  position: relative;
-  transition: transform .45s cubic-bezier(.2,.8,.2,1);
-  width: 100%;
-}
-.work-heading-laptop:hover { transform: rotate(1deg) translateY(-.35rem); }
-.work-laptop-art { display: block; height: auto; width: 100%; }
-.laptop-sticker {
-  align-items: center;
-  background: #fffdf7;
-  border: 2px solid var(--ink);
-  box-shadow: .28rem .32rem 0 rgba(49,27,20,.22);
-  display: flex;
-  justify-content: center;
-  padding: clamp(.25rem, .55vw, .5rem);
-  position: absolute;
-  transition: transform .28s ease;
-  z-index: 2;
-}
-.laptop-sticker img { display: block; height: auto; max-height: 100%; max-width: 100%; object-fit: contain; }
-.laptop-sticker-lowes {
-  border-radius: .45rem;
-  height: 17%;
-  left: 31%;
-  top: 39%;
-  transform: rotate(-4deg);
-  width: 20%;
-}
-.laptop-sticker-nice {
-  border-radius: 999px;
-  height: 13%;
-  left: 62%;
-  top: 25%;
-  transform: rotate(4deg);
-  width: 18%;
-}
-.laptop-sticker-allstate {
-  border-radius: 48% 52% 45% 55%;
-  height: 15%;
-  left: 62%;
-  top: 52%;
-  transform: rotate(5deg);
-  width: 21%;
-}
-.laptop-personal-sticker {
-  height: auto;
-  position: absolute;
-  transition: transform .28s ease;
-  z-index: 3;
-}
-.laptop-sticker-motorcycle {
-  left: 42%;
-  top: 52%;
-  transform: rotate(-3deg);
-  width: 19%;
-}
-.laptop-sticker-paws {
-  left: 34%;
-  top: 20%;
-  transform: rotate(-7deg);
-  width: 12%;
-}
-.laptop-sticker-texas {
-  left: 81%;
-  top: 40%;
-  transform: rotate(5deg);
-  width: 12%;
-}
-.work-heading-laptop:hover .laptop-sticker-lowes { transform: rotate(-6deg) translateY(-.2rem); }
-.work-heading-laptop:hover .laptop-sticker-nice { transform: rotate(6deg) translateY(-.15rem); }
-.work-heading-laptop:hover .laptop-sticker-allstate { transform: rotate(3deg) translateY(-.2rem); }
-.work-heading-laptop:hover .laptop-sticker-motorcycle { transform: rotate(-5deg) translateY(-.2rem); }
-.work-heading-laptop:hover .laptop-sticker-paws { transform: rotate(-4deg) translateY(-.18rem); }
-.work-heading-laptop:hover .laptop-sticker-texas { transform: rotate(8deg) translateY(-.18rem); }
 .project-feature {
   border-bottom: 1px solid var(--ink);
   border-top: 1px solid var(--ink);
@@ -880,7 +802,6 @@ html[data-work-room-transition='leaving'] .home-page {
   .section-heading { gap: 0.5rem; }
   .section-heading-work { gap: 2rem; grid-template-columns: 1fr; }
   .section-heading-work .work-heading-copy { grid-column: 1; }
-  .work-heading-laptop { justify-self: center; margin-left: 0; max-width: 38rem; }
   .hero-composition { min-height: 46rem; }
   .hero-composition h1 { font-size: clamp(4.2rem, 11.5vw, 6.5rem); }
   .hero-figure { left: 40%; right: auto; top: 1.5rem; width: 65%; }
@@ -1738,8 +1659,6 @@ html[data-work-room-transition='leaving'] .home-page {
 @media (max-width: 640px) {
   .section-heading-work { margin-bottom: 3.5rem; }
   .section-heading-work h2 { font-size: clamp(3rem, 14vw, 4rem); }
-  .work-heading-laptop { margin-left: -.5rem; width: calc(100% + 1rem); }
-  .laptop-sticker { border-width: 1px; box-shadow: .18rem .2rem 0 rgba(49,27,20,.2); }
   .footer-meta { align-items: flex-start; flex-direction: column; gap: .75rem; }
   .project-row, .work-index-row, .page-intro, .case-section { grid-template-columns: 1fr; }
   .project-row .project-visual, .work-index-row .project-visual, .work-index-copy, .page-intro > p:last-child { grid-column: 1; }

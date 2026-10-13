@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import type { Project } from '@/lib/projects';
 import { prepareCaseStudyArrival } from './case-study-arrival';
-import { KaylaCharacter } from './kayla-character';
 import styles from './listening-room.module.css';
 
 const VINYL_DURATION = 3600;
@@ -38,9 +37,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const [dragged, setDragged] = useState<number | null>(null);
   const [overPlayer, setOverPlayer] = useState(false);
   const [interacted, setInteracted] = useState(false);
+  const [laptopFocused, setLaptopFocused] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const recordLayerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLButtonElement>(null);
+  const laptopRef = useRef<HTMLButtonElement>(null);
   const sleevesRef = useRef<(HTMLElement | null)[]>([]);
   const frontRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const playRefs = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -70,7 +71,10 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   }, [flipped, playing, selected]);
 
   useEffect(() => {
-    if (upright === null || !window.matchMedia('(max-width: 700px)').matches)
+    if (
+      (upright === null && !laptopFocused) ||
+      !window.matchMedia('(max-width: 700px)').matches
+    )
       return;
     let frame = 0;
     let cancelled = false;
@@ -79,18 +83,22 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       cancelAnimationFrame(frame);
     };
     frame = requestAnimationFrame(() => {
-      const layer = recordLayerRef.current;
-      const sleeve = sleevesRef.current[upright];
-      if (!layer || !sleeve) return;
-      // Use the final square size, not the rotating sleeve's transient bounds.
-      const size = Math.min(window.innerWidth * 0.88, 350);
+      const layer = upright === null ? sceneRef.current : recordLayerRef.current;
+      const object =
+        upright === null ? laptopRef.current : sleevesRef.current[upright];
+      if (!layer || !object) return;
+      // Use the final focused size, not the object's transient bounds.
+      const size =
+        upright === null
+          ? Math.min(window.innerWidth * 0.78, 320)
+          : Math.min(window.innerWidth * 0.88, 350);
       const viewport = window.visualViewport;
       const height = viewport?.height ?? window.innerHeight;
       const topInset = 92;
       const bottomInset = 76;
       const space = Math.max(0, height - topInset - bottomInset - size);
       const top =
-        window.scrollY + layer.getBoundingClientRect().top + sleeve.offsetTop;
+        window.scrollY + layer.getBoundingClientRect().top + object.offsetTop;
       const target = Math.min(
         Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
         Math.max(0, top - topInset - space / 2 - (viewport?.offsetTop ?? 0)),
@@ -127,23 +135,25 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       window.removeEventListener('pointerdown', cancel);
       window.removeEventListener('keydown', cancel);
     };
-  }, [upright]);
+  }, [upright, laptopFocused]);
 
   useEffect(() => {
-    if (upright === null) return;
+    if (upright === null && !laptopFocused) return;
     function dismiss(event: PointerEvent) {
       if (busy.current || !(event.target instanceof Node)) return;
       if (
-        sleevesRef.current[upright!]?.contains(event.target) ||
+        (upright !== null && sleevesRef.current[upright]?.contains(event.target)) ||
+        laptopRef.current?.contains(event.target) ||
         playerRef.current?.contains(event.target)
       )
         return;
       setFlipped(null);
       setLifted(null);
+      setLaptopFocused(false);
     }
     document.addEventListener('pointerdown', dismiss);
     return () => document.removeEventListener('pointerdown', dismiss);
-  }, [upright]);
+  }, [upright, laptopFocused]);
 
   useEffect(() => {
     function keyboard(event: KeyboardEvent) {
@@ -156,7 +166,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setFlight(null);
         setFlipped(null);
         setLifted(null);
-        frontRefs.current[selected]?.focus({ preventScroll: true });
+        setLaptopFocused(false);
+        if (laptopFocused) laptopRef.current?.focus({ preventScroll: true });
+        else frontRefs.current[selected]?.focus({ preventScroll: true });
       } else if (
         !busy.current &&
         (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
@@ -168,19 +180,21 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setSelected(next);
         setFlipped(null);
         setLifted(null);
+        setLaptopFocused(false);
         setInteracted(true);
         frontRefs.current[next]?.focus({ preventScroll: true });
       }
     }
     document.addEventListener('keydown', keyboard);
     return () => document.removeEventListener('keydown', keyboard);
-  }, [selected, projects.length]);
+  }, [selected, projects.length, laptopFocused]);
 
   function browse(index: number) {
     if (busy.current) return;
     setSelected((index + projects.length) % projects.length);
     setFlipped(null);
     setLifted(null);
+    setLaptopFocused(false);
     setInteracted(true);
   }
 
@@ -190,6 +204,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     setSelected(index);
     setFlipped(index);
     setPlaying(true);
+    setLaptopFocused(false);
     setInteracted(true);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       router.push(`/work/${projects[index].slug}`);
@@ -205,7 +220,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         const layer = recordLayerRef.current?.getBoundingClientRect();
         const sleeve = sleevesRef.current[index]?.getBoundingClientRect();
         const player = playerRef.current
-          ?.querySelector('svg')
+          ?.querySelector('[data-platter]')
           ?.getBoundingClientRect();
         if (!layer || !sleeve || !player) {
           openProject();
@@ -214,9 +229,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         const size = sleeve.width * 0.86;
         const x = sleeve.left - layer.left + sleeve.width * 0.07;
         const y = sleeve.top - layer.top + sleeve.height * 0.07;
-        const targetWidth = player.width * (166 / 330);
-        const targetX = player.left - layer.left + player.width * (146 / 330);
-        const targetY = player.top - layer.top + player.height * (155 / 240);
+        const targetWidth = player.width;
+        const targetX = player.left - layer.left + player.width / 2;
+        const targetY = player.top - layer.top + player.height / 2;
         const mobile = window.matchMedia('(max-width: 700px)').matches;
         const duration = mobile ? MOBILE_VINYL_DURATION : VINYL_DURATION;
         setFlight({
@@ -284,6 +299,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         data-upright={upright !== null}
         data-playing={playing}
         data-flight={flight !== null}
+        data-laptop-focused={laptopFocused}
         style={
           {
             '--vinyl-duration': `${flight?.duration ?? VINYL_DURATION}ms`,
@@ -291,52 +307,44 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         }
       >
         <RoomOutline />
-        <KaylaCharacter
-          paused={flipped !== null || playing || dragged !== null}
+        <Image
+          className={styles.standingCharacter}
+          src="/images/kayla-work-thinking-v1.png"
+          alt=""
+          width={1024}
+          height={1536}
+          unoptimized
+          priority
         />
         <svg
-          className={styles.table}
-          viewBox="0 0 1200 800"
+          className={styles.furniture}
+          viewBox="0 0 1200 640"
           fill="none"
           aria-hidden="true"
         >
           <g stroke="#957966" strokeWidth="1.7" strokeLinejoin="round">
-            <g fill="#e1ccb0">
-              <path d="M72 516H114L92 790H68Z" />
-              <path d="M1074 523H1116L1140 790H1116Z" />
-              <path d="m62 514 1070 8-2 26-1066-8Z" />
+            <g>
+              <path d="m914 401 150 3 30 18-166-2Z" fill="#dfc9ac" />
+              <path d="m928 420 166 2v18l-166-2Z" fill="#cba67f" />
+              <path d="m947 438 13 174m111-172 17 172" stroke="#8e6d59" strokeWidth="8" />
+              <path d="m938 520 145 2" opacity=".5" />
             </g>
-            <path
-              d="m104 542-20 231m1001-225 38 225"
-              stroke="#b79b7c"
-              opacity=".5"
-            />
-            <path d="m134 372 861 8 155 130-1120-8Z" fill="#eee1cf" />
-            <path d="m30 502 1120 8v15L30 517Z" fill="#dfc9ac" />
-            <path d="m145 389 806 8m-839 91 942 8" opacity=".25" />
           </g>
         </svg>
         <svg
-          className={styles.mobileTable}
+          className={styles.mobileFurniture}
           viewBox="0 0 400 470"
           preserveAspectRatio="none"
           fill="none"
           aria-hidden="true"
         >
           <g stroke="#957966" strokeWidth="1.5" strokeLinejoin="round">
-            <g fill="#e1ccb0">
-              <path d="M20 362H42L27 466H13Z" />
-              <path d="M358 362H380L387 466H373Z" />
-              <path d="M-10 362H410v16H-10Z" />
+            <g>
+              <path d="m304 267 76 2 17 11-86-1Z" fill="#dfc9ac" />
+              <path d="m311 279 86 1v12l-86-1Z" fill="#cba67f" />
+              <path d="m321 291 7 158m56-157 10 157" stroke="#8e6d59" strokeWidth="5" />
+              <path d="m316 372 73 1" opacity=".5" />
             </g>
-            <path
-              d="m35 381-13 75m343-75 13 75"
-              stroke="#b79b7c"
-              opacity=".5"
-            />
-            <path d="M-60 180H430L500 355H-100Z" fill="#eee1cf" />
-            <path d="M-100 355H500v10H-100Z" fill="#dfc9ac" />
-            <path d="M-30 194h460M-70 342h540" opacity=".4" />
           </g>
         </svg>
         <div
@@ -361,6 +369,22 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
               data-dragged={dragged === index}
               data-project={project.slug}
             >
+              <svg
+                className={styles.sleeveLedge}
+                viewBox="0 0 160 16"
+                preserveAspectRatio="none"
+                fill="none"
+                aria-hidden="true"
+              >
+                <g
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M1 1h158M8 1l8 7h127l16-7M20 8v8m119-8v8" />
+                </g>
+              </svg>
               <div className={styles.flipShell}>
                 <button
                   ref={(node) => {
@@ -516,6 +540,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
               : `Play ${projects[selected].shortTitle}`
           }
           onClick={() => {
+            setLaptopFocused(false);
             if (flipped === selected) play(selected);
             else {
               setFlipped(selected);
@@ -543,6 +568,25 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         >
           <RecordPlayer />
         </button>
+        <button
+          ref={laptopRef}
+          className={styles.laptopObject}
+          type="button"
+          aria-label={
+            laptopFocused
+              ? 'Return the laptop to its stool'
+              : 'Explore where Kayla has worked'
+          }
+          onClick={() => {
+            if (busy.current) return;
+            setFlipped(null);
+            setLifted(null);
+            setLaptopFocused((focused) => !focused);
+            setInteracted(true);
+          }}
+        >
+          <StickerLaptop />
+        </button>
         <output className={styles.liveStatus} aria-live="polite">
           {projects[selected].shortTitle}.{' '}
           {playing
@@ -569,6 +613,72 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         </p>
       </noscript>
     </section>
+  );
+}
+
+function StickerLaptop() {
+  return (
+    <span className={styles.laptopArt} aria-hidden="true">
+      <Image
+        className={styles.laptopBase}
+        src="/images/projects-laptop.png"
+        alt=""
+        width={1536}
+        height={1024}
+        unoptimized
+      />
+      <span className={`${styles.laptopSticker} ${styles.laptopStickerLowes}`}>
+        <Image
+          src="/experience-logos/lowes.png"
+          alt=""
+          width={1357}
+          height={623}
+          unoptimized
+        />
+      </span>
+      <span className={`${styles.laptopSticker} ${styles.laptopStickerNice}`}>
+        <Image
+          src="/experience-logos/nice.svg"
+          alt=""
+          width={864}
+          height={401}
+          unoptimized
+        />
+      </span>
+      <span className={`${styles.laptopSticker} ${styles.laptopStickerAllstate}`}>
+        <Image
+          src="/experience-logos/allstate.png"
+          alt=""
+          width={3960}
+          height={900}
+          unoptimized
+        />
+      </span>
+      <Image
+        className={`${styles.laptopPersonalSticker} ${styles.laptopStickerMotorcycle}`}
+        src="/images/stickers/motorcycle-sage.png"
+        alt=""
+        width={1254}
+        height={1254}
+        unoptimized
+      />
+      <Image
+        className={`${styles.laptopPersonalSticker} ${styles.laptopStickerPaws}`}
+        src="/images/stickers/fur-babies.png"
+        alt=""
+        width={1254}
+        height={1254}
+        unoptimized
+      />
+      <Image
+        className={`${styles.laptopPersonalSticker} ${styles.laptopStickerTexas}`}
+        src="/images/stickers/texas-brownsville.png"
+        alt=""
+        width={1254}
+        height={1254}
+        unoptimized
+      />
+    </span>
   );
 }
 
@@ -701,29 +811,16 @@ function RoomOutline() {
 
 function RecordPlayer() {
   return (
-    <svg className={styles.player} viewBox="0 0 330 240" aria-hidden="true">
-      <g stroke="#48291e" strokeWidth="2.5" strokeLinejoin="round">
-        <path d="m28 137 25-111 246 12-8 110Z" fill="#f0c08c" />
-        <path d="m40 128 22-91 224 11-6 89Z" fill="#e7ab72" />
-        <path d="m19 142 247 13 39 34-249-9Z" fill="#c77548" />
-        <path d="m19 142 37 38v27l-37-35Z" fill="#ad593b" />
-        <path d="m56 180 249 9v26l-249-8Z" fill="#b86340" />
-        <path d="m29 140 234 12 29 27-234-10Z" fill="#e6b77e" />
-        <ellipse cx="146" cy="155" rx="83" ry="19" fill="#342b27" />
-        <g stroke="#716054" strokeWidth=".8" fill="none">
-          <ellipse cx="146" cy="155" rx="73" ry="15" />
-          <ellipse cx="146" cy="155" rx="64" ry="12" />
-          <ellipse cx="146" cy="155" rx="54" ry="9" />
-        </g>
-        <ellipse cx="146" cy="155" rx="23" ry="6" fill="#d6a355" />
-        <path d="M146 155v-5" strokeWidth="3" />
-        <circle cx="250" cy="148" r="7" fill="#7a8060" />
-        <path d="m250 148-12 19-52-3" strokeWidth="5" fill="none" />
-        <path d="m185 161-12 1v5l12 1Z" fill="#ead8bc" />
-        <circle cx="277" cy="202" r="5" fill="#e7be88" />
-        <path d="m77 209 2 9h13l2-8m178 6 2 8h13l2-8" fill="#48291e" />
-        <path d="m75 195 57 2" stroke="#e7be88" strokeWidth="1.5" />
-      </g>
-    </svg>
+    <span className={styles.playerArt} aria-hidden="true">
+      <Image
+        className={styles.player}
+        src="/images/record-console-v2.png"
+        alt=""
+        width={1536}
+        height={1024}
+        unoptimized
+      />
+      <span className={styles.platterTarget} data-platter />
+    </span>
   );
 }
