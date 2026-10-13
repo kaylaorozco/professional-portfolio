@@ -6,28 +6,30 @@ import { HandsfulCaseStudy } from '@/components/handsful-case-study';
 import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
-import { getProject, projects } from '@/lib/projects';
+import { CaseStudyArrival } from '@/components/work/case-study-arrival';
+import { getPublishedProject, publishedProjects } from '@/lib/projects';
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return publishedProjects.map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = getPublishedProject(slug);
   if (!project) return {};
   return { title: `${project.shortTitle} — Kayla Orozco`, description: project.summary };
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = getPublishedProject(slug);
   if (!project) notFound();
-  const index = projects.findIndex((item) => item.slug === slug);
-  const next = projects[(index + 1) % projects.length];
+  const index = publishedProjects.findIndex((item) => item.slug === slug);
+  const next = publishedProjects[(index + 1) % publishedProjects.length];
 
   return (
     <main>
+      <CaseStudyArrival slug={slug} />
       <SiteHeader />
       <article className="case-study">
         <Link className="back-link" href="/work" prefetch={false}><ArrowLeft aria-hidden="true" size={17} /> All work</Link>

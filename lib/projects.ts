@@ -6,6 +6,7 @@ export type ProjectSection = {
 
 export type Project = {
   slug: string;
+  visibility: 'published' | 'draft';
   number: string;
   title: string;
   shortTitle: string;
@@ -26,6 +27,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: 'handsful',
+    visibility: 'published',
     number: '01',
     title: 'Handsful — Building a Baby Tracker for Multiples',
     shortTitle: 'Handsful',
@@ -79,6 +81,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'intelligent-product-discovery',
+    visibility: 'published',
     number: '02',
     title: 'From Static Lookup to Intelligent Product Discovery',
     shortTitle: 'Intelligent Product Discovery',
@@ -127,6 +130,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'enterprise-rescheduling',
+    visibility: 'draft',
     number: '03',
     title: 'Rebuilding Enterprise Rescheduling as an Intelligent System',
     shortTitle: 'Enterprise Rescheduling',
@@ -174,6 +178,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'associate-call-out',
+    visibility: 'draft',
     number: '04',
     title: 'Automated Associate Call-Out',
     shortTitle: 'Automated Associate Call-Out',
@@ -221,6 +226,15 @@ export const projects: Project[] = [
   },
 ];
 
+// Keep draft content in the archive; public Work routes use this collection.
+export const publishedProjects = projects.filter(
+  (project) => project.visibility === 'published',
+);
+
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
+}
+
+export function getPublishedProject(slug: string) {
+  return publishedProjects.find((project) => project.slug === slug);
 }
