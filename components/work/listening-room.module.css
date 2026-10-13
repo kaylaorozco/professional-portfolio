@@ -62,13 +62,30 @@
   display: none;
 }
 .standingCharacter {
-  height: auto;
-  left: 42%;
+  bottom: 6%;
+  left: 40%;
   pointer-events: none;
   position: absolute;
-  top: 9%;
-  width: 34%;
+  width: 28%;
   z-index: 1;
+}
+.standingCharacterPoster {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.standingCharacterCanvas {
+  height: 100%;
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+.standingCharacter[data-ready='true'] .standingCharacterPoster {
+  opacity: 0;
+}
+.standingCharacter[data-ready='true'] .standingCharacterCanvas {
+  opacity: 1;
 }
 .laptopObject {
   background: transparent;
@@ -759,9 +776,9 @@
     z-index: 2;
   }
   .standingCharacter {
-    left: 41%;
-    top: 4px;
-    width: min(58%, 232px);
+    bottom: 9%;
+    left: 39%;
+    width: min(56%, 224px);
   }
   .playerTarget {
     display: block;
