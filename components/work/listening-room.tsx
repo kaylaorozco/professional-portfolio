@@ -12,6 +12,7 @@ import Image from 'next/image';
 import type { Project } from '@/lib/projects';
 import { prepareCaseStudyArrival } from './case-study-arrival';
 import { KaylaCharacter } from './kayla-character';
+import { LaptopArt } from './laptop-art';
 import styles from './listening-room.module.css';
 
 const VINYL_DURATION = 3600;
@@ -39,10 +40,14 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const [overPlayer, setOverPlayer] = useState(false);
   const [interacted, setInteracted] = useState(false);
   const [laptopFocused, setLaptopFocused] = useState(false);
+  const [laptopOpen, setLaptopOpen] = useState(false);
+  const [laptopInteracted, setLaptopInteracted] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const recordLayerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLButtonElement>(null);
-  const laptopRef = useRef<HTMLButtonElement>(null);
+  const laptopRef = useRef<HTMLDivElement>(null);
+  const laptopTriggerRef = useRef<HTMLButtonElement>(null);
+  const laptopMovedAt = useRef(-Infinity);
   const sleevesRef = useRef<(HTMLElement | null)[]>([]);
   const frontRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const playRefs = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -91,7 +96,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       // Use the final focused size, not the object's transient bounds.
       const size =
         upright === null
-          ? Math.min(window.innerWidth * 0.78, 320)
+          ? Math.min(window.innerWidth * 0.88, 360) / 1.4
           : Math.min(window.innerWidth * 0.88, 350);
       const viewport = window.visualViewport;
       const height = viewport?.height ?? window.innerHeight;
@@ -99,7 +104,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       const bottomInset = 76;
       const space = Math.max(0, height - topInset - bottomInset - size);
       const top =
-        window.scrollY + layer.getBoundingClientRect().top + object.offsetTop;
+        window.scrollY + layer.getBoundingClientRect().top +
+        (upright === null ? 165 : object.offsetTop);
       const target = Math.min(
         Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
         Math.max(0, top - topInset - space / 2 - (viewport?.offsetTop ?? 0)),
@@ -151,6 +157,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       setFlipped(null);
       setLifted(null);
       setLaptopFocused(false);
+      setLaptopOpen(false);
     }
     document.addEventListener('pointerdown', dismiss);
     return () => document.removeEventListener('pointerdown', dismiss);
@@ -168,9 +175,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setFlipped(null);
         setLifted(null);
         setLaptopFocused(false);
-        if (laptopFocused) laptopRef.current?.focus({ preventScroll: true });
+        setLaptopOpen(false);
+        if (laptopFocused) laptopTriggerRef.current?.focus({ preventScroll: true });
         else frontRefs.current[selected]?.focus({ preventScroll: true });
       } else if (
+        !laptopFocused &&
         !busy.current &&
         (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
       ) {
@@ -182,6 +191,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setFlipped(null);
         setLifted(null);
         setLaptopFocused(false);
+        setLaptopOpen(false);
         setInteracted(true);
         frontRefs.current[next]?.focus({ preventScroll: true });
       }
@@ -196,6 +206,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     setFlipped(null);
     setLifted(null);
     setLaptopFocused(false);
+    setLaptopOpen(false);
     setInteracted(true);
   }
 
@@ -206,6 +217,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     setFlipped(index);
     setPlaying(true);
     setLaptopFocused(false);
+    setLaptopOpen(false);
     setInteracted(true);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       router.push(`/work/${projects[index].slug}`);
@@ -301,6 +313,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         data-playing={playing}
         data-flight={flight !== null}
         data-laptop-focused={laptopFocused}
+        data-laptop-open={laptopOpen}
         style={
           {
             '--vinyl-duration': `${flight?.duration ?? VINYL_DURATION}ms`,
@@ -534,6 +547,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
           }
           onClick={() => {
             setLaptopFocused(false);
+            setLaptopOpen(false);
             if (flipped === selected) play(selected);
             else {
               setFlipped(selected);
@@ -561,32 +575,47 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         >
           <RecordPlayer />
         </button>
-        <button
+        <div
           ref={laptopRef}
           className={styles.laptopObject}
-          type="button"
-          aria-label={
-            laptopFocused
-              ? 'Return the laptop to its stool'
-              : 'Explore where Kayla has worked'
+          data-stage={
+            laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'
           }
-          onClick={() => {
+        >
+          <LaptopArt stage={laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'} invited={!laptopInteracted && upright === null}
+          triggerRef={laptopTriggerRef}
+          onClose={() => { setLaptopOpen(false); setLaptopFocused(false); }}
+          onActivate={() => {
             if (busy.current) return;
+            if (performance.now() - laptopMovedAt.current < 1100) return;
+            laptopMovedAt.current = performance.now();
+            setLaptopInteracted(true);
             setFlipped(null);
             setLifted(null);
-            setLaptopFocused((focused) => !focused);
+            if (!laptopFocused) {
+              setLaptopFocused(true);
+              setLaptopOpen(false);
+            } else if (!laptopOpen) {
+              setLaptopOpen(true);
+            } else {
+              setLaptopOpen(false);
+              setLaptopFocused(false);
+            }
             setInteracted(true);
-          }}
-        >
-          <StickerLaptop />
-        </button>
+          }} />
+        </div>
         <output className={styles.liveStatus} aria-live="polite">
-          {projects[selected].shortTitle}.{' '}
-          {playing
-            ? 'Opening case study.'
-            : flipped === null
-              ? 'Cover.'
-              : 'Project overview.'}
+          {laptopOpen
+            ? 'Laptop open. Choose an app to explore my toolkit.'
+            : laptopFocused
+              ? 'Sticker-covered laptop centered. Activate it again to open it.'
+              : `${projects[selected].shortTitle}. ${
+                  playing
+                    ? 'Opening case study.'
+                    : flipped === null
+                      ? 'Cover.'
+                      : 'Project overview.'
+                }`}
         </output>
       </div>
       <div className={styles.collectionNote}>
@@ -609,71 +638,6 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   );
 }
 
-function StickerLaptop() {
-  return (
-    <span className={styles.laptopArt} aria-hidden="true">
-      <Image
-        className={styles.laptopBase}
-        src="/images/projects-laptop.png"
-        alt=""
-        width={1536}
-        height={1024}
-        unoptimized
-      />
-      <span className={`${styles.laptopSticker} ${styles.laptopStickerLowes}`}>
-        <Image
-          src="/experience-logos/lowes.png"
-          alt=""
-          width={1357}
-          height={623}
-          unoptimized
-        />
-      </span>
-      <span className={`${styles.laptopSticker} ${styles.laptopStickerNice}`}>
-        <Image
-          src="/experience-logos/nice.svg"
-          alt=""
-          width={864}
-          height={401}
-          unoptimized
-        />
-      </span>
-      <span className={`${styles.laptopSticker} ${styles.laptopStickerAllstate}`}>
-        <Image
-          src="/experience-logos/allstate.png"
-          alt=""
-          width={3960}
-          height={900}
-          unoptimized
-        />
-      </span>
-      <Image
-        className={`${styles.laptopPersonalSticker} ${styles.laptopStickerMotorcycle}`}
-        src="/images/stickers/motorcycle-sage.png"
-        alt=""
-        width={1254}
-        height={1254}
-        unoptimized
-      />
-      <Image
-        className={`${styles.laptopPersonalSticker} ${styles.laptopStickerPaws}`}
-        src="/images/stickers/fur-babies.png"
-        alt=""
-        width={1254}
-        height={1254}
-        unoptimized
-      />
-      <Image
-        className={`${styles.laptopPersonalSticker} ${styles.laptopStickerTexas}`}
-        src="/images/stickers/texas-brownsville.png"
-        alt=""
-        width={1254}
-        height={1254}
-        unoptimized
-      />
-    </span>
-  );
-}
 
 function RecordCover({ project }: { project: Project }) {
   const handsful = project.slug === 'handsful';
