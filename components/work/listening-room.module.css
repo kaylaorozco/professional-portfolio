@@ -161,31 +161,33 @@
   left: 11%;
   perspective: 1200px;
   position: absolute;
-  top: 18%;
+  top: 24%;
   transform: skewY(var(--wall-skew)) rotate(var(--shelf-lean)) scaleX(0.78);
   transform-origin: left bottom;
   transform-style: preserve-3d;
   transition:
     transform 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    left 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    top 950ms cubic-bezier(0.4, 0, 0.2, 1),
     width 950ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 11%;
 }
 .sleeve:nth-child(2) {
   --shelf-lean: 2deg;
   left: 22%;
-  top: 8%;
+  top: 14%;
 }
 .sleeve:has(.front:hover),
 .sleeve:has(.front:focus-visible) {
   z-index: 5;
 }
-.sleeve:not([data-flipped='true']):has(.front:hover) .flipShell,
-.sleeve:not([data-flipped='true']):has(.front:focus-visible) .flipShell {
+.sleeve:not([data-upright='true']):has(.front:hover) .flipShell,
+.sleeve:not([data-upright='true']):has(.front:focus-visible) .flipShell {
   transform: translateY(-6%) scale(1.03);
 }
-.sleeve[data-flipped='true'],
-.sleeve[data-flipped='true']:has(.front:hover),
-.sleeve[data-flipped='true']:has(.front:focus-visible) {
+.sleeve[data-upright='true'],
+.sleeve[data-upright='true']:has(.front:hover),
+.sleeve[data-upright='true']:has(.front:focus-visible) {
   left: 50%;
   top: 18%;
   transform: translateX(-50%) rotate(0);
@@ -243,7 +245,6 @@
   cursor: grabbing;
 }
 .front:focus-visible,
-.playerTarget:focus-visible,
 .play:focus-visible,
 .backToCover:focus-visible {
   outline: 2px solid var(--clay);
@@ -517,11 +518,11 @@
   border: 0;
   border-radius: 12px;
   color: var(--muted-ink);
-  cursor: pointer;
+  cursor: default;
   left: -7%;
   padding: 0;
   position: absolute;
-  top: 38%;
+  top: 44%;
   transform: none;
   transform-origin: left bottom;
   transition: opacity 400ms ease;
@@ -541,12 +542,12 @@
   width: 100%;
 }
 .platterTarget {
-  height: 17%;
-  left: 27%;
+  height: 13.5%;
+  left: 27.5%;
   pointer-events: none;
   position: absolute;
   top: 33%;
-  width: 23%;
+  width: 21%;
 }
 .playerTarget[data-ready='true'] {
   background: #e6a34c20;
@@ -644,12 +645,12 @@
   }
   90% {
     transform: translate(var(--travel-x), var(--travel-y))
-      scale(var(--record-scale)) scaleY(0.23) rotate(55deg);
+      scale(var(--record-scale)) scaleY(0.44) rotate(55deg);
   }
   100% {
     z-index: 8;
     transform: translate(var(--travel-x), var(--travel-y))
-      scale(var(--record-scale)) scaleY(0.23) rotate(70deg);
+      scale(var(--record-scale)) scaleY(0.44) rotate(70deg);
   }
 }
 @media (hover: none) {
@@ -708,7 +709,7 @@
   }
   .standingCharacter {
     bottom: 9%;
-    left: 39%;
+    left: 35%;
     width: min(56%, 224px);
   }
   .playerTarget {
@@ -717,12 +718,14 @@
     top: 47%;
     transform: none;
     width: 82%;
+    z-index: 0;
   }
   .laptopObject {
     left: 79%;
     top: 261px;
     transform: none;
     width: 19%;
+    z-index: 0;
   }
   .scene[data-laptop-focused='true'] .laptopObject,
   .scene[data-laptop-focused='true'] .laptopObject:focus-visible {
@@ -750,7 +753,7 @@
   .sleeve,
   .sleeve:nth-child(2) {
     left: 5%;
-    top: 24%;
+    top: 28%;
     transform: skewY(var(--wall-skew)) rotate(var(--shelf-lean)) scaleX(0.78);
     width: min(23%, 92px);
     z-index: 1;
@@ -758,8 +761,7 @@
       transform 1500ms cubic-bezier(0.4, 0, 0.2, 1),
       width 1500ms cubic-bezier(0.4, 0, 0.2, 1),
       left 1500ms cubic-bezier(0.4, 0, 0.2, 1),
-      top 1500ms cubic-bezier(0.4, 0, 0.2, 1),
-      z-index 0ms linear 750ms;
+      top 1500ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .flipShell {
     transition-duration: 1500ms;
@@ -769,7 +771,7 @@
   }
   .sleeve:nth-child(2) {
     left: 13%;
-    top: 11%;
+    top: 1%;
   }
   .sleeve:has(.front:hover),
   .sleeve:nth-child(2):has(.front:hover) {
@@ -782,9 +784,6 @@
   .sleeve:not([data-flipped='true']):has(.front:hover) .flipShell,
   .sleeve:not([data-flipped='true']):has(.front:focus-visible) .flipShell {
     transform: rotateY(0);
-  }
-  .scene[data-upright='true'] .sleeve:not([data-upright='true']) {
-    left: 95%;
   }
   .scene .sleeve[data-upright='true'],
   .scene .sleeve[data-upright='true']:has(.front:hover),

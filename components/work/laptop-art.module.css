@@ -7,7 +7,7 @@
   position: relative;
   width: 100%;
 }
-.outside:has(.activate:focus-visible) {
+.stage:has(.activate:focus-visible) .outside {
   outline: 2px solid var(--clay);
   outline-offset: 6px;
 }
@@ -19,6 +19,11 @@
   border-radius: inherit;
   background: transparent;
   cursor: pointer;
+  pointer-events: auto;
+  transform: translateZ(4px);
+}
+.stage[data-stage='open'] .activate {
+  pointer-events: none;
 }
 .activate:focus-visible {
   outline: none;
@@ -70,6 +75,7 @@
   width: 32%;
 }
 .lid {
+  pointer-events: none;
   transform: rotateX(0deg) translateZ(2px);
   transform-origin: center top;
   transform-style: preserve-3d;
@@ -329,7 +335,9 @@
   background: #513c30;
 }
 @media (max-width: 700px) {
-  .stage { aspect-ratio: 1.4; }
+  .stage {
+    aspect-ratio: 1.4;
+  }
   .detail {
     display: none;
   }
@@ -435,8 +443,21 @@
 .stage[data-stage='open'] .lid {
   transform: rotateX(110deg) translateZ(2px);
 }
+.stage[data-stage='open'] .inside {
+  pointer-events: auto;
+}
 .stage[data-stage='resting'][data-invited='true'] .lid {
   animation: lid-peek 7s ease-in-out 4s infinite;
+}
+@media (min-width: 701px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .stage[data-stage='resting'] .lid {
+    transition-duration: 450ms;
+  }
+  .stage[data-stage='resting']:has(.activate:hover) .lid,
+  .stage[data-stage='resting']:has(.activate:focus-visible) .lid {
+    animation: none;
+    transform: rotateX(12deg) translateZ(2px);
+  }
 }
 @keyframes lid-peek {
   0%,

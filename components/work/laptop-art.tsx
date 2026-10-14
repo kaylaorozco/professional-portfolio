@@ -29,6 +29,24 @@ export function LaptopArt({
   return (
     <span className={styles.stage} data-stage={stage} data-invited={invited}>
       <span className={styles.body}>
+        <button
+          ref={triggerRef}
+          type="button"
+          className={styles.activate}
+          tabIndex={stage === 'open' ? -1 : 0}
+          aria-hidden={stage === 'open'}
+          aria-expanded={stage === 'stickers'}
+          aria-label={
+            stage === 'stickers'
+              ? 'Turn the laptop around and open my toolkit'
+              : 'Bring the laptop forward to inspect its stickers'
+          }
+          onClick={(event) => {
+            // A double-click is one request, not a shortcut past the sticker view.
+            if (event.detail > 1) return;
+            onActivate();
+          }}
+        />
         <span className={styles.deck} aria-hidden="true">
           <span className={styles.keys}>
             {Array.from({ length: 48 }, (_, i) => (
@@ -39,20 +57,6 @@ export function LaptopArt({
         </span>
         <span className={styles.lid}>
           <span className={styles.outside}>
-            <button
-              ref={triggerRef}
-              type="button"
-              className={styles.activate}
-              tabIndex={stage === 'open' ? -1 : 0}
-              aria-hidden={stage === 'open'}
-              aria-expanded={stage === 'stickers'}
-              aria-label={
-                stage === 'stickers'
-                  ? 'Turn the laptop around and open my toolkit'
-                  : 'Bring the laptop forward to inspect its stickers'
-              }
-              onClick={onActivate}
-            />
             <span className={`${styles.logo} ${styles.lowes}`}>
               <Image
                 src="/experience-logos/lowes.png"

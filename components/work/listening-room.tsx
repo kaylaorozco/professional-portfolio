@@ -44,10 +44,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const [laptopInteracted, setLaptopInteracted] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const recordLayerRef = useRef<HTMLDivElement>(null);
-  const playerRef = useRef<HTMLButtonElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
   const laptopRef = useRef<HTMLDivElement>(null);
   const laptopTriggerRef = useRef<HTMLButtonElement>(null);
-  const laptopMovedAt = useRef(-Infinity);
   const sleevesRef = useRef<(HTMLElement | null)[]>([]);
   const frontRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const playRefs = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -105,7 +104,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       const space = Math.max(0, height - topInset - bottomInset - size);
       const top =
         window.scrollY + layer.getBoundingClientRect().top +
-        (upright === null ? 165 : object.offsetTop);
+        (upright === null ? 165 : layer.offsetHeight * 0.18);
       const target = Math.min(
         Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
         Math.max(0, top - topInset - space / 2 - (viewport?.offsetTop ?? 0)),
@@ -150,8 +149,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       if (busy.current || !(event.target instanceof Node)) return;
       if (
         (upright !== null && sleevesRef.current[upright]?.contains(event.target)) ||
-        laptopRef.current?.contains(event.target) ||
-        playerRef.current?.contains(event.target)
+        laptopRef.current?.contains(event.target)
       )
         return;
       setFlipped(null);
@@ -374,19 +372,18 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   disabled={playing}
                   inert={flipped === index}
                   aria-hidden={flipped === index}
-                  aria-label={`Flip ${project.shortTitle} for project overview`}
+                  aria-label={lifted === index ? `Flip ${project.shortTitle} for project overview` : `Bring ${project.shortTitle} forward to view its cover`}
                   aria-expanded={flipped === index}
                   aria-controls={`sleeve-back-${project.slug}`}
                   onFocus={() => setInteracted(true)}
-                  onClick={() => {
+                  onClick={(event) => {
                     if (swiped.current) {
                       swiped.current = false;
                       return;
                     }
                     if (busy.current) return;
-                    const mobile =
-                      window.matchMedia('(max-width: 700px)').matches;
-                    if (mobile && lifted !== index) {
+                    if (event.detail > 1) return;
+                    if (lifted !== index) {
                       browse(index);
                       setLifted(index);
                       return;
@@ -505,27 +502,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
             </div>
           )}
         </div>
-        <button
+        <div
           ref={playerRef}
           className={styles.playerTarget}
-          type="button"
           data-ready={dragged !== null}
           data-over={overPlayer}
-          disabled={playing}
-          aria-label={
-            flipped === null
-              ? `View ${projects[selected].shortTitle} overview`
-              : `Play ${projects[selected].shortTitle}`
-          }
-          onClick={() => {
-            setLaptopFocused(false);
-            setLaptopOpen(false);
-            if (flipped === selected) play(selected);
-            else {
-              setFlipped(selected);
-              setInteracted(true);
-            }
-          }}
           onDragOver={(event) => {
             if (dragged === null) return;
             event.preventDefault();
@@ -546,7 +527,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
           }}
         >
           <RecordPlayer />
-        </button>
+        </div>
         <div
           ref={laptopRef}
           className={styles.laptopObject}
@@ -559,8 +540,6 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
           onClose={() => { setLaptopOpen(false); setLaptopFocused(false); }}
           onActivate={() => {
             if (busy.current) return;
-            if (performance.now() - laptopMovedAt.current < 1100) return;
-            laptopMovedAt.current = performance.now();
             setLaptopInteracted(true);
             setFlipped(null);
             setLifted(null);
@@ -585,7 +564,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   playing
                     ? 'Opening case study.'
                     : flipped === null
-                      ? 'Cover.'
+                      ? lifted === null ? 'Cover on the wall.' : 'Cover centered. Activate again for project details.'
                       : 'Project overview.'
                 }`}
         </output>
@@ -743,7 +722,7 @@ function RecordPlayer() {
     <span className={styles.playerArt} aria-hidden="true">
       <Image
         className={styles.player}
-        src="/images/record-console-v2.png"
+        src="/images/record-console-empty-v3.png"
         alt=""
         width={1536}
         height={1024}
