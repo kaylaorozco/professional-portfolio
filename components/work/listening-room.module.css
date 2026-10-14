@@ -53,6 +53,7 @@
 .roomOutline {
   color: #947d6a;
 }
+.mobileRoom { display: none; }
 .laptopStand {
   aspect-ratio: 700 / 990;
   left: 76%;
@@ -695,12 +696,13 @@
     width: calc(100% + 2.4rem);
   }
   .roomOutline {
-    height: 390px;
-    left: -190px;
-    opacity: 0.65;
+    height: 490px;
+    left: 0;
     top: 0;
-    width: 750px;
+    width: 100%;
   }
+  .desktopRoom { display: none; }
+  .mobileRoom { display: block; }
   .laptopStand {
     left: 72%;
     top: 255px;
@@ -715,7 +717,7 @@
   .playerTarget {
     display: block;
     left: -18%;
-    top: 47%;
+    top: 53%;
     transform: none;
     width: 82%;
     z-index: 0;

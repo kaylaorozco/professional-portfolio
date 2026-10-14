@@ -677,43 +677,52 @@ function RecordCover({ project }: { project: Project }) {
 
 function RoomOutline() {
   return (
-    <svg
-      className={styles.roomOutline}
-      viewBox="0 0 1200 640"
-      fill="none"
-      aria-hidden="true"
-    >
-      <g
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <g opacity=".42">
-          <path d="M48 510V90h228v420M60 510V102h204v408M60 220h204M60 336h204M60 448h204" />
-          <path d="M74 218v-79h14v79m8 0v-96h20v96m9 0v-87h12v87m10 0-8-67 17-2 8 69m13 0v-91h20v91m8 0v-72h15v72m10 0 16-81 16 3-16 78" />
-          <path d="M78 334v-86h18v86m10 0v-71h13v71m10 0v-82h21v82m9 0 18-64 15 4-18 60m25 0v-89h17v89m9 0v-75h21v75" />
-          <rect x="77" y="365" width="68" height="80" rx="2" />
-          <circle cx="111" cy="405" r="25" />
-          <circle cx="111" cy="405" r="5" />
-          <path d="M159 445v-55h15v55m9 0v-68h18v68m10 0 12-57 19 4-12 53M55 511v25m213-25v25M0 538h130m950 0h120" />
+    <>
+      <svg className={`${styles.roomOutline} ${styles.desktopRoom}`} viewBox="0 0 1200 640" fill="none" aria-hidden="true">
+        <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          {/* Match the cabinet's long edge on the left and the table's
+              roughly 9-degree descending plane on the right. */}
+          <g opacity=".3">
+            <path d="M450 8V280L0 535M450 280l750 120" />
+            <path d="M0 523l450-255 750 120M450 268v12" />
+          </g>
+          <g opacity=".38">
+            {/* Slim window, projected onto the left wall. */}
+            <path d="M24 92l86-13v179l-86 32ZM32 100l70-11v161l-70 25Z" />
+            <path d="M67 95v172M32 188l70-19M18 294l98-37-7 8-91 35Z" />
+          </g>
+          <g opacity=".34" transform="matrix(1 .16 0 1 720 40)">
+            <rect width="135" height="150" rx="1" />
+            <rect x="10" y="10" width="115" height="130" />
+            <path d="M30 111c14-22 23-41 37-58 13 19 25 38 40 58M48 111h38" />
+            <circle cx="91" cy="39" r="12" />
+          </g>
+          <g opacity=".38" transform="matrix(1 .16 0 1 965 205)">
+            <path d="M0 0h167l-9 8H-9ZM15 8v15m131-15v15" />
+            <path d="M28-1l-5-38h42L60-1ZM44-39v-43m0 28c-24-3-35-17-30-30 20 1 30 14 30 30Zm0-13c-4-22 2-39 13-43 11 16 6 33-13 43Zm1 15c2-20 17-31 32-29-1 17-14 28-32 29Z" />
+            <path d="M93-1v-34h11v34m5 0v-43h12v43m6 0 8-34 11 3-7 31" />
+          </g>
         </g>
-        <g opacity=".28">
-          <rect x="363" y="36" width="120" height="143" rx="1" />
-          <rect x="373" y="46" width="100" height="123" />
-          <circle cx="423" cy="100" r="31" />
-          <path d="m401 140 22-18 23 18M545 99h144m-135 0V58h42v41m-33-41c-22-22-9-36 0-22 9-25 25-18 18 0 19-8 27 5 3 22m33 41V71h54v28" />
+      </svg>
+      <svg className={`${styles.roomOutline} ${styles.mobileRoom}`} viewBox="0 0 400 490" preserveAspectRatio="none" fill="none" aria-hidden="true">
+        <g stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+          <g opacity=".28">
+            <path d="M175 0v308L0 397m175-89 225 36M0 389l175-89 225 36" />
+          </g>
+          <g opacity=".34" transform="matrix(1 .16 0 1 315 120)">
+            <rect width="73" height="100" rx="1" />
+            <rect x="7" y="7" width="59" height="86" />
+            <circle cx="48" cy="29" r="8" />
+            <path d="m16 75 19-33 23 33" />
+          </g>
+          <g opacity=".34" transform="matrix(1 .16 0 1 240 65)">
+            <path d="M0 0h82l-6 5H-6ZM9 5v9m61-9v9" />
+            <path d="m20 0-3-22h25L39 0ZM29-22v-19m0 9c-14-1-22-10-19-18 13 0 19 8 19 18Zm0-9c-3-12 0-22 7-25 7 10 4 20-7 25Zm1 10c1-13 10-20 20-19-1 11-9 18-20 19Z" />
+            <path d="M55 0v-22h8V0m4 0v-28h8V0" />
+          </g>
         </g>
-        <g opacity=".53">
-          <path d="M1000 463v-77h119v77m-108-77v-13h96v13" />
-          <rect x="1013" y="397" width="92" height="111" rx="4" />
-          <circle cx="1059" cy="430" r="12" />
-          <circle cx="1059" cy="476" r="23" />
-          <circle cx="1059" cy="476" r="6" />
-          <path d="M1117 376h37l7-51h-51l7 51Zm18-51c-14-25-22-49-9-61 14 13 13 33 9 61Zm0-8c3-27 15-43 27-40 4 19-8 32-27 40Zm-6-6c-20-3-35-16-33-30 17-2 30 8 33 30Z" />
-        </g>
-      </g>
-    </svg>
+      </svg>
+    </>
   );
 }
 
