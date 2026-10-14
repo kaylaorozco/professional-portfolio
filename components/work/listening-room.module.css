@@ -43,8 +43,7 @@
   position: relative;
   width: min(100%, calc(max(350px, 100svh - 300px) * 1.875));
 }
-.roomOutline,
-.furniture {
+.roomOutline {
   height: 100%;
   inset: 0;
   pointer-events: none;
@@ -54,12 +53,26 @@
 .roomOutline {
   color: #947d6a;
 }
-.furniture {
-  height: 100%;
+.laptopStand {
+  aspect-ratio: 700 / 990;
+  left: 76%;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 59%;
+  transform: skewY(6deg);
+  transform-origin: center top;
+  width: 17%;
   z-index: 2;
 }
-.mobileFurniture {
-  display: none;
+.laptopStand img {
+  height: auto;
+  left: -50%;
+  max-width: none;
+  position: absolute;
+  top: -8%;
+  transform: scaleX(-1);
+  width: 200%;
 }
 .standingCharacter {
   bottom: 6%;
@@ -93,10 +106,10 @@
   border: 0;
   color: inherit;
   cursor: pointer;
-  left: 78%;
+  left: 79%;
   padding: 0;
   position: absolute;
-  top: 62%;
+  top: 61%;
   transform: none;
   transform-origin: center bottom;
   transition:
@@ -687,18 +700,11 @@
     top: 0;
     width: 750px;
   }
-  .furniture {
-    display: none;
-  }
-  .mobileFurniture {
-    display: block;
-    height: 470px;
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 2;
+  .laptopStand {
+    left: 72%;
+    top: 255px;
+    width: 28%;
+    z-index: 0;
   }
   .standingCharacter {
     bottom: 9%;
@@ -713,8 +719,8 @@
     width: 82%;
   }
   .laptopObject {
-    left: 78%;
-    top: 267px;
+    left: 79%;
+    top: 261px;
     transform: none;
     width: 19%;
   }

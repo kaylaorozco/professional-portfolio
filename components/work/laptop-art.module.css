@@ -28,7 +28,7 @@
   pointer-events: auto;
   height: 100%;
   position: relative;
-  transform: rotateX(70deg) rotateZ(5deg);
+  transform: skewY(9deg) skewX(-35deg) rotateX(74deg);
   transform-origin: center top;
   transform-style: preserve-3d;
   transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1);

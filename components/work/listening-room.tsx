@@ -322,37 +322,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       >
         <RoomOutline />
         <KaylaCharacter paused={playing} />
-        <svg
-          className={styles.furniture}
-          viewBox="0 0 1200 640"
-          fill="none"
-          aria-hidden="true"
-        >
-          <g stroke="#957966" strokeWidth="1.7" strokeLinejoin="round">
-            <g>
-              <path d="m914 401 150 3 30 18-166-2Z" fill="#dfc9ac" />
-              <path d="m928 420 166 2v18l-166-2Z" fill="#cba67f" />
-              <path d="m947 438 13 174m111-172 17 172" stroke="#8e6d59" strokeWidth="8" />
-              <path d="m938 520 145 2" opacity=".5" />
-            </g>
-          </g>
-        </svg>
-        <svg
-          className={styles.mobileFurniture}
-          viewBox="0 0 400 470"
-          preserveAspectRatio="none"
-          fill="none"
-          aria-hidden="true"
-        >
-          <g stroke="#957966" strokeWidth="1.5" strokeLinejoin="round">
-            <g>
-              <path d="m304 267 76 2 17 11-86-1Z" fill="#dfc9ac" />
-              <path d="m311 279 86 1v12l-86-1Z" fill="#cba67f" />
-              <path d="m321 291 7 158m56-157 10 157" stroke="#8e6d59" strokeWidth="5" />
-              <path d="m316 372 73 1" opacity=".5" />
-            </g>
-          </g>
-        </svg>
+        <span className={styles.laptopStand} aria-hidden="true">
+          <Image src="/images/laptop-side-table-v2.png" alt="" width={1402} height={1122} unoptimized />
+        </span>
         <div
           ref={recordLayerRef}
           className={styles.sleeves}
