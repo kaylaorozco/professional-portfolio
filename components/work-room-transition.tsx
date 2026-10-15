@@ -135,7 +135,7 @@ export function WorkRoomLink() {
       // Navigation still works when browser storage is unavailable.
     }
     timerRef.current = window.setTimeout(() => {
-      router.push('/work');
+      router.push('/work', { scroll: true });
     }, EXIT_DURATION);
   }
 
@@ -158,12 +158,21 @@ export function WorkRoomArrival({ children }: { children: ReactNode }) {
     } catch {
       // Render normally when browser storage is unavailable.
     }
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    // A newly mounted Work page starts at the top before its first paint.
+    // Its object-centering animation controls scrolling independently.
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const restoreScrollBehavior = () => {
+      root.style.scrollBehavior = previousScrollBehavior;
+    };
     if (
       !arriving ||
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
       !shellRef.current
     )
-      return;
+      return restoreScrollBehavior;
 
     const shell = shellRef.current;
     shell.dataset.arrival = 'entering';
@@ -181,6 +190,7 @@ export function WorkRoomArrival({ children }: { children: ReactNode }) {
       cancelAnimationFrame(firstFrame);
       cancelAnimationFrame(secondFrame);
       window.clearTimeout(settleTimer);
+      restoreScrollBehavior();
     };
   }, []);
 
