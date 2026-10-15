@@ -12,6 +12,8 @@ import Image from 'next/image';
 import type { Project } from '@/lib/projects';
 import { prepareCaseStudyArrival } from './case-study-arrival';
 import { KaylaCharacter } from './kayla-character';
+import { LaptopArt } from './laptop-art';
+import { FeedbackBoard } from './feedback-board';
 import styles from './listening-room.module.css';
 
 const VINYL_DURATION = 3600;
@@ -38,9 +40,15 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const [dragged, setDragged] = useState<number | null>(null);
   const [overPlayer, setOverPlayer] = useState(false);
   const [interacted, setInteracted] = useState(false);
+  const [laptopFocused, setLaptopFocused] = useState(false);
+  const [laptopOpen, setLaptopOpen] = useState(false);
+  const [laptopLayerRaised, setLaptopLayerRaised] = useState(false);
+  const [laptopInteracted, setLaptopInteracted] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const recordLayerRef = useRef<HTMLDivElement>(null);
-  const playerRef = useRef<HTMLButtonElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const laptopRef = useRef<HTMLDivElement>(null);
+  const laptopTriggerRef = useRef<HTMLButtonElement>(null);
   const sleevesRef = useRef<(HTMLElement | null)[]>([]);
   const frontRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const playRefs = useRef<(HTMLAnchorElement | null)[]>([]);
@@ -70,7 +78,10 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   }, [flipped, playing, selected]);
 
   useEffect(() => {
-    if (upright === null || !window.matchMedia('(max-width: 700px)').matches)
+    if (
+      (upright === null && !laptopFocused) ||
+      !window.matchMedia('(max-width: 700px)').matches
+    )
       return;
     let frame = 0;
     let cancelled = false;
@@ -79,18 +90,23 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       cancelAnimationFrame(frame);
     };
     frame = requestAnimationFrame(() => {
-      const layer = recordLayerRef.current;
-      const sleeve = sleevesRef.current[upright];
-      if (!layer || !sleeve) return;
-      // Use the final square size, not the rotating sleeve's transient bounds.
-      const size = Math.min(window.innerWidth * 0.88, 350);
+      const layer = upright === null ? sceneRef.current : recordLayerRef.current;
+      const object =
+        upright === null ? laptopRef.current : sleevesRef.current[upright];
+      if (!layer || !object) return;
+      // Use the final focused size, not the object's transient bounds.
+      const size =
+        upright === null
+          ? Math.min(window.innerWidth * 0.88, 360) / 1.4
+          : Math.min(window.innerWidth * 0.88, 350);
       const viewport = window.visualViewport;
       const height = viewport?.height ?? window.innerHeight;
       const topInset = 92;
       const bottomInset = 76;
       const space = Math.max(0, height - topInset - bottomInset - size);
       const top =
-        window.scrollY + layer.getBoundingClientRect().top + sleeve.offsetTop;
+        window.scrollY + layer.getBoundingClientRect().top +
+        (upright === null ? 165 : layer.offsetHeight * 0.18);
       const target = Math.min(
         Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
         Math.max(0, top - topInset - space / 2 - (viewport?.offsetTop ?? 0)),
@@ -127,26 +143,29 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       window.removeEventListener('pointerdown', cancel);
       window.removeEventListener('keydown', cancel);
     };
-  }, [upright]);
+  }, [upright, laptopFocused]);
 
   useEffect(() => {
-    if (upright === null) return;
+    if (upright === null && !laptopFocused) return;
     function dismiss(event: PointerEvent) {
       if (busy.current || !(event.target instanceof Node)) return;
       if (
-        sleevesRef.current[upright!]?.contains(event.target) ||
-        playerRef.current?.contains(event.target)
+        (upright !== null && sleevesRef.current[upright]?.contains(event.target)) ||
+        laptopRef.current?.contains(event.target)
       )
         return;
       setFlipped(null);
       setLifted(null);
+      setLaptopFocused(false);
+      setLaptopOpen(false);
     }
     document.addEventListener('pointerdown', dismiss);
     return () => document.removeEventListener('pointerdown', dismiss);
-  }, [upright]);
+  }, [upright, laptopFocused]);
 
   useEffect(() => {
     function keyboard(event: KeyboardEvent) {
+      if (event.defaultPrevented || document.activeElement?.closest('dialog[open]')) return;
       if (!sceneRef.current?.contains(document.activeElement)) return;
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -156,8 +175,12 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setFlight(null);
         setFlipped(null);
         setLifted(null);
-        frontRefs.current[selected]?.focus({ preventScroll: true });
+        setLaptopFocused(false);
+        setLaptopOpen(false);
+        if (laptopFocused) laptopTriggerRef.current?.focus({ preventScroll: true });
+        else frontRefs.current[selected]?.focus({ preventScroll: true });
       } else if (
+        !laptopFocused &&
         !busy.current &&
         (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
       ) {
@@ -168,19 +191,23 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setSelected(next);
         setFlipped(null);
         setLifted(null);
+        setLaptopFocused(false);
+        setLaptopOpen(false);
         setInteracted(true);
         frontRefs.current[next]?.focus({ preventScroll: true });
       }
     }
     document.addEventListener('keydown', keyboard);
     return () => document.removeEventListener('keydown', keyboard);
-  }, [selected, projects.length]);
+  }, [selected, projects.length, laptopFocused]);
 
   function browse(index: number) {
     if (busy.current) return;
     setSelected((index + projects.length) % projects.length);
     setFlipped(null);
     setLifted(null);
+    setLaptopFocused(false);
+    setLaptopOpen(false);
     setInteracted(true);
   }
 
@@ -190,6 +217,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     setSelected(index);
     setFlipped(index);
     setPlaying(true);
+    setLaptopFocused(false);
+    setLaptopOpen(false);
     setInteracted(true);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       router.push(`/work/${projects[index].slug}`);
@@ -197,7 +226,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     }
     function openProject() {
       prepareCaseStudyArrival(projects[index].slug);
-      router.push(`/work/${projects[index].slug}`, { scroll: false });
+      router.push(`/work/${projects[index].slug}`, { scroll: true });
     }
     // Let a dragged sleeve stand upright before revealing its record.
     timer.current = setTimeout(
@@ -205,7 +234,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         const layer = recordLayerRef.current?.getBoundingClientRect();
         const sleeve = sleevesRef.current[index]?.getBoundingClientRect();
         const player = playerRef.current
-          ?.querySelector('svg')
+          ?.querySelector('[data-platter]')
           ?.getBoundingClientRect();
         if (!layer || !sleeve || !player) {
           openProject();
@@ -214,9 +243,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         const size = sleeve.width * 0.86;
         const x = sleeve.left - layer.left + sleeve.width * 0.07;
         const y = sleeve.top - layer.top + sleeve.height * 0.07;
-        const targetWidth = player.width * (166 / 330);
-        const targetX = player.left - layer.left + player.width * (146 / 330);
-        const targetY = player.top - layer.top + player.height * (155 / 240);
+        const targetWidth = player.width;
+        const targetX = player.left - layer.left + player.width / 2;
+        const targetY = player.top - layer.top + player.height / 2;
         const mobile = window.matchMedia('(max-width: 700px)').matches;
         const duration = mobile ? MOBILE_VINYL_DURATION : VINYL_DURATION;
         setFlight({
@@ -263,17 +292,14 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     <section className={styles.work} aria-labelledby="work-title">
       <header className={styles.intro}>
         <div>
-          <p className={styles.eyebrow}>Selected work</p>
           <h1 id="work-title">
-            Good work.
+            <span>Good work.</span>
             <br />
-            On repeat.
+            <span>Good company.</span>
           </h1>
         </div>
         <p className={styles.introNote}>
-          A small collection of products and intelligent systems.
-          <br />
-          Designed, built, and put out into the world.
+          Take a peek around—pick an object to explore.
         </p>
       </header>
       <div
@@ -284,6 +310,9 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         data-upright={upright !== null}
         data-playing={playing}
         data-flight={flight !== null}
+        data-laptop-focused={laptopFocused}
+        data-laptop-open={laptopOpen}
+        data-laptop-raised={laptopFocused || laptopLayerRaised}
         style={
           {
             '--vinyl-duration': `${flight?.duration ?? VINYL_DURATION}ms`,
@@ -291,54 +320,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         }
       >
         <RoomOutline />
-        <KaylaCharacter
-          paused={flipped !== null || playing || dragged !== null}
-        />
-        <svg
-          className={styles.table}
-          viewBox="0 0 1200 800"
-          fill="none"
-          aria-hidden="true"
-        >
-          <g stroke="#957966" strokeWidth="1.7" strokeLinejoin="round">
-            <g fill="#e1ccb0">
-              <path d="M72 516H114L92 790H68Z" />
-              <path d="M1074 523H1116L1140 790H1116Z" />
-              <path d="m62 514 1070 8-2 26-1066-8Z" />
-            </g>
-            <path
-              d="m104 542-20 231m1001-225 38 225"
-              stroke="#b79b7c"
-              opacity=".5"
-            />
-            <path d="m134 372 861 8 155 130-1120-8Z" fill="#eee1cf" />
-            <path d="m30 502 1120 8v15L30 517Z" fill="#dfc9ac" />
-            <path d="m145 389 806 8m-839 91 942 8" opacity=".25" />
-          </g>
-        </svg>
-        <svg
-          className={styles.mobileTable}
-          viewBox="0 0 400 470"
-          preserveAspectRatio="none"
-          fill="none"
-          aria-hidden="true"
-        >
-          <g stroke="#957966" strokeWidth="1.5" strokeLinejoin="round">
-            <g fill="#e1ccb0">
-              <path d="M20 362H42L27 466H13Z" />
-              <path d="M358 362H380L387 466H373Z" />
-              <path d="M-10 362H410v16H-10Z" />
-            </g>
-            <path
-              d="m35 381-13 75m343-75 13 75"
-              stroke="#b79b7c"
-              opacity=".5"
-            />
-            <path d="M-60 180H430L500 355H-100Z" fill="#eee1cf" />
-            <path d="M-100 355H500v10H-100Z" fill="#dfc9ac" />
-            <path d="M-30 194h460M-70 342h540" opacity=".4" />
-          </g>
-        </svg>
+        <FeedbackBoard />
+        <KaylaCharacter paused={playing} />
+        <span className={styles.laptopStand} aria-hidden="true">
+          <Image src="/images/laptop-side-table-v2.png" alt="" width={1402} height={1122} unoptimized />
+        </span>
         <div
           ref={recordLayerRef}
           className={styles.sleeves}
@@ -361,6 +347,22 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
               data-dragged={dragged === index}
               data-project={project.slug}
             >
+              <svg
+                className={styles.sleeveLedge}
+                viewBox="0 0 160 16"
+                preserveAspectRatio="none"
+                fill="none"
+                aria-hidden="true"
+              >
+                <g
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M1 1h158M8 1l8 7h127l16-7M20 8v8m119-8v8" />
+                </g>
+              </svg>
               <div className={styles.flipShell}>
                 <button
                   ref={(node) => {
@@ -372,19 +374,18 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   disabled={playing}
                   inert={flipped === index}
                   aria-hidden={flipped === index}
-                  aria-label={`Flip ${project.shortTitle} for project overview`}
+                  aria-label={lifted === index ? `Flip ${project.shortTitle} for project overview` : `Bring ${project.shortTitle} forward to view its cover`}
                   aria-expanded={flipped === index}
                   aria-controls={`sleeve-back-${project.slug}`}
                   onFocus={() => setInteracted(true)}
-                  onClick={() => {
+                  onClick={(event) => {
                     if (swiped.current) {
                       swiped.current = false;
                       return;
                     }
                     if (busy.current) return;
-                    const mobile =
-                      window.matchMedia('(max-width: 700px)').matches;
-                    if (mobile && lifted !== index) {
+                    if (event.detail > 1) return;
+                    if (lifted !== index) {
                       browse(index);
                       setLifted(index);
                       return;
@@ -465,7 +466,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   >
                     {playing && selected === index
                       ? 'Putting this one on…'
-                      : 'Play this project'}
+                      : 'View full case study'}
                     <span aria-hidden="true">▷</span>
                   </a>
                   <button
@@ -481,6 +482,40 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   </button>
                 </section>
               </div>
+              {lifted === index && flipped === null && !playing && (
+                <button
+                  className={styles.flipHint}
+                  type="button"
+                  aria-label={`Flip ${project.shortTitle} for project details`}
+                  aria-controls={`sleeve-back-${project.slug}`}
+                  onClick={() => {
+                    if (busy.current) return;
+                    setSelected(index);
+                    setFlipped(index);
+                    setInteracted(true);
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 64 44"
+                    fill="none"
+                    aria-hidden="true"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path
+                      className={styles.flipArrowSweep}
+                      pathLength="1"
+                      d="M17 34C7 28 7 15 17 9C30 1 48 9 48 28"
+                    />
+                    <path
+                      className={styles.flipArrowHead}
+                      d="m40 20 8 8 8-8"
+                    />
+                  </svg>
+                </button>
+              )}
             </article>
           ))}
           {flight && (
@@ -503,25 +538,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
             </div>
           )}
         </div>
-        <button
+        <div
           ref={playerRef}
           className={styles.playerTarget}
-          type="button"
           data-ready={dragged !== null}
           data-over={overPlayer}
-          disabled={playing}
-          aria-label={
-            flipped === null
-              ? `View ${projects[selected].shortTitle} overview`
-              : `Play ${projects[selected].shortTitle}`
-          }
-          onClick={() => {
-            if (flipped === selected) play(selected);
-            else {
-              setFlipped(selected);
-              setInteracted(true);
-            }
-          }}
           onDragOver={(event) => {
             if (dragged === null) return;
             event.preventDefault();
@@ -542,21 +563,55 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
           }}
         >
           <RecordPlayer />
-        </button>
+        </div>
+        <div
+          ref={laptopRef}
+          className={styles.laptopObject}
+          onTransitionEnd={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              event.propertyName === 'width' &&
+              !laptopFocused
+            ) setLaptopLayerRaised(false);
+          }}
+          data-stage={
+            laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'
+          }
+        >
+          <LaptopArt stage={laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'} invited={!laptopInteracted && upright === null}
+          triggerRef={laptopTriggerRef}
+          onClose={() => { setLaptopOpen(false); setLaptopFocused(false); }}
+          onActivate={() => {
+            if (busy.current) return;
+            setLaptopInteracted(true);
+            setFlipped(null);
+            setLifted(null);
+            if (!laptopFocused) {
+              setLaptopLayerRaised(true);
+              setLaptopFocused(true);
+              setLaptopOpen(false);
+            } else if (!laptopOpen) {
+              setLaptopOpen(true);
+            } else {
+              setLaptopOpen(false);
+              setLaptopFocused(false);
+            }
+            setInteracted(true);
+          }} />
+        </div>
         <output className={styles.liveStatus} aria-live="polite">
-          {projects[selected].shortTitle}.{' '}
-          {playing
-            ? 'Opening case study.'
-            : flipped === null
-              ? 'Cover.'
-              : 'Project overview.'}
+          {laptopOpen
+            ? 'Laptop open. Choose an app to explore my toolkit.'
+            : laptopFocused
+              ? 'Sticker-covered laptop centered. Activate it again to open it.'
+              : `${projects[selected].shortTitle}. ${
+                  playing
+                    ? 'Opening case study.'
+                    : flipped === null
+                      ? lifted === null ? 'Cover on the wall.' : 'Cover centered. Activate again for project details.'
+                      : 'Project overview.'
+                }`}
         </output>
-      </div>
-      <div className={styles.collectionNote}>
-        <span>
-          01—{String(projects.length).padStart(2, '0')} / The current rotation
-        </span>
-        <p>From an idea of my own to systems used nationwide.</p>
       </div>
       <noscript>
         <p>
@@ -571,6 +626,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     </section>
   );
 }
+
 
 function RecordCover({ project }: { project: Project }) {
   const handsful = project.slug === 'handsful';
@@ -606,7 +662,7 @@ function RecordCover({ project }: { project: Project }) {
               height={406}
               unoptimized
             />
-            <span>A little less juggling.</span>
+            <span>A baby tracker built for multiples.</span>
           </div>
           <Image
             className={styles.phoneOne}
@@ -627,7 +683,7 @@ function RecordCover({ project }: { project: Project }) {
             unoptimized
           />
           <span className={styles.coverFoot}>
-            Built for the beautifully full hands.
+            Designed, built, and shipped.
           </span>
         </>
       ) : (
@@ -659,71 +715,55 @@ function RecordCover({ project }: { project: Project }) {
 
 function RoomOutline() {
   return (
-    <svg
-      className={styles.roomOutline}
-      viewBox="0 0 1200 640"
-      fill="none"
-      aria-hidden="true"
-    >
-      <g
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <g opacity=".42">
-          <path d="M48 510V90h228v420M60 510V102h204v408M60 220h204M60 336h204M60 448h204" />
-          <path d="M74 218v-79h14v79m8 0v-96h20v96m9 0v-87h12v87m10 0-8-67 17-2 8 69m13 0v-91h20v91m8 0v-72h15v72m10 0 16-81 16 3-16 78" />
-          <path d="M78 334v-86h18v86m10 0v-71h13v71m10 0v-82h21v82m9 0 18-64 15 4-18 60m25 0v-89h17v89m9 0v-75h21v75" />
-          <rect x="77" y="365" width="68" height="80" rx="2" />
-          <circle cx="111" cy="405" r="25" />
-          <circle cx="111" cy="405" r="5" />
-          <path d="M159 445v-55h15v55m9 0v-68h18v68m10 0 12-57 19 4-12 53M55 511v25m213-25v25M0 538h130m950 0h120" />
+    <>
+      <svg className={`${styles.roomOutline} ${styles.desktopRoom}`} viewBox="0 0 1200 640" fill="none" aria-hidden="true">
+        <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+          {/* Match the cabinet's long edge on the left and the table's
+              roughly 9-degree descending plane on the right. */}
+          <g opacity=".3">
+            <path d="M450 8V280L0 535M450 280l750 120" />
+            <path d="M0 523l450-255 750 120M450 268v12" />
+          </g>
+          <g opacity=".38">
+            {/* Slim window, projected onto the left wall. */}
+            <path d="M24 92l86-13v179l-86 32ZM32 100l70-11v161l-70 25Z" />
+            <path d="M67 95v172M32 188l70-19M18 294l98-37-7 8-91 35Z" />
+          </g>
+          <g opacity=".38" transform="matrix(1 .16 0 1 965 145)">
+            <path d="M0 0h167l-9 8H-9ZM15 8v15m131-15v15" />
+            <path d="M28-1l-5-38h42L60-1ZM44-39v-43m0 28c-24-3-35-17-30-30 20 1 30 14 30 30Zm0-13c-4-22 2-39 13-43 11 16 6 33-13 43Zm1 15c2-20 17-31 32-29-1 17-14 28-32 29Z" />
+            <path d="M93-1v-34h11v34m5 0v-43h12v43m6 0 8-34 11 3-7 31" />
+          </g>
         </g>
-        <g opacity=".28">
-          <rect x="363" y="36" width="120" height="143" rx="1" />
-          <rect x="373" y="46" width="100" height="123" />
-          <circle cx="423" cy="100" r="31" />
-          <path d="m401 140 22-18 23 18M545 99h144m-135 0V58h42v41m-33-41c-22-22-9-36 0-22 9-25 25-18 18 0 19-8 27 5 3 22m33 41V71h54v28" />
+      </svg>
+      <svg className={`${styles.roomOutline} ${styles.mobileRoom}`} viewBox="0 0 400 490" preserveAspectRatio="none" fill="none" aria-hidden="true">
+        <g stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+          <g opacity=".28">
+            <path d="M175 0v308L0 397m175-89 225 36M0 389l175-89 225 36" />
+          </g>
+          <g opacity=".34" transform="matrix(1 .16 0 1 240 65)">
+            <path d="M0 0h82l-6 5H-6ZM9 5v9m61-9v9" />
+            <path d="m20 0-3-22h25L39 0ZM29-22v-19m0 9c-14-1-22-10-19-18 13 0 19 8 19 18Zm0-9c-3-12 0-22 7-25 7 10 4 20-7 25Zm1 10c1-13 10-20 20-19-1 11-9 18-20 19Z" />
+            <path d="M55 0v-22h8V0m4 0v-28h8V0" />
+          </g>
         </g>
-        <g opacity=".53">
-          <path d="M1000 463v-77h119v77m-108-77v-13h96v13" />
-          <rect x="1013" y="397" width="92" height="111" rx="4" />
-          <circle cx="1059" cy="430" r="12" />
-          <circle cx="1059" cy="476" r="23" />
-          <circle cx="1059" cy="476" r="6" />
-          <path d="M1117 376h37l7-51h-51l7 51Zm18-51c-14-25-22-49-9-61 14 13 13 33 9 61Zm0-8c3-27 15-43 27-40 4 19-8 32-27 40Zm-6-6c-20-3-35-16-33-30 17-2 30 8 33 30Z" />
-        </g>
-      </g>
-    </svg>
+      </svg>
+    </>
   );
 }
 
 function RecordPlayer() {
   return (
-    <svg className={styles.player} viewBox="0 0 330 240" aria-hidden="true">
-      <g stroke="#48291e" strokeWidth="2.5" strokeLinejoin="round">
-        <path d="m28 137 25-111 246 12-8 110Z" fill="#f0c08c" />
-        <path d="m40 128 22-91 224 11-6 89Z" fill="#e7ab72" />
-        <path d="m19 142 247 13 39 34-249-9Z" fill="#c77548" />
-        <path d="m19 142 37 38v27l-37-35Z" fill="#ad593b" />
-        <path d="m56 180 249 9v26l-249-8Z" fill="#b86340" />
-        <path d="m29 140 234 12 29 27-234-10Z" fill="#e6b77e" />
-        <ellipse cx="146" cy="155" rx="83" ry="19" fill="#342b27" />
-        <g stroke="#716054" strokeWidth=".8" fill="none">
-          <ellipse cx="146" cy="155" rx="73" ry="15" />
-          <ellipse cx="146" cy="155" rx="64" ry="12" />
-          <ellipse cx="146" cy="155" rx="54" ry="9" />
-        </g>
-        <ellipse cx="146" cy="155" rx="23" ry="6" fill="#d6a355" />
-        <path d="M146 155v-5" strokeWidth="3" />
-        <circle cx="250" cy="148" r="7" fill="#7a8060" />
-        <path d="m250 148-12 19-52-3" strokeWidth="5" fill="none" />
-        <path d="m185 161-12 1v5l12 1Z" fill="#ead8bc" />
-        <circle cx="277" cy="202" r="5" fill="#e7be88" />
-        <path d="m77 209 2 9h13l2-8m178 6 2 8h13l2-8" fill="#48291e" />
-        <path d="m75 195 57 2" stroke="#e7be88" strokeWidth="1.5" />
-      </g>
-    </svg>
+    <span className={styles.playerArt} aria-hidden="true">
+      <Image
+        className={styles.player}
+        src="/images/record-console-empty-v3.png"
+        alt=""
+        width={1536}
+        height={1024}
+        unoptimized
+      />
+      <span className={styles.platterTarget} data-platter />
+    </span>
   );
 }

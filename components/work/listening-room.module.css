@@ -1,6 +1,8 @@
 .work {
   background: var(--paper);
-  overflow: hidden;
+  /* The header plus cream room fill the current viewport before the footer. */
+  min-height: calc(100dvh - 5rem);
+  overflow: clip;
   padding: clamp(1.5rem, 2.5vw, 2.5rem) 4vw 2.5rem;
 }
 .intro {
@@ -13,14 +15,6 @@
   position: relative;
   z-index: 2;
 }
-.eyebrow {
-  color: var(--clay-dark);
-  font-family: var(--font-geist-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  margin: 0 0 1rem;
-  text-transform: uppercase;
-}
 .intro h1 {
   font-family: var(--display);
   font-size: clamp(3.4rem, 5vw, 5rem);
@@ -28,6 +22,9 @@
   letter-spacing: -0.065em;
   line-height: 0.92;
   margin: 0;
+}
+.intro h1 > span {
+  white-space: nowrap;
 }
 .introNote {
   color: var(--muted-ink);
@@ -43,8 +40,7 @@
   position: relative;
   width: min(100%, calc(max(350px, 100svh - 300px) * 1.875));
 }
-.roomOutline,
-.table {
+.roomOutline {
   height: 100%;
   inset: 0;
   pointer-events: none;
@@ -54,84 +50,209 @@
 .roomOutline {
   color: #947d6a;
 }
-.table {
-  height: 125%;
-  z-index: 2;
-}
-.mobileTable {
-  display: none;
-}
-.character {
-  left: 65%;
+.mobileRoom { display: none; }
+.laptopStand {
+  aspect-ratio: 700 / 990;
+  left: 78%;
+  overflow: hidden;
   pointer-events: none;
   position: absolute;
-  top: 17%;
-  width: 35.55%;
+  top: 32.5%;
+  transform: skewY(6deg);
+  transform-origin: center top;
+  width: 13.5%;
+  z-index: 2;
+}
+.laptopStand img {
+  height: auto;
+  left: -50%;
+  max-width: none;
+  position: absolute;
+  top: -8%;
+  transform: scaleX(-1);
+  width: 200%;
+}
+.standingCharacter {
+  bottom: 6%;
+  left: 40%;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 400ms ease;
+  width: 28%;
   z-index: 1;
 }
-.character img {
+.standingCharacterPoster {
   display: block;
   height: auto;
   width: 100%;
 }
-.characterCanvas {
+.standingCharacterCanvas {
   height: 100%;
   inset: 0;
   opacity: 0;
   position: absolute;
   width: 100%;
 }
-.character[data-ready='true'] .characterPoster {
+.standingCharacter[data-ready='true'] .standingCharacterPoster {
   opacity: 0;
 }
-.character[data-ready='true'] .characterCanvas {
+.standingCharacter[data-ready='true'] .standingCharacterCanvas {
   opacity: 1;
 }
-.sleeves {
-  height: 40%;
-  left: 18%;
-  perspective: 1200px;
+.laptopObject {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  left: 80.4%;
+  padding: 0;
   position: absolute;
-  top: 40%;
-  width: 49%;
-  z-index: 7;
+  top: 34.1%;
+  transform: none;
+  transform-origin: center bottom;
+  transition:
+    left 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 400ms ease,
+    top 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    width 950ms cubic-bezier(0.4, 0, 0.2, 1);
+  width: 9.5%;
+  z-index: 3;
 }
-.sleeve {
+.laptopObject:focus-visible {
+  outline: none;
+}
+.scene[data-laptop-focused='true'] .laptopObject {
+  left: 50%;
+  top: 27%;
+  transform: translateX(-50%) rotate(0);
+  width: 44%;
+  z-index: 9;
+}
+.scene[data-laptop-open='true'] .laptopObject {
+  top: 42%;
+  width: 50%;
+}
+.scene[data-laptop-raised='true'] .laptopObject {
+  z-index: 9;
+}
+.sleeves {
+  pointer-events: none;
+  height: 100%;
   left: 0;
   perspective: 1200px;
   position: absolute;
   top: 0;
-  transform: rotateX(65deg) rotateZ(-14deg);
-  transform-origin: center 75%;
+  transition: opacity 400ms ease;
+  width: 100%;
+  z-index: 7;
+}
+.sleeve {
+  pointer-events: auto;
+  --shelf-lean: -1deg;
+  --wall-skew: -17deg;
+  left: 11%;
+  perspective: 1200px;
+  position: absolute;
+  top: 24%;
+  transform: skewY(var(--wall-skew)) rotate(var(--shelf-lean)) scaleX(0.78);
+  transform-origin: left bottom;
   transform-style: preserve-3d;
   transition:
     transform 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    left 950ms cubic-bezier(0.4, 0, 0.2, 1),
+    top 950ms cubic-bezier(0.4, 0, 0.2, 1),
     width 950ms cubic-bezier(0.4, 0, 0.2, 1);
-  width: 47%;
+  width: 11%;
 }
 .sleeve:nth-child(2) {
-  left: 44%;
-  top: -3%;
-  transform: rotateX(65deg) rotateZ(13deg);
+  --shelf-lean: 2deg;
+  left: 22%;
+  top: 14%;
 }
 .sleeve:has(.front:hover),
 .sleeve:has(.front:focus-visible) {
-  transform: translateY(-13%) rotateX(4deg) rotateZ(-5deg);
   z-index: 5;
 }
-.sleeve:nth-child(2):has(.front:hover),
-.sleeve:nth-child(2):has(.front:focus-visible) {
-  transform: translateY(-13%) rotateX(4deg) rotateZ(4deg);
+.sleeve:not([data-upright='true']):has(.front:hover) .flipShell,
+.sleeve:not([data-upright='true']):has(.front:focus-visible) .flipShell {
+  transform: translateY(-6%) scale(1.03);
 }
-.sleeve[data-flipped='true'],
-.sleeve[data-flipped='true']:has(.front:hover),
-.sleeve[data-flipped='true']:has(.front:focus-visible) {
-  transform: translateY(-28%) rotateX(0) rotateZ(0);
+.sleeve[data-upright='true'],
+.sleeve[data-upright='true']:has(.front:hover),
+.sleeve[data-upright='true']:has(.front:focus-visible) {
+  left: 50%;
+  top: 18%;
+  transform: translateX(-50%) rotate(0);
   width: clamp(280px, 28vw, 360px);
   z-index: 7;
 }
 .sleeve[data-dragged='true'] {
   opacity: 0.4;
+}
+.flipHint {
+  --flip-hint-delay: 950ms;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 48px;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  visibility: hidden;
+  animation: flip-hint-arrive 220ms ease-out var(--flip-hint-delay) both;
+}
+.flipHint:hover {
+  color: var(--clay);
+}
+.flipHint svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.flipArrowSweep {
+  stroke-dasharray: 1;
+  animation: flip-arrow-swoosh 5s ease-out var(--flip-hint-delay) infinite both;
+}
+.flipArrowHead {
+  animation: flip-arrow-tip 5s ease-out var(--flip-hint-delay) infinite both;
+}
+@keyframes flip-arrow-swoosh {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  2% { opacity: 1; }
+  12%, 90% { stroke-dashoffset: 0; opacity: 1; }
+  98%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes flip-arrow-tip {
+  0%, 8% { opacity: 0; transform: translate(-3px, -4px); }
+  14%, 90% { opacity: 1; transform: translate(0, 0); }
+  98%, 100% { opacity: 0; transform: translate(0, 0); }
+}
+@keyframes flip-hint-arrive {
+  from { opacity: 0; visibility: hidden; }
+  to { opacity: 1; visibility: visible; }
+}
+.sleeveLedge {
+  color: #947d6a;
+  height: 12px;
+  left: -16%;
+  opacity: 0.58;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  transition: opacity 250ms ease;
+  width: 132%;
+  z-index: 0;
+}
+.sleeve[data-flipped='true'] .sleeveLedge,
+.sleeve[data-upright='true'] .sleeveLedge {
+  opacity: 0;
 }
 .flipShell {
   aspect-ratio: 1;
@@ -141,6 +262,7 @@
   transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   will-change: transform;
+  z-index: 1;
 }
 .sleeve[data-flipped='true'] .flipShell {
   transform: rotateY(180deg);
@@ -163,7 +285,7 @@
   cursor: grabbing;
 }
 .front:focus-visible,
-.playerTarget:focus-visible,
+.flipHint:focus-visible,
 .play:focus-visible,
 .backToCover:focus-visible {
   outline: 2px solid var(--clay);
@@ -437,20 +559,36 @@
   border: 0;
   border-radius: 12px;
   color: var(--muted-ink);
-  cursor: pointer;
-  left: 70%;
+  cursor: default;
+  left: -7%;
   padding: 0;
   position: absolute;
-  top: 46%;
-  width: 25%;
+  top: 44%;
+  transform: none;
+  transform-origin: left bottom;
+  transition: opacity 400ms ease;
+  width: 44%;
   z-index: 3;
+}
+.playerArt {
+  display: block;
+  position: relative;
+  width: 100%;
 }
 .player {
   display: block;
   height: auto;
   pointer-events: none;
-  transform: rotate(-3deg);
+  transform: none;
   width: 100%;
+}
+.platterTarget {
+  height: 13.5%;
+  left: 27.5%;
+  pointer-events: none;
+  position: absolute;
+  top: 33%;
+  width: 21%;
 }
 .playerTarget[data-ready='true'] {
   background: #e6a34c20;
@@ -460,28 +598,6 @@
 .playerTarget[data-over='true'] {
   background: #e6a34c45;
   outline-style: solid;
-}
-.collectionNote {
-  align-items: center;
-  border-top: 1px solid var(--line);
-  color: var(--muted-ink);
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-  margin: 0.5rem auto 0;
-  max-width: 1360px;
-  padding-top: 1.5rem;
-}
-.collectionNote > span {
-  font-family: var(--font-geist-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.collectionNote p {
-  font-family: var(--display);
-  font-size: 1rem;
-  margin: 0;
 }
 .liveStatus {
   clip-path: inset(50%);
@@ -527,10 +643,10 @@
 @keyframes sleeve-set-down {
   0%,
   55% {
-    transform: translateY(-28%) rotateX(0) rotateZ(0);
+    transform: translate(-50%, 0) rotateX(0) rotateZ(0);
   }
   100% {
-    transform: translate(-5%, 12%) rotateX(65deg) rotateZ(-8deg) scale(0.8);
+    transform: translate(-55%, 12%) rotateX(65deg) rotateZ(-8deg) scale(0.8);
   }
 }
 @keyframes vinyl-journey {
@@ -540,20 +656,20 @@
   }
   42% {
     z-index: 6;
-    transform: translate(78%, 0) rotate(12deg);
+    transform: translate(110%, 0);
   }
   55% {
     z-index: 8;
-    transform: translate(82%, -10%) rotate(22deg);
+    transform: translate(115%, -10%) rotate(12deg);
   }
   90% {
     transform: translate(var(--travel-x), var(--travel-y))
-      scale(var(--record-scale)) scaleY(0.23) rotate(55deg);
+      scale(var(--record-scale)) scaleY(0.44) rotate(55deg);
   }
   100% {
     z-index: 8;
     transform: translate(var(--travel-x), var(--travel-y))
-      scale(var(--record-scale)) scaleY(0.23) rotate(70deg);
+      scale(var(--record-scale)) scaleY(0.44) rotate(70deg);
   }
 }
 @media (hover: none) {
@@ -563,6 +679,9 @@
   }
 }
 @media (max-width: 1000px) and (min-width: 701px) {
+  .intro h1 {
+    font-size: clamp(2.8rem, 5.5vw, 3.5rem);
+  }
   .introNote {
     font-size: 0.82rem;
     max-width: 18rem;
@@ -572,6 +691,9 @@
   }
 }
 @media (max-width: 700px) {
+  .flipHint {
+    --flip-hint-delay: 1500ms;
+  }
   .work {
     padding: 2.3rem 1.2rem 2rem;
   }
@@ -581,11 +703,7 @@
     gap: 1.25rem;
   }
   .intro h1 {
-    font-size: clamp(3.4rem, 14vw, 5rem);
-  }
-  .eyebrow {
-    font-size: 0.6rem;
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 11.5vw, 4rem);
   }
   .introNote {
     font-size: 0.85rem;
@@ -598,82 +716,100 @@
     width: calc(100% + 2.4rem);
   }
   .roomOutline {
-    height: 390px;
-    left: -190px;
-    opacity: 0.65;
-    top: 0;
-    width: 750px;
-  }
-  .table {
-    display: none;
-  }
-  .mobileTable {
-    display: block;
-    height: 470px;
+    height: 490px;
     left: 0;
-    pointer-events: none;
-    position: absolute;
     top: 0;
     width: 100%;
-    z-index: 2;
   }
-  .character {
-    left: auto;
-    right: -5%;
-    top: 8px;
-    width: 272px;
+  .desktopRoom { display: none; }
+  .mobileRoom { display: block; }
+  .laptopStand {
+    left: 72%;
+    top: 255px;
+    width: 28%;
+    z-index: 0;
+  }
+  .standingCharacter {
+    bottom: 9%;
+    left: 35%;
+    width: min(56%, 224px);
   }
   .playerTarget {
-    display: none;
+    display: block;
+    left: -18%;
+    top: 53%;
+    transform: none;
+    width: 82%;
+    z-index: 0;
+  }
+  .laptopObject {
+    left: 79%;
+    top: 261px;
+    transform: none;
+    width: 19%;
+    z-index: 0;
+  }
+  .scene[data-laptop-focused='true'] .laptopObject,
+  .scene[data-laptop-focused='true'] .laptopObject:focus-visible {
+    left: 50%;
+    top: 165px;
+    transform: translateX(-50%) rotate(0);
+    width: min(88vw, 360px);
+  }
+  .scene[data-laptop-open='true'] .laptopObject,
+  .scene[data-laptop-open='true'] .laptopObject:focus-visible {
+    top: 275px;
+    width: min(88vw, 400px);
   }
   .sleeves {
-    height: 215px;
-    left: calc(50% - min(21.24%, 84.96px));
+    height: 490px;
+    left: 0;
     perspective: 900px;
-    top: 195px;
+    top: 0;
     touch-action: pan-y;
-    width: min(36%, 144px);
+    width: 100%;
   }
   .sleeve,
   .sleeve:nth-child(2) {
-    left: 18%;
-    top: -11%;
-    transform: rotateX(30deg) rotateZ(10deg);
-    width: 100%;
+    left: 5%;
+    top: 28%;
+    transform: skewY(var(--wall-skew)) rotate(var(--shelf-lean)) scaleX(0.78);
+    width: min(23%, 92px);
     z-index: 1;
     transition:
       transform 1500ms cubic-bezier(0.4, 0, 0.2, 1),
       width 1500ms cubic-bezier(0.4, 0, 0.2, 1),
       left 1500ms cubic-bezier(0.4, 0, 0.2, 1),
-      top 1500ms cubic-bezier(0.4, 0, 0.2, 1),
-      z-index 0ms linear 750ms;
+      top 1500ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .flipShell {
     transition-duration: 1500ms;
   }
   .sleeve[data-front='true'] {
-    left: 0;
-    top: 3%;
-    transform: rotateX(30deg) rotateZ(-9deg);
     z-index: 3;
+  }
+  .sleeve:nth-child(2) {
+    left: 13%;
+    top: 1%;
   }
   .sleeve:has(.front:hover),
   .sleeve:nth-child(2):has(.front:hover) {
-    transform: rotateX(30deg) rotateZ(10deg);
+    transform: skewY(var(--wall-skew)) rotate(var(--shelf-lean)) scaleX(0.78);
   }
   .sleeve[data-front='true']:has(.front:hover),
   .sleeve[data-front='true']:has(.front:focus-visible) {
-    transform: rotateX(25deg) rotateZ(-9deg);
+    transform: skewY(var(--wall-skew)) rotate(var(--shelf-lean)) scaleX(0.78);
   }
-  .scene[data-upright='true'] .sleeve:not([data-upright='true']) {
-    left: 95%;
+  .sleeve:not([data-flipped='true']):has(.front:hover) .flipShell,
+  .sleeve:not([data-flipped='true']):has(.front:focus-visible) .flipShell {
+    transform: rotateY(0);
   }
   .scene .sleeve[data-upright='true'],
   .scene .sleeve[data-upright='true']:has(.front:hover),
   .scene .sleeve[data-upright='true']:has(.front:focus-visible) {
-    left: calc(59% - min(44vw, 175px));
-    top: -10%;
-    transform: rotateX(0) rotateZ(0);
+    left: 50%;
+    top: 18%;
+    transform: translateX(-50%) rotateX(0) rotateZ(0);
     width: min(88vw, 350px);
     z-index: 7;
     transition-delay: 0ms;
@@ -688,16 +824,7 @@
   .scene[data-flight='true'] .sleeve[data-flipped='true'] {
     animation: none;
   }
-  .collectionNote {
-    align-items: start;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-top: 1.5rem;
-  }
-  .collectionNote p {
-    font-size: 0.9rem;
-  }
-  .scene[data-interacted='false'] .sleeve[data-front='true'] {
+  .scene[data-interacted='false'] .sleeve[data-front='true'] .flipShell {
     animation: stack-invitation 900ms ease-in-out 2.5s 1;
   }
 }
@@ -714,25 +841,34 @@
 @keyframes stack-invitation {
   0%,
   100% {
-    transform: rotateX(30deg) rotateZ(-9deg);
+    transform: translate(0, 0) rotateY(0);
   }
   35% {
-    transform: translateX(-5px) rotateX(25deg) rotateZ(-11deg);
+    transform: translate(-5px, -2px) rotateY(0) rotateZ(-1deg);
   }
   65% {
-    transform: translateX(3px) rotateX(28deg) rotateZ(-7deg);
+    transform: translate(3px, -1px) rotateY(0) rotateZ(1deg);
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .flipHint {
+    animation: none;
+    visibility: visible;
+  }
+  .flipArrowSweep,
+  .flipArrowHead {
+    animation: none;
+  }
   .sleeve,
   .sleeve:nth-child(2),
   .flipShell,
+  .laptopObject,
   .scene {
     transition: none;
   }
   .flight,
   .scene[data-flight='true'] .sleeve[data-flipped='true'],
-  .scene[data-interacted='false'] .sleeve[data-front='true'] {
+  .scene[data-interacted='false'] .sleeve[data-front='true'] .flipShell {
     animation: none;
   }
 }

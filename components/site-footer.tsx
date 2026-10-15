@@ -1,5 +1,4 @@
 import { ArrowUpRight } from 'lucide-react';
-import Link from 'next/link';
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
@@ -26,7 +25,6 @@ export function SiteFooter() {
       </div>
       <div className="footer-meta">
         <p>© 2020–{currentYear} Kayla Orozco</p>
-        <Link href="/privacy" prefetch={false}>Privacy</Link>
       </div>
     </footer>
   );
