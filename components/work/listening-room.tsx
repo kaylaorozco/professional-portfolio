@@ -226,7 +226,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     }
     function openProject() {
       prepareCaseStudyArrival(projects[index].slug);
-      router.push(`/work/${projects[index].slug}`, { scroll: false });
+      router.push(`/work/${projects[index].slug}`, { scroll: true });
     }
     // Let a dragged sleeve stand upright before revealing its record.
     timer.current = setTimeout(
@@ -466,7 +466,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   >
                     {playing && selected === index
                       ? 'Putting this one on…'
-                      : 'Play this project'}
+                      : 'View full case study'}
                     <span aria-hidden="true">▷</span>
                   </a>
                   <button
@@ -482,6 +482,40 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   </button>
                 </section>
               </div>
+              {lifted === index && flipped === null && !playing && (
+                <button
+                  className={styles.flipHint}
+                  type="button"
+                  aria-label={`Flip ${project.shortTitle} for project details`}
+                  aria-controls={`sleeve-back-${project.slug}`}
+                  onClick={() => {
+                    if (busy.current) return;
+                    setSelected(index);
+                    setFlipped(index);
+                    setInteracted(true);
+                  }}
+                >
+                  <svg
+                    viewBox="0 0 64 44"
+                    fill="none"
+                    aria-hidden="true"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path
+                      className={styles.flipArrowSweep}
+                      pathLength="1"
+                      d="M17 34C7 28 7 15 17 9C30 1 48 9 48 28"
+                    />
+                    <path
+                      className={styles.flipArrowHead}
+                      d="m40 20 8 8 8-8"
+                    />
+                  </svg>
+                </button>
+              )}
             </article>
           ))}
           {flight && (
@@ -628,7 +662,7 @@ function RecordCover({ project }: { project: Project }) {
               height={406}
               unoptimized
             />
-            <span>A little less juggling.</span>
+            <span>A baby tracker built for multiples.</span>
           </div>
           <Image
             className={styles.phoneOne}
@@ -649,7 +683,7 @@ function RecordCover({ project }: { project: Project }) {
             unoptimized
           />
           <span className={styles.coverFoot}>
-            Built for the beautifully full hands.
+            Designed, built, and shipped.
           </span>
         </>
       ) : (

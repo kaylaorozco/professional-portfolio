@@ -190,6 +190,53 @@
 .sleeve[data-dragged='true'] {
   opacity: 0.4;
 }
+.flipHint {
+  --flip-hint-delay: 950ms;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 48px;
+  padding: 2px 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  visibility: hidden;
+  animation: flip-hint-arrive 220ms ease-out var(--flip-hint-delay) both;
+}
+.flipHint:hover {
+  color: var(--clay);
+}
+.flipHint svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.flipArrowSweep {
+  stroke-dasharray: 1;
+  animation: flip-arrow-swoosh 5s ease-out var(--flip-hint-delay) infinite both;
+}
+.flipArrowHead {
+  animation: flip-arrow-tip 5s ease-out var(--flip-hint-delay) infinite both;
+}
+@keyframes flip-arrow-swoosh {
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  2% { opacity: 1; }
+  12%, 90% { stroke-dashoffset: 0; opacity: 1; }
+  98%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+@keyframes flip-arrow-tip {
+  0%, 8% { opacity: 0; transform: translate(-3px, -4px); }
+  14%, 90% { opacity: 1; transform: translate(0, 0); }
+  98%, 100% { opacity: 0; transform: translate(0, 0); }
+}
+@keyframes flip-hint-arrive {
+  from { opacity: 0; visibility: hidden; }
+  to { opacity: 1; visibility: visible; }
+}
 .sleeveLedge {
   color: #947d6a;
   height: 12px;
@@ -238,6 +285,7 @@
   cursor: grabbing;
 }
 .front:focus-visible,
+.flipHint:focus-visible,
 .play:focus-visible,
 .backToCover:focus-visible {
   outline: 2px solid var(--clay);
@@ -595,7 +643,7 @@
 @keyframes sleeve-set-down {
   0%,
   55% {
-    transform: translate(-50%, -28%) rotateX(0) rotateZ(0);
+    transform: translate(-50%, 0) rotateX(0) rotateZ(0);
   }
   100% {
     transform: translate(-55%, 12%) rotateX(65deg) rotateZ(-8deg) scale(0.8);
@@ -608,11 +656,11 @@
   }
   42% {
     z-index: 6;
-    transform: translate(78%, 0) rotate(12deg);
+    transform: translate(110%, 0);
   }
   55% {
     z-index: 8;
-    transform: translate(82%, -10%) rotate(22deg);
+    transform: translate(115%, -10%) rotate(12deg);
   }
   90% {
     transform: translate(var(--travel-x), var(--travel-y))
@@ -643,6 +691,9 @@
   }
 }
 @media (max-width: 700px) {
+  .flipHint {
+    --flip-hint-delay: 1500ms;
+  }
   .work {
     padding: 2.3rem 1.2rem 2rem;
   }
@@ -800,6 +851,14 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .flipHint {
+    animation: none;
+    visibility: visible;
+  }
+  .flipArrowSweep,
+  .flipArrowHead {
+    animation: none;
+  }
   .sleeve,
   .sleeve:nth-child(2),
   .flipShell,

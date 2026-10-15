@@ -184,7 +184,7 @@ function LaptopDock() {
         </span>
       </span>
       <span className={styles.dockViewport}>
-        <span className={styles.dock} role="group" aria-label="Tools I use">
+        <span className={styles.dock} role="toolbar" aria-label="Tools I use">
           {tools.map((item, index) => (
             <button
               key={item.name}
@@ -194,6 +194,7 @@ function LaptopDock() {
               type="button"
               className={styles.app}
               aria-label={item.name}
+              data-tool={item.name}
               aria-pressed={selected === index}
               data-hovered={hovered === index}
               data-neighbor={
