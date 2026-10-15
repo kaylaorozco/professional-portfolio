@@ -13,6 +13,7 @@ import type { Project } from '@/lib/projects';
 import { prepareCaseStudyArrival } from './case-study-arrival';
 import { KaylaCharacter } from './kayla-character';
 import { LaptopArt } from './laptop-art';
+import { FeedbackBoard } from './feedback-board';
 import styles from './listening-room.module.css';
 
 const VINYL_DURATION = 3600;
@@ -163,6 +164,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
 
   useEffect(() => {
     function keyboard(event: KeyboardEvent) {
+      if (event.defaultPrevented || document.activeElement?.closest('dialog[open]')) return;
       if (!sceneRef.current?.contains(document.activeElement)) return;
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -319,6 +321,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         }
       >
         <RoomOutline />
+        <FeedbackBoard />
         <KaylaCharacter paused={playing} />
         <span className={styles.laptopStand} aria-hidden="true">
           <Image src="/images/laptop-side-table-v2.png" alt="" width={1402} height={1122} unoptimized />
@@ -691,13 +694,7 @@ function RoomOutline() {
             <path d="M24 92l86-13v179l-86 32ZM32 100l70-11v161l-70 25Z" />
             <path d="M67 95v172M32 188l70-19M18 294l98-37-7 8-91 35Z" />
           </g>
-          <g opacity=".34" transform="matrix(1 .16 0 1 720 40)">
-            <rect width="135" height="150" rx="1" />
-            <rect x="10" y="10" width="115" height="130" />
-            <path d="M30 111c14-22 23-41 37-58 13 19 25 38 40 58M48 111h38" />
-            <circle cx="91" cy="39" r="12" />
-          </g>
-          <g opacity=".38" transform="matrix(1 .16 0 1 965 205)">
+          <g opacity=".38" transform="matrix(1 .16 0 1 965 145)">
             <path d="M0 0h167l-9 8H-9ZM15 8v15m131-15v15" />
             <path d="M28-1l-5-38h42L60-1ZM44-39v-43m0 28c-24-3-35-17-30-30 20 1 30 14 30 30Zm0-13c-4-22 2-39 13-43 11 16 6 33-13 43Zm1 15c2-20 17-31 32-29-1 17-14 28-32 29Z" />
             <path d="M93-1v-34h11v34m5 0v-43h12v43m6 0 8-34 11 3-7 31" />
@@ -708,12 +705,6 @@ function RoomOutline() {
         <g stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
           <g opacity=".28">
             <path d="M175 0v308L0 397m175-89 225 36M0 389l175-89 225 36" />
-          </g>
-          <g opacity=".34" transform="matrix(1 .16 0 1 315 120)">
-            <rect width="73" height="100" rx="1" />
-            <rect x="7" y="7" width="59" height="86" />
-            <circle cx="48" cy="29" r="8" />
-            <path d="m16 75 19-33 23 33" />
           </g>
           <g opacity=".34" transform="matrix(1 .16 0 1 240 65)">
             <path d="M0 0h82l-6 5H-6ZM9 5v9m61-9v9" />

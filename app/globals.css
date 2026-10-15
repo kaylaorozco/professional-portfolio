@@ -18,7 +18,8 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* Preserve the room's layout when dialogs temporarily hide page scrolling. */
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 body {
   margin: 0;
   background: var(--paper);
