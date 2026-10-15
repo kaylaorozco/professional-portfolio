@@ -1,5 +1,7 @@
 .work {
   background: var(--paper);
+  /* The header plus cream room fill the current viewport before the footer. */
+  min-height: calc(100dvh - 5rem);
   overflow: clip;
   padding: clamp(1.5rem, 2.5vw, 2.5rem) 4vw 2.5rem;
 }
@@ -13,14 +15,6 @@
   position: relative;
   z-index: 2;
 }
-.eyebrow {
-  color: var(--clay-dark);
-  font-family: var(--font-geist-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  margin: 0 0 1rem;
-  text-transform: uppercase;
-}
 .intro h1 {
   font-family: var(--display);
   font-size: clamp(3.4rem, 5vw, 5rem);
@@ -28,6 +22,9 @@
   letter-spacing: -0.065em;
   line-height: 0.92;
   margin: 0;
+}
+.intro h1 > span {
+  white-space: nowrap;
 }
 .introNote {
   color: var(--muted-ink);
@@ -136,13 +133,8 @@
   top: 42%;
   width: 50%;
 }
-.scene[data-laptop-focused='true'] .sleeves,
-.scene[data-laptop-focused='true'] .playerTarget,
-.scene[data-laptop-focused='true'] .standingCharacter {
-  opacity: 0.28;
-}
-.scene[data-upright='true'] .laptopObject {
-  opacity: 0.25;
+.scene[data-laptop-raised='true'] .laptopObject {
+  z-index: 9;
 }
 .sleeves {
   pointer-events: none;
@@ -559,28 +551,6 @@
   background: #e6a34c45;
   outline-style: solid;
 }
-.collectionNote {
-  align-items: center;
-  border-top: 1px solid var(--line);
-  color: var(--muted-ink);
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-  margin: 0.5rem auto 0;
-  max-width: 1360px;
-  padding-top: 1.5rem;
-}
-.collectionNote > span {
-  font-family: var(--font-geist-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.collectionNote p {
-  font-family: var(--display);
-  font-size: 1rem;
-  margin: 0;
-}
 .liveStatus {
   clip-path: inset(50%);
   height: 1px;
@@ -661,6 +631,9 @@
   }
 }
 @media (max-width: 1000px) and (min-width: 701px) {
+  .intro h1 {
+    font-size: clamp(2.8rem, 5.5vw, 3.5rem);
+  }
   .introNote {
     font-size: 0.82rem;
     max-width: 18rem;
@@ -679,11 +652,7 @@
     gap: 1.25rem;
   }
   .intro h1 {
-    font-size: clamp(3.4rem, 14vw, 5rem);
-  }
-  .eyebrow {
-    font-size: 0.6rem;
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 11.5vw, 4rem);
   }
   .introNote {
     font-size: 0.85rem;
@@ -740,9 +709,6 @@
   .scene[data-laptop-open='true'] .laptopObject:focus-visible {
     top: 275px;
     width: min(88vw, 400px);
-  }
-  .scene[data-laptop-focused='true'] .sleeves {
-    opacity: 0.2;
   }
   .sleeves {
     height: 490px;
@@ -806,15 +772,6 @@
   }
   .scene[data-flight='true'] .sleeve[data-flipped='true'] {
     animation: none;
-  }
-  .collectionNote {
-    align-items: start;
-    flex-direction: column;
-    gap: 0.7rem;
-    margin-top: 1.5rem;
-  }
-  .collectionNote p {
-    font-size: 0.9rem;
   }
   .scene[data-interacted='false'] .sleeve[data-front='true'] .flipShell {
     animation: stack-invitation 900ms ease-in-out 2.5s 1;

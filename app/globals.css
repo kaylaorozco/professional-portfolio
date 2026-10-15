@@ -612,8 +612,8 @@ a { color: inherit; text-decoration: none; }
 }
 .work-room-cta[aria-disabled='true'] { pointer-events: none; }
 
-html[data-work-room-transition='leaving'] { overflow: hidden; }
-html[data-work-room-transition='leaving'] body::before {
+html:is([data-work-room-transition='leaving'], [data-work-room-transition='returning']) { overflow: hidden; }
+html:is([data-work-room-transition='leaving'], [data-work-room-transition='returning']) body::before {
   animation: work-room-motion-lines 820ms cubic-bezier(.5, 0, .25, 1) forwards;
   background:
     linear-gradient(90deg, transparent 3%, rgba(111, 85, 76, .28) 3% 39%, transparent 39%) 0 17% / 100% 1px no-repeat,
@@ -630,7 +630,7 @@ html[data-work-room-transition='leaving'] body::before {
   width: 120vw;
   z-index: 101;
 }
-html[data-work-room-transition='leaving'] body::after {
+html:is([data-work-room-transition='leaving'], [data-work-room-transition='returning']) body::after {
   animation: work-room-curtain-in 820ms cubic-bezier(.76, 0, .24, 1) forwards;
   background: var(--paper);
   content: '';
@@ -644,6 +644,27 @@ html[data-work-room-transition='leaving'] .home-page {
   animation: home-page-exit-left 820ms cubic-bezier(.76, 0, .24, 1) forwards;
   pointer-events: none;
   will-change: transform;
+}
+html[data-work-room-transition='returning'] body::before {
+  animation-name: room-return-motion-lines;
+  transform: translateX(-70vw);
+}
+html[data-work-room-transition='returning'] body::after {
+  transform: translateX(-100%);
+}
+html[data-work-room-transition='returning'] main {
+  animation: page-exit-right 820ms cubic-bezier(.76, 0, .24, 1) forwards;
+  pointer-events: none;
+  will-change: transform;
+}
+html[data-room-return-arrival='entering'] main {
+  opacity: 0;
+  transform: translateX(-3rem);
+}
+html[data-room-return-arrival='settled'] main {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 440ms ease-out, transform 600ms cubic-bezier(.22, 1, .36, 1);
 }
 
 .work-room-arrival {
@@ -668,6 +689,9 @@ html[data-work-room-transition='leaving'] .home-page {
 @keyframes home-page-exit-left {
   to { transform: translateX(-100vw); }
 }
+@keyframes page-exit-right {
+  to { transform: translateX(100vw); }
+}
 
 @keyframes work-room-curtain-in {
   to { transform: translateX(0); }
@@ -678,6 +702,12 @@ html[data-work-room-transition='leaving'] .home-page {
   18% { opacity: 1; }
   72% { opacity: .85; }
   100% { opacity: 0; transform: translateX(-70vw); }
+}
+@keyframes room-return-motion-lines {
+  0% { opacity: 0; transform: translateX(-70vw); }
+  18% { opacity: 1; }
+  72% { opacity: .85; }
+  100% { opacity: 0; transform: translateX(65vw); }
 }
 
 .hero-ticker {
@@ -949,14 +979,16 @@ html[data-work-room-transition='leaving'] .home-page {
   .logo-final-stars { transform: translateY(-0.2rem); }
   .hero-ticker-track { animation: none; transform: none; }
   .work-room-cta,
-  html[data-work-room-transition='leaving'] body::before,
-  html[data-work-room-transition='leaving'] body::after,
-  html[data-work-room-transition='leaving'] .home-page {
+  html:is([data-work-room-transition='leaving'], [data-work-room-transition='returning']) body::before,
+  html:is([data-work-room-transition='leaving'], [data-work-room-transition='returning']) body::after,
+  html[data-work-room-transition='leaving'] .home-page,
+  html[data-work-room-transition='returning'] main {
     animation: none;
   }
   .work-room-arrival,
   .work-room-arrival[data-arrival='entering'],
-  .work-room-arrival[data-arrival='settled'] {
+  .work-room-arrival[data-arrival='settled'],
+  html[data-room-return-arrival] main {
     opacity: 1;
     transform: none;
     transition: none;

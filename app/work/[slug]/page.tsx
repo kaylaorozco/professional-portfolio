@@ -7,6 +7,7 @@ import { ProjectVisual } from '@/components/project-visual';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { CaseStudyArrival } from '@/components/work/case-study-arrival';
+import { BackNavigationLink } from '@/components/work-room-transition';
 import { getPublishedProject, publishedProjects } from '@/lib/projects';
 
 export function generateStaticParams() {
@@ -32,7 +33,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <CaseStudyArrival slug={slug} />
       <SiteHeader />
       <article className="case-study">
-        <Link className="back-link" href="/work" prefetch={false}><ArrowLeft aria-hidden="true" size={17} /> All work</Link>
+        <BackNavigationLink className="back-link" href="/work"><ArrowLeft aria-hidden="true" size={17} /> All work</BackNavigationLink>
         <header className={`case-hero${project.slug === 'handsful' ? ' case-hero-handsful' : ''}`}>
           <div className="case-hero-copy">
             <p className="eyebrow">{project.type} · {project.status}</p>

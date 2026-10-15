@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import { BackNavigationLink } from './work-room-transition';
 
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <Link className="wordmark" href="/#top" prefetch={false} aria-label="Kayla Orozco, home">
+      <BackNavigationLink className="wordmark" href="/#top" aria-label="Kayla Orozco, home">
         <span className="wordmark-name" aria-hidden="true">
           <span className="brand-glyph glyph-k morph-anchor" />
           <span className="brand-glyph glyph-a morph-away morph-1" />
@@ -22,7 +23,7 @@ export function SiteHeader() {
           <span className="logo-final-layer logo-final-swoosh" />
           <span className="logo-final-layer logo-final-stars" />
         </span>
-      </Link>
+      </BackNavigationLink>
       <nav className="site-nav" aria-label="Primary navigation">
         <Link href="/about" prefetch={false}>About</Link>
         <Link href="/work" prefetch={false}>Work</Link>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import { testimonials } from '@/lib/testimonials';
 import styles from './feedback-board.module.css';
@@ -26,13 +26,26 @@ export function FeedbackBoard() {
     quoteRef.current?.scrollTo({ top: 0 });
   }, [selected, open]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open) return;
     const dialog = dialogRef.current;
     if (!dialog) return;
     dialog.showModal();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // Show and measure before paint: no frame with the wall board gone and
+    // the reading panel still closed, and no estimated-size correction later.
+    const board = boardRef.current;
+    if (board) {
+      const wall = board.getBoundingClientRect();
+      const panel = dialog.getBoundingClientRect();
+      setOrigin({
+        '--board-x': `${wall.left + wall.width / 2 - panel.left - panel.width / 2}px`,
+        '--board-y': `${wall.top + wall.height / 2 - panel.top - panel.height / 2}px`,
+        '--board-scale-x': board.offsetWidth / panel.width,
+        '--board-scale-y': board.offsetHeight / panel.height,
+      } as CSSProperties);
+    }
     return () => {
       document.body.style.overflow = previousOverflow;
       dialog.close();
@@ -98,13 +111,6 @@ export function FeedbackBoard() {
           setSelected(
             target ? Number(target.getAttribute('data-note-index')) : 1,
           );
-          const rect = event.currentTarget.getBoundingClientRect();
-          setOrigin({
-            '--board-x': `${rect.left + rect.width / 2 - window.innerWidth / 2}px`,
-            '--board-y': `${rect.top + rect.height / 2 - window.innerHeight / 2}px`,
-            '--board-scale':
-              rect.width / Math.min(window.innerWidth * 0.92, 640),
-          } as CSSProperties);
           setClosing(false);
           setOpen(true);
         }}
@@ -132,6 +138,7 @@ export function FeedbackBoard() {
           </span>
         </span>
       </button>
+      {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- Native modal dialog handles its backdrop, Escape, and arrow-key navigation. */}
       <dialog
         ref={dialogRef}
         className={styles.dialog}

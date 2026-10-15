@@ -42,6 +42,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const [interacted, setInteracted] = useState(false);
   const [laptopFocused, setLaptopFocused] = useState(false);
   const [laptopOpen, setLaptopOpen] = useState(false);
+  const [laptopLayerRaised, setLaptopLayerRaised] = useState(false);
   const [laptopInteracted, setLaptopInteracted] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const recordLayerRef = useRef<HTMLDivElement>(null);
@@ -291,17 +292,14 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     <section className={styles.work} aria-labelledby="work-title">
       <header className={styles.intro}>
         <div>
-          <p className={styles.eyebrow}>Selected work</p>
           <h1 id="work-title">
-            Good work.
+            <span>Good work.</span>
             <br />
-            On repeat.
+            <span>Good company.</span>
           </h1>
         </div>
         <p className={styles.introNote}>
-          A small collection of products and intelligent systems.
-          <br />
-          Designed, built, and put out into the world.
+          Take a peek around—pick an object to explore.
         </p>
       </header>
       <div
@@ -314,6 +312,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         data-flight={flight !== null}
         data-laptop-focused={laptopFocused}
         data-laptop-open={laptopOpen}
+        data-laptop-raised={laptopFocused || laptopLayerRaised}
         style={
           {
             '--vinyl-duration': `${flight?.duration ?? VINYL_DURATION}ms`,
@@ -534,6 +533,13 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         <div
           ref={laptopRef}
           className={styles.laptopObject}
+          onTransitionEnd={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              event.propertyName === 'width' &&
+              !laptopFocused
+            ) setLaptopLayerRaised(false);
+          }}
           data-stage={
             laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'
           }
@@ -547,6 +553,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
             setFlipped(null);
             setLifted(null);
             if (!laptopFocused) {
+              setLaptopLayerRaised(true);
               setLaptopFocused(true);
               setLaptopOpen(false);
             } else if (!laptopOpen) {
@@ -571,12 +578,6 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                       : 'Project overview.'
                 }`}
         </output>
-      </div>
-      <div className={styles.collectionNote}>
-        <span>
-          01—{String(projects.length).padStart(2, '0')} / The current rotation
-        </span>
-        <p>From an idea of my own to systems used nationwide.</p>
       </div>
       <noscript>
         <p>

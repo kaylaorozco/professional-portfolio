@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SoundProvider } from '@/components/site-sound';
+import { BackNavigationArrival } from '@/components/work-room-transition';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body><SoundProvider>{children}</SoundProvider></body>
+      <body><SoundProvider><BackNavigationArrival />{children}</SoundProvider></body>
     </html>
   );
 }
