@@ -54,8 +54,8 @@ export function KaylaCharacter({ paused }: { paused: boolean }) {
         EYE_X,
         EYE_Y + 14,
       );
-      skin.addColorStop(0, '#fecf99');
-      skin.addColorStop(1, '#fecd95');
+      skin.addColorStop(0, '#f7bf89');
+      skin.addColorStop(1, '#f8c28f');
       context!.fillStyle = skin;
       context!.beginPath();
       context!.ellipse(EYE_X, EYE_Y, 12, 13, 0, 0, Math.PI * 2);
@@ -125,7 +125,7 @@ export function KaylaCharacter({ paused }: { paused: boolean }) {
       ready = false;
       sync();
     };
-    artwork.src = '/images/kayla-work-standing-v4.png';
+    artwork.src = '/images/kayla-work-standing-v6.png';
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -153,7 +153,7 @@ export function KaylaCharacter({ paused }: { paused: boolean }) {
     <div ref={characterRef} className={styles.standingCharacter} aria-hidden="true">
       <Image
         className={styles.standingCharacterPoster}
-        src="/images/kayla-work-standing-v4.png"
+        src="/images/kayla-work-standing-v6.png"
         alt=""
         width={WIDTH}
         height={HEIGHT}
