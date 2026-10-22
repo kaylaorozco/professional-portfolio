@@ -90,7 +90,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       cancelAnimationFrame(frame);
     };
     frame = requestAnimationFrame(() => {
-      const layer = upright === null ? sceneRef.current : recordLayerRef.current;
+      const layer =
+        upright === null ? sceneRef.current : recordLayerRef.current;
       const object =
         upright === null ? laptopRef.current : sleevesRef.current[upright];
       if (!layer || !object) return;
@@ -105,7 +106,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       const bottomInset = 76;
       const space = Math.max(0, height - topInset - bottomInset - size);
       const top =
-        window.scrollY + layer.getBoundingClientRect().top +
+        window.scrollY +
+        layer.getBoundingClientRect().top +
         (upright === null ? 165 : layer.offsetHeight * 0.18);
       const target = Math.min(
         Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
@@ -150,7 +152,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     function dismiss(event: PointerEvent) {
       if (busy.current || !(event.target instanceof Node)) return;
       if (
-        (upright !== null && sleevesRef.current[upright]?.contains(event.target)) ||
+        (upright !== null &&
+          sleevesRef.current[upright]?.contains(event.target)) ||
         laptopRef.current?.contains(event.target)
       )
         return;
@@ -165,7 +168,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
 
   useEffect(() => {
     function keyboard(event: KeyboardEvent) {
-      if (event.defaultPrevented || document.activeElement?.closest('dialog[open]')) return;
+      if (
+        event.defaultPrevented ||
+        document.activeElement?.closest('dialog[open]')
+      )
+        return;
       if (!sceneRef.current?.contains(document.activeElement)) return;
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -177,7 +184,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         setLifted(null);
         setLaptopFocused(false);
         setLaptopOpen(false);
-        if (laptopFocused) laptopTriggerRef.current?.focus({ preventScroll: true });
+        if (laptopFocused)
+          laptopTriggerRef.current?.focus({ preventScroll: true });
         else frontRefs.current[selected]?.focus({ preventScroll: true });
       } else if (
         !laptopFocused &&
@@ -323,7 +331,13 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
         <FeedbackBoard />
         <KaylaCharacter paused={playing} />
         <span className={styles.laptopStand} aria-hidden="true">
-          <Image src="/images/laptop-side-table-v2.png" alt="" width={1402} height={1122} unoptimized />
+          <Image
+            src="/images/laptop-side-table-v2.png"
+            alt=""
+            width={1402}
+            height={1122}
+            unoptimized
+          />
         </span>
         <div
           ref={recordLayerRef}
@@ -374,7 +388,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   disabled={playing}
                   inert={flipped === index}
                   aria-hidden={flipped === index}
-                  aria-label={lifted === index ? `Flip ${project.shortTitle} for project overview` : `Bring ${project.shortTitle} forward to view its cover`}
+                  aria-label={
+                    lifted === index
+                      ? `Flip ${project.shortTitle} for project overview`
+                      : `Bring ${project.shortTitle} forward to view its cover`
+                  }
                   aria-expanded={flipped === index}
                   aria-controls={`sleeve-back-${project.slug}`}
                   onFocus={() => setInteracted(true)}
@@ -509,10 +527,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                       pathLength="1"
                       d="M17 34C7 28 7 15 17 9C30 1 48 9 48 28"
                     />
-                    <path
-                      className={styles.flipArrowHead}
-                      d="m40 20 8 8 8-8"
-                    />
+                    <path className={styles.flipArrowHead} d="m40 20 8 8 8-8" />
                   </svg>
                 </button>
               )}
@@ -572,43 +587,52 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
               event.target === event.currentTarget &&
               event.propertyName === 'width' &&
               !laptopFocused
-            ) setLaptopLayerRaised(false);
+            )
+              setLaptopLayerRaised(false);
           }}
           data-stage={
             laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'
           }
         >
-          <LaptopArt stage={laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'} invited={!laptopInteracted && upright === null}
-          triggerRef={laptopTriggerRef}
-          onClose={() => { setLaptopOpen(false); setLaptopFocused(false); }}
-          onActivate={() => {
-            if (busy.current) return;
-            setLaptopInteracted(true);
-            setFlipped(null);
-            setLifted(null);
-            if (!laptopFocused) {
-              setLaptopLayerRaised(true);
-              setLaptopFocused(true);
-              setLaptopOpen(false);
-            } else if (!laptopOpen) {
-              setLaptopOpen(true);
-            } else {
+          <LaptopArt
+            stage={laptopOpen ? 'open' : laptopFocused ? 'stickers' : 'resting'}
+            invited={!laptopInteracted && upright === null}
+            triggerRef={laptopTriggerRef}
+            onClose={() => {
               setLaptopOpen(false);
               setLaptopFocused(false);
-            }
-            setInteracted(true);
-          }} />
+            }}
+            onActivate={() => {
+              if (busy.current) return;
+              setLaptopInteracted(true);
+              setFlipped(null);
+              setLifted(null);
+              if (!laptopFocused) {
+                setLaptopLayerRaised(true);
+                setLaptopFocused(true);
+                setLaptopOpen(false);
+              } else if (!laptopOpen) {
+                setLaptopOpen(true);
+              } else {
+                setLaptopOpen(false);
+                setLaptopFocused(false);
+              }
+              setInteracted(true);
+            }}
+          />
         </div>
         <output className={styles.liveStatus} aria-live="polite">
           {laptopOpen
-            ? 'Laptop open. Choose an app to explore my toolkit.'
+            ? 'Laptop open. Read my notes or explore my toolkit.'
             : laptopFocused
               ? 'Sticker-covered laptop centered. Activate it again to open it.'
               : `${projects[selected].shortTitle}. ${
                   playing
                     ? 'Opening case study.'
                     : flipped === null
-                      ? lifted === null ? 'Cover on the wall.' : 'Cover centered. Activate again for project details.'
+                      ? lifted === null
+                        ? 'Cover on the wall.'
+                        : 'Cover centered. Activate again for project details.'
                       : 'Project overview.'
                 }`}
         </output>
@@ -626,7 +650,6 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
     </section>
   );
 }
-
 
 function RecordCover({ project }: { project: Project }) {
   const handsful = project.slug === 'handsful';
@@ -716,8 +739,18 @@ function RecordCover({ project }: { project: Project }) {
 function RoomOutline() {
   return (
     <>
-      <svg className={`${styles.roomOutline} ${styles.desktopRoom}`} viewBox="0 0 1200 640" fill="none" aria-hidden="true">
-        <g stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className={`${styles.roomOutline} ${styles.desktopRoom}`}
+        viewBox="0 0 1200 640"
+        fill="none"
+        aria-hidden="true"
+      >
+        <g
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           {/* Match the cabinet's long edge on the left and the table's
               roughly 9-degree descending plane on the right. */}
           <g opacity=".3">
@@ -736,8 +769,19 @@ function RoomOutline() {
           </g>
         </g>
       </svg>
-      <svg className={`${styles.roomOutline} ${styles.mobileRoom}`} viewBox="0 0 400 490" preserveAspectRatio="none" fill="none" aria-hidden="true">
-        <g stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className={`${styles.roomOutline} ${styles.mobileRoom}`}
+        viewBox="0 0 400 490"
+        preserveAspectRatio="none"
+        fill="none"
+        aria-hidden="true"
+      >
+        <g
+          stroke="currentColor"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <g opacity=".28">
             <path d="M175 0v308L0 397m175-89 225 36M0 389l175-89 225 36" />
           </g>

@@ -38,7 +38,7 @@ export function LaptopArt({
           aria-expanded={stage === 'stickers'}
           aria-label={
             stage === 'stickers'
-              ? 'Turn the laptop around and open my toolkit'
+              ? 'Turn the laptop around and look inside'
               : 'Bring the laptop forward to inspect its stickers'
           }
           onClick={(event) => {
@@ -124,22 +124,76 @@ export function LaptopArt({
             aria-hidden={stage !== 'open'}
           >
             <span className={styles.screen}>
-              <span className={styles.menubar}>
-                <span>My toolkit</span>
-                <button
-                  ref={closeRef}
-                  type="button"
-                  className={styles.close}
-                  onClick={onClose}
-                  aria-label="Close toolkit and return laptop to stand"
-                >
-                  ×
-                </button>
-              </span>
-              <LaptopDock key={stage === 'open' ? 'open' : 'closed'} />
+              <LaptopScreen
+                key={stage === 'open' ? 'open' : 'closed'}
+                closeRef={closeRef}
+                onClose={onClose}
+              />
             </span>
           </span>
         </span>
+      </span>
+    </span>
+  );
+}
+
+function LaptopScreen({
+  closeRef,
+  onClose,
+}: {
+  closeRef: RefObject<HTMLButtonElement | null>;
+  onClose: () => void;
+}) {
+  const [view, setView] = useState<'notes' | 'toolkit'>('toolkit');
+
+  return (
+    <>
+      <span className={styles.menubar}>
+        <span className={styles.screenTabs} aria-label="Laptop sections">
+          <button
+            type="button"
+            className={styles.screenTab}
+            aria-pressed={view === 'toolkit'}
+            onClick={() => setView('toolkit')}
+          >
+            Toolkit
+          </button>
+          <button
+            type="button"
+            className={styles.screenTab}
+            aria-pressed={view === 'notes'}
+            onClick={() => setView('notes')}
+          >
+            Notes
+          </button>
+        </span>
+        <button
+          ref={closeRef}
+          type="button"
+          className={styles.close}
+          onClick={onClose}
+          aria-label="Close laptop and return it to the stand"
+        >
+          ×
+        </button>
+      </span>
+      {view === 'notes' ? <AboutNotes /> : <LaptopDock />}
+    </>
+  );
+}
+
+function AboutNotes() {
+  return (
+    <span className={styles.notes}>
+      <span className={styles.notesLabel}>About me</span>
+      <strong className={styles.notesTitle}>The human in the loop.</strong>
+      <span className={styles.notesParagraph}>
+        I&apos;m a Texas-based conversational designer and design engineer with
+        5+ years creating AI experiences across chat, voice, and mobile. I turn
+        complex business needs into natural interactions people can trust,
+        connecting language, product strategy, and system logic. I&apos;ve led
+        enterprise transformations and now build mobile products through my
+        personal studio, staying hands-on from concept through implementation.
       </span>
     </span>
   );
