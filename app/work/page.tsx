@@ -14,7 +14,7 @@ export default function WorkPage() {
   return (
     <main>
       <WorkRoomArrival>
-        <SiteHeader />
+        <SiteHeader staticLogo />
         <ListeningRoom projects={publishedProjects} />
         <SiteFooter />
       </WorkRoomArrival>

@@ -31,7 +31,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   return (
     <main>
       <CaseStudyArrival slug={slug} />
-      <SiteHeader />
+      <SiteHeader staticLogo />
       <article className="case-study">
         <BackNavigationLink className="back-link" href="/work"><ArrowLeft aria-hidden="true" size={17} /> All work</BackNavigationLink>
         <header className={`case-hero${project.slug === 'handsful' ? ' case-hero-handsful' : ''}`}>
