@@ -4,7 +4,11 @@ import { BackNavigationLink } from './work-room-transition';
 export function SiteHeader() {
   return (
     <header className="site-header">
-      <BackNavigationLink className="wordmark" href="/#top" aria-label="Kayla Orozco, home">
+      <BackNavigationLink
+        className="wordmark"
+        href="/#top"
+        aria-label="Kayla Orozco, home"
+      >
         <span className="wordmark-name" aria-hidden="true">
           <span className="brand-glyph glyph-k morph-anchor" />
           <span className="brand-glyph glyph-a morph-away morph-1" />
@@ -25,8 +29,9 @@ export function SiteHeader() {
         </span>
       </BackNavigationLink>
       <nav className="site-nav" aria-label="Primary navigation">
-        <Link href="/about" prefetch={false}>About</Link>
-        <Link href="/work" prefetch={false}>Work</Link>
+        <Link href="/work" prefetch={false}>
+          Work
+        </Link>
         <Link className="nav-contact" href="/contact" prefetch={false}>
           Let&apos;s Chat
         </Link>
@@ -40,8 +45,9 @@ export function SiteHeader() {
           </span>
         </summary>
         <nav className="mobile-nav-panel" aria-label="Mobile navigation">
-          <Link href="/about" prefetch={false}>About</Link>
-          <Link href="/work" prefetch={false}>Work</Link>
+          <Link href="/work" prefetch={false}>
+            Work
+          </Link>
           <Link href="/contact" prefetch={false}>
             Let&apos;s Chat
           </Link>

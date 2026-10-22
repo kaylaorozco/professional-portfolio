@@ -188,18 +188,12 @@ function AboutNotes() {
       <span className={styles.notesLabel}>About me</span>
       <strong className={styles.notesTitle}>The human in the loop.</strong>
       <span className={styles.notesParagraph}>
-        I&apos;m a <strong>Texas-based</strong> conversational designer and
-        design engineer building AI experiences across chat, voice, and mobile.
-        I translate complex business needs into natural interactions people can
-        trust, bringing together language, product strategy, and the systems
-        behind the interface.
-      </span>
-      <span className={styles.notesParagraph}>
-        I&apos;ve led enterprise-scale transformations with product and
-        engineering teams, and now build mobile products through my studio,
-        Mesquite &amp; Thorn Digital. I use AI tools to help write code, then
-        review and refine it myself. Whether designing or building, I ground the
-        work in real human behavior.
+        I&apos;m a Texas-based conversational designer and design engineer with
+        5+ years creating AI experiences across chat, voice, and mobile. I turn
+        complex business needs into natural interactions people can trust,
+        connecting language, product strategy, and system logic. I&apos;ve led
+        enterprise transformations and now build mobile products through my
+        personal studio, staying hands-on from concept through implementation.
       </span>
     </span>
   );

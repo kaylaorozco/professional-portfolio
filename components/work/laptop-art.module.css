@@ -233,7 +233,7 @@
   display: block;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 5% 8% 6%;
 }
 .notesLabel {
@@ -401,15 +401,18 @@
     padding: 0 7px;
   }
   .notes {
-    padding: 5% 7% 7%;
+    padding: 3% 6% 4%;
+  }
+  .notesLabel {
+    margin-bottom: 0.8cqw;
   }
   .notesTitle {
-    font-size: clamp(20px, 7cqw, 28px);
-    margin-bottom: 3cqw;
+    font-size: clamp(18px, 6cqw, 22px);
+    margin-bottom: 2cqw;
   }
   .notesParagraph {
-    font-size: clamp(11px, 3.25cqw, 14px);
-    line-height: 1.45;
+    font-size: clamp(9.5px, 2.8cqw, 12px);
+    line-height: 1.35;
   }
   .notesParagraph + .notesParagraph {
     margin-top: 3cqw;
