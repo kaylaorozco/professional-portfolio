@@ -18,9 +18,10 @@ export default function Home() {
           <span className="hero-inline-spark" aria-hidden="true">✦</span>
           <div className="hero-editorial-side">
             <p>
-              I turn ambiguous ideas into working products—from mobile apps to
-              conversational AI—combining interaction design, intelligent
-              behavior, and code.
+              I&apos;m a design engineer specializing in AI-powered products and
+              conversational experiences. I bring together product thinking,
+              interaction design, and engineering to turn complex ideas into
+              intuitive, working products.
             </p>
             <div className="hero-actions">
               <WorkRoomLink />
