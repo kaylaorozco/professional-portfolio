@@ -185,15 +185,16 @@ function LaptopScreen({
 function AboutNotes() {
   return (
     <span className={styles.notes}>
-      <span className={styles.notesLabel}>About me</span>
       <strong className={styles.notesTitle}>The human in the loop.</strong>
       <span className={styles.notesParagraph}>
-        I&apos;m a Texas-based conversational designer and design engineer with
-        5+ years creating AI experiences across chat, voice, and mobile. I turn
-        complex business needs into natural interactions people can trust,
-        connecting language, product strategy, and system logic. I&apos;ve led
-        enterprise transformations and now build mobile products through my
-        personal studio, staying hands-on from concept through implementation.
+        I started in conversational design, making complex systems feel more
+        human. Over 5+ years, I&apos;ve expanded from designing AI conversations to
+        building the products behind them.
+      </span>
+      <span className={styles.notesParagraph}>
+        Today, I bring together design, strategy, and engineering—from enterprise
+        AI to independently built mobile products. I stay hands-on from concept
+        to launch.
       </span>
     </span>
   );
