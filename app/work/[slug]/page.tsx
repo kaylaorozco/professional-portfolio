@@ -52,12 +52,36 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <ProjectVisual project={project} />
         </header>
 
-        <dl className={`case-facts${project.platform ? ' case-facts-four' : ''}`}>
-          <div><dt>Role</dt><dd>{project.role}</dd></div>
-          <div><dt>Timeline</dt><dd>{project.timeline}</dd></div>
-          {project.platform && <div><dt>Platform</dt><dd>{project.platform}</dd></div>}
-          <div><dt>Scope</dt><dd>{project.tags.slice(0, 3).join(' · ')}</dd></div>
-        </dl>
+        {project.slug === 'handsful' ? (
+          <section className="case-overview" aria-labelledby="project-overview-title">
+            <p className="eyebrow" id="project-overview-title">Project overview</p>
+            <dl className="case-facts case-facts-four case-overview-grid">
+              <div>
+                <dt>The challenge</dt>
+                <dd>Simplify everyday care tracking, especially for families managing multiple babies.</dd>
+              </div>
+              <div>
+                <dt>My role</dt>
+                <dd>{project.role}<span className="case-fact-secondary">{project.timeline}</span></dd>
+              </div>
+              <div>
+                <dt>What I owned</dt>
+                <dd>Product strategy, UX/UI design, engineering, AI integration, and launch.</dd>
+              </div>
+              <div>
+                <dt>The outcome</dt>
+                <dd>Designed, built, and launched Handsful on iOS and Android.<span className="case-fact-secondary">Available in the U.S. and Mexico</span></dd>
+              </div>
+            </dl>
+          </section>
+        ) : (
+          <dl className={`case-facts${project.platform ? ' case-facts-four' : ''}`}>
+            <div><dt>Role</dt><dd>{project.role}</dd></div>
+            <div><dt>Timeline</dt><dd>{project.timeline}</dd></div>
+            {project.platform && <div><dt>Platform</dt><dd>{project.platform}</dd></div>}
+            <div><dt>Scope</dt><dd>{project.tags.slice(0, 3).join(' · ')}</dd></div>
+          </dl>
+        )}
 
         <section className="outcome-panel">
           <p className="eyebrow">Outcome</p>

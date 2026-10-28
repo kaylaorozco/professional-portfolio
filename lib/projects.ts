@@ -32,18 +32,19 @@ export const projects: Project[] = [
     title: 'Handsful — Building a Baby Tracker for Multiples',
     shortTitle: 'Handsful',
     type: 'Mobile product · Design + engineering',
-    status: 'Live on the App Store',
+    status: 'Live on iOS and Android',
     summary:
       'I designed, engineered, and shipped Handsful, a baby tracker built from the ground up for families raising twins, triplets, and other multiples—centering shared caregiving, simultaneous logging, and fewer decisions in the moment.',
     outcome:
-      'I took Handsful from product concept through interaction design, system architecture, React Native implementation, and App Store launch—building a shared family system where multiples are the starting point.',
+      'I took Handsful from product concept through interaction design, system architecture, React Native implementation, and iOS and Android launch—building a shared family system where multiples are the starting point.',
     role: 'Founder & Design Engineer',
     timeline: '2026 – present',
-    platform: 'iOS shipped · shared iOS/Android codebase',
+    platform: 'iOS + Android · U.S. + Mexico',
     links: [
-      { label: 'Website', href: 'https://handsful.app' },
-      { label: 'App Store', href: 'https://apps.apple.com/us/app/handsful-multiples-tracker/id6797077032' },
       { label: 'Technical showcase', href: 'https://github.com/kaylaorozco/handsful-showcase' },
+      { label: 'App Store', href: 'https://apps.apple.com/us/app/handsful-multiples-tracker/id6797077032' },
+      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.handsful.app' },
+      { label: 'Website', href: 'https://handsful.app' },
     ],
     tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'RevenueCat', 'Applied AI'],
     metrics: [

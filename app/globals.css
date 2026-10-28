@@ -1187,6 +1187,11 @@ html[data-room-return-arrival='settled'] main {
 .case-facts div:first-child { border-left: 0; }
 .case-facts dt { color: var(--clay-dark); font-family: var(--font-geist-mono), monospace; font-size: .67rem; font-weight: 750; text-transform: uppercase; }
 .case-facts dd { font-size: .9rem; margin: .55rem 0 0; }
+.case-overview { margin-top: 5rem; }
+.case-overview > .eyebrow { margin: 0 0 1rem; }
+.case-overview .case-facts { margin-top: 0; }
+.case-overview-grid dd { line-height: 1.55; }
+.case-fact-secondary { color: var(--muted-ink); display: block; font-size: .76rem; line-height: 1.5; margin-top: .55rem; }
 .outcome-panel { background: var(--ink); border-radius: 1.2rem; color: var(--paper-light); margin: clamp(4rem, 8vw, 8rem) 0; padding: clamp(2rem, 5vw, 5rem); }
 .outcome-panel .eyebrow { color: var(--ochre); }
 .outcome-panel h2 { font-family: var(--display); font-size: clamp(2.4rem, 5vw, 5.4rem); font-weight: 500; letter-spacing: -.055em; line-height: .98; margin: 0; max-width: 18ch; }

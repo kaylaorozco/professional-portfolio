@@ -197,7 +197,7 @@ export function HandsfulCaseStudy() {
             <p>AI processing stays server-side, generated summaries use a retention limit, consent is tracked at family and caregiver level, and sensitive categories that do not belong in model context are excluded.</p>
           </div>
           <p>
-            Although Handsful is currently available only in the U.S., I designed its data, consent, and deletion patterns with broader privacy requirements in mind. That includes minimizing data sent to third parties, reviewing analytics choices, and leaving room for stricter requirements without claiming compliance guarantees.
+            Handsful is currently available in the U.S. and Mexico. I designed its data, consent, and deletion patterns with broader privacy requirements in mind, including minimizing data sent to third parties, reviewing analytics choices, and leaving room for stricter requirements without claiming compliance guarantees.
           </p>
         </div>
       </section>
@@ -231,7 +231,7 @@ export function HandsfulCaseStudy() {
             The implemented scope includes core logging, shared family care, Timeline, authentication, family sharing, doctor-visit PDF export, English and Spanish support, subscriptions on iOS, and AI Insights.
           </p>
           <p>
-            The iOS app is available on the App Store. The React Native implementation shares a codebase with Android, without implying that every production feature is launched there.
+            Handsful is available on iOS and Android. The React Native implementation supports both platforms from one shared codebase.
           </p>
         </div>
       </section>
