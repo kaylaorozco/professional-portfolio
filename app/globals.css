@@ -248,7 +248,7 @@ a { color: inherit; text-decoration: none; }
 
 .sound-toggle {
   align-items: center;
-  background: var(--ochre);
+  background: var(--paper-light);
   border: 1px solid color-mix(in srgb, var(--ink) 34%, transparent);
   border-radius: 999px;
   bottom: calc(1.25rem + env(safe-area-inset-bottom));
@@ -271,9 +271,9 @@ a { color: inherit; text-decoration: none; }
   z-index: 30;
 }
 .sound-toggle.is-expanded { gap: 0.55rem; width: 9.75rem; }
-.sound-toggle:hover { background: color-mix(in srgb, var(--ochre) 84%, var(--paper-light)); box-shadow: 0 0.75rem 2rem rgba(42, 22, 18, 0.26); }
+.sound-toggle:hover { background: color-mix(in srgb, var(--paper-light) 88%, var(--ochre)); box-shadow: 0 0.75rem 2rem rgba(42, 22, 18, 0.26); }
 .sound-toggle:focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; }
-.sound-toggle.is-on { background: var(--clay); border-color: var(--clay-dark); color: var(--paper-light); }
+.sound-toggle.is-on { background: var(--paper-light); border-color: color-mix(in srgb, var(--ink) 34%, transparent); color: var(--ink); }
 .sound-toggle-label { max-width: 0; opacity: 0; overflow: hidden; transition: max-width 280ms ease, opacity 160ms ease; }
 .sound-toggle.is-expanded .sound-toggle-label { max-width: 5rem; opacity: 1; }
 .sound-vinyl {
@@ -1177,6 +1177,8 @@ html[data-room-return-arrival='settled'] main {
 .back-link { margin: 1rem 0 4rem; }
 .case-hero { align-items: center; display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: 1.1fr .75fr; }
 .case-hero .project-visual { min-height: 26rem; }
+.case-hero .visual-discovery-art,
+.work-index-row .visual-discovery-art { min-height: 0; }
 .case-deck { color: var(--muted-ink); font-size: clamp(1.1rem, 1.6vw, 1.35rem); line-height: 1.7; margin: clamp(1.35rem, 2.4vw, 2rem) 0 0; max-width: 48rem; }
 .case-links { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.75rem; }
 .case-links a { align-items: center; border: 1px solid var(--ink); border-radius: 999px; display: inline-flex; font-size: .82rem; font-weight: 750; gap: .35rem; padding: .65rem .9rem; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }

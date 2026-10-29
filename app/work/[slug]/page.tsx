@@ -27,6 +27,41 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   if (!project) notFound();
   const index = publishedProjects.findIndex((item) => item.slug === slug);
   const next = publishedProjects[(index + 1) % publishedProjects.length];
+  const projectOverview = project.slug === 'handsful'
+    ? [
+        {
+          label: 'The challenge',
+          value: 'Simplify everyday care tracking, especially for families managing multiple babies.',
+        },
+        { label: 'My role', value: project.role, secondary: project.timeline },
+        {
+          label: 'What I owned',
+          value: 'Product strategy, UX/UI design, engineering, AI integration, and launch.',
+        },
+        {
+          label: 'The outcome',
+          value: 'Designed, built, and launched Handsful on iOS and Android.',
+          secondary: 'Available in the U.S. and Mexico',
+        },
+      ]
+    : project.slug === 'intelligent-product-discovery'
+      ? [
+          {
+            label: 'The challenge',
+            value: 'Help customers get relevant product availability information in their own words, without being transferred to a store associate.',
+          },
+          { label: 'My role', value: project.role, secondary: '1 month to pilot' },
+          {
+            label: 'What I owned',
+            value: 'Conversation design, AI experience strategy, prompt architecture, pilot testing, and production optimization.',
+          },
+          {
+            label: 'The outcome',
+            value: 'Increased containment from 15% to 43%, saving approximately 123,000 labor hours annually.',
+            secondary: 'Expanded nationwide.',
+          },
+        ]
+      : null;
 
   return (
     <main>
@@ -52,26 +87,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <ProjectVisual project={project} />
         </header>
 
-        {project.slug === 'handsful' ? (
+        {projectOverview ? (
           <section className="case-overview" aria-labelledby="project-overview-title">
             <p className="eyebrow" id="project-overview-title">Project overview</p>
             <dl className="case-facts case-facts-four case-overview-grid">
-              <div>
-                <dt>The challenge</dt>
-                <dd>Simplify everyday care tracking, especially for families managing multiple babies.</dd>
-              </div>
-              <div>
-                <dt>My role</dt>
-                <dd>{project.role}<span className="case-fact-secondary">{project.timeline}</span></dd>
-              </div>
-              <div>
-                <dt>What I owned</dt>
-                <dd>Product strategy, UX/UI design, engineering, AI integration, and launch.</dd>
-              </div>
-              <div>
-                <dt>The outcome</dt>
-                <dd>Designed, built, and launched Handsful on iOS and Android.<span className="case-fact-secondary">Available in the U.S. and Mexico</span></dd>
-              </div>
+              {projectOverview.map((fact) => (
+                <div key={fact.label}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}{fact.secondary && <span className="case-fact-secondary">{fact.secondary}</span>}</dd>
+                </div>
+              ))}
             </dl>
           </section>
         ) : (

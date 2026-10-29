@@ -89,10 +89,10 @@ export const projects: Project[] = [
     type: 'Enterprise AI · Voice',
     status: 'Shipped nationwide',
     summary:
-      'For a Fortune 50 retailer, the IVR knew how to look up a product. It didn’t know how to understand one. I redesigned the experience from the ground up; weaving LLM-powered intent recognition and prompt engineering into a legacy system to turn a dead-end lookup into a revenue-driving discovery moment.',
+      'For a Fortune 50 retailer, I transformed a rigid product-lookup IVR into an AI-powered discovery experience that understood natural product requests and returned more useful results.',
     outcome:
-      'Containment rose from 15% to 43%, and the successful pilot expanded to stores nationwide.',
-    role: 'AI product designer, prompt experience designer, and analyst',
+      'Production results validated a more flexible approach to product discovery.',
+    role: 'Product Designer, Conversational AI',
     timeline: '1 month to pilot · expanded nationwide',
     tags: ['Conversational design', 'Prompt engineering', 'Legacy system modernization'],
     metrics: [

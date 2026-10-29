@@ -24,7 +24,7 @@ export function ProjectVisual({ project }: { project: Project }) {
     return (
       <div className="project-visual visual-discovery visual-discovery-art"
         aria-label="Lowe’s intelligent product discovery system, from natural voice request through AI interpretation to relevant results">
-        <img className="discovery-overview-image" src="/images/product-discovery-overview.png" alt="" />
+        <img className="discovery-overview-image" src="/images/product-discovery-overview-v2.png" alt="" />
         <span className="discovery-client-mark" aria-hidden="true">
           <img src="/experience-logos/lowes.png" alt="" />
         </span>
