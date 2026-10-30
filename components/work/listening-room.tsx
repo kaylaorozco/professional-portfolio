@@ -18,7 +18,6 @@ import styles from './listening-room.module.css';
 
 const VINYL_DURATION = 3600;
 const MOBILE_VINYL_DURATION = 2400;
-const MOBILE_CENTER_DURATION = 1600;
 type Flight = {
   x: number;
   y: number;
@@ -85,72 +84,6 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       frontRefs.current[selected]?.focus({ preventScroll: true });
     previousFlip.current = flipped;
   }, [flipped, playing, selected]);
-
-  useEffect(() => {
-    if (
-      upright !== null ||
-      !laptopFocused ||
-      !window.matchMedia('(max-width: 700px)').matches
-    )
-      return;
-    let frame = 0;
-    let cancelled = false;
-    const cancel = () => {
-      cancelled = true;
-      cancelAnimationFrame(frame);
-    };
-    frame = requestAnimationFrame(() => {
-      const layer = sceneRef.current;
-      const object = laptopRef.current;
-      if (!layer || !object) return;
-      // Use the final focused size, not the object's transient bounds.
-      const size = Math.min(window.innerWidth * 0.88, 360) / 1.4;
-      const viewport = window.visualViewport;
-      const height = viewport?.height ?? window.innerHeight;
-      const topInset = 92;
-      const bottomInset = 76;
-      const space = Math.max(0, height - topInset - bottomInset - size);
-      const top =
-        window.scrollY +
-        layer.getBoundingClientRect().top +
-        165;
-      const target = Math.min(
-        Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
-        Math.max(0, top - topInset - space / 2 - (viewport?.offsetTop ?? 0)),
-      );
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.scrollTo({ top: target, behavior: 'instant' });
-        return;
-      }
-      // Native smooth scrolling chooses its own (often very short) duration.
-      // Keep this gentle movement in time with the mobile sleeve flip instead.
-      const start = window.scrollY;
-      const started = performance.now();
-      function center(now: number) {
-        if (cancelled) return;
-        const progress = Math.min(1, (now - started) / MOBILE_CENTER_DURATION);
-        const eased = progress ** 3 * (progress * (progress * 6 - 15) + 10);
-        window.scrollTo({
-          top: start + (target - start) * eased,
-          behavior: 'instant',
-        });
-        if (progress < 1) frame = requestAnimationFrame(center);
-      }
-      frame = requestAnimationFrame(center);
-    });
-    // Let visitors take control immediately if they scroll or interact again.
-    window.addEventListener('wheel', cancel, { passive: true });
-    window.addEventListener('touchstart', cancel, { passive: true });
-    window.addEventListener('pointerdown', cancel, { passive: true });
-    window.addEventListener('keydown', cancel);
-    return () => {
-      cancel();
-      window.removeEventListener('wheel', cancel);
-      window.removeEventListener('touchstart', cancel);
-      window.removeEventListener('pointerdown', cancel);
-      window.removeEventListener('keydown', cancel);
-    };
-  }, [upright, laptopFocused]);
 
   useEffect(() => {
     if (upright === null && !laptopFocused) return;
