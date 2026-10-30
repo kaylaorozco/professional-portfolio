@@ -135,12 +135,17 @@ export function WorkRoomLink() {
       // Navigation still works when browser storage is unavailable.
     }
     timerRef.current = window.setTimeout(() => {
-      router.push('/work', { scroll: true });
+      router.push('/work', { scroll: false });
     }, EXIT_DURATION);
   }
 
   return (
-    <Link className="button button-primary work-room-cta" href="/work" onClick={enterWorkRoom}>
+    <Link
+      className="button button-primary work-room-cta"
+      href="/work"
+      scroll={false}
+      onClick={enterWorkRoom}
+    >
       Enter the work room
       <span aria-hidden="true">&#8594;</span>
     </Link>

@@ -55,6 +55,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const busy = useRef(false);
   const previousFlip = useRef<number | null>(null);
+  const suppressNextPlayFocus = useRef(false);
   const flipStartedAt = useRef(0);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const swiped = useRef(false);
@@ -70,8 +71,16 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
   useEffect(() => {
     if (flipped !== null && flipped !== previousFlip.current)
       flipStartedAt.current = performance.now();
-    if (flipped !== null && !playing)
-      playRefs.current[flipped]?.focus({ preventScroll: true });
+    if (flipped !== null && !playing) {
+      const playLink = playRefs.current[flipped];
+      if (playLink) {
+        if (suppressNextPlayFocus.current)
+          playLink.dataset.autoFocused = 'true';
+        else delete playLink.dataset.autoFocused;
+        suppressNextPlayFocus.current = false;
+        playLink.focus({ preventScroll: true });
+      }
+    }
     else if (flipped === null && previousFlip.current !== null)
       frontRefs.current[selected]?.focus({ preventScroll: true });
     previousFlip.current = flipped;
@@ -79,7 +88,8 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
 
   useEffect(() => {
     if (
-      (upright === null && !laptopFocused) ||
+      upright !== null ||
+      !laptopFocused ||
       !window.matchMedia('(max-width: 700px)').matches
     )
       return;
@@ -90,16 +100,11 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       cancelAnimationFrame(frame);
     };
     frame = requestAnimationFrame(() => {
-      const layer =
-        upright === null ? sceneRef.current : recordLayerRef.current;
-      const object =
-        upright === null ? laptopRef.current : sleevesRef.current[upright];
+      const layer = sceneRef.current;
+      const object = laptopRef.current;
       if (!layer || !object) return;
       // Use the final focused size, not the object's transient bounds.
-      const size =
-        upright === null
-          ? Math.min(window.innerWidth * 0.88, 360) / 1.4
-          : Math.min(window.innerWidth * 0.88, 350);
+      const size = Math.min(window.innerWidth * 0.88, 360) / 1.4;
       const viewport = window.visualViewport;
       const height = viewport?.height ?? window.innerHeight;
       const topInset = 92;
@@ -108,7 +113,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
       const top =
         window.scrollY +
         layer.getBoundingClientRect().top +
-        (upright === null ? 165 : layer.offsetHeight * 0.18);
+        165;
       const target = Math.min(
         Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
         Math.max(0, top - topInset - space / 2 - (viewport?.offsetTop ?? 0)),
@@ -409,6 +414,7 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                       return;
                     }
                     setSelected(index);
+                    suppressNextPlayFocus.current = event.detail !== 0;
                     setFlipped(index);
                     setInteracted(true);
                   }}
@@ -470,6 +476,12 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                     className={styles.play}
                     href={`/work/${project.slug}`}
                     aria-disabled={playing}
+                    onBlur={(event) => {
+                      delete event.currentTarget.dataset.autoFocused;
+                    }}
+                    onKeyDown={(event) => {
+                      delete event.currentTarget.dataset.autoFocused;
+                    }}
                     onClick={(event) => {
                       if (
                         event.metaKey ||
@@ -506,9 +518,10 @@ export function ListeningRoom({ projects }: { projects: Project[] }) {
                   type="button"
                   aria-label={`Flip ${project.shortTitle} for project details`}
                   aria-controls={`sleeve-back-${project.slug}`}
-                  onClick={() => {
+                  onClick={(event) => {
                     if (busy.current) return;
                     setSelected(index);
+                    suppressNextPlayFocus.current = event.detail !== 0;
                     setFlipped(index);
                     setInteracted(true);
                   }}

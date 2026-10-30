@@ -294,6 +294,9 @@
   outline: 2px solid var(--clay);
   outline-offset: 6px;
 }
+.play[data-auto-focused='true']:focus-visible {
+  outline: none;
+}
 .cover {
   aspect-ratio: 1;
   border: 1px solid #46342c;
