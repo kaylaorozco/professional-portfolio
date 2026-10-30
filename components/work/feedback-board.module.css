@@ -29,6 +29,10 @@
   overflow: hidden;
   transition: translate 200ms ease;
 }
+.boardPicture {
+  inset: 0;
+  position: absolute;
+}
 .boardArt {
   position: absolute;
   left: -3.5%;

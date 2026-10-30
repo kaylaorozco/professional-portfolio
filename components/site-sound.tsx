@@ -151,6 +151,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 function SoundToggle() {
   const sound = useContext(SoundContext);
   const [expanded, setExpanded] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const collapseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -164,6 +165,7 @@ function SoundToggle() {
 
   function handleToggle() {
     sound?.toggle();
+    setHasInteracted(true);
     setExpanded(true);
     if (collapseTimerRef.current) clearTimeout(collapseTimerRef.current);
     collapseTimerRef.current = setTimeout(() => setExpanded(false), 3200);
@@ -172,6 +174,7 @@ function SoundToggle() {
   return (
     <button
       className={`sound-toggle${expanded ? ' is-expanded' : ''}${sound.enabled ? ' is-on' : ''}`}
+      data-interacted={hasInteracted}
       type="button"
       aria-label={sound.enabled ? 'Turn site sound off' : 'Turn site sound on'}
       aria-pressed={sound.enabled}

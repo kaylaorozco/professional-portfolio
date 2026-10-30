@@ -91,6 +91,9 @@ export function HeroCharacter() {
     if (!canvas || !stage || !ctx) return;
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     let disposed = false, loaded = false, inView = false, finished = false;
+    let loadStarted = false;
+    let idleRequest: number | null = null;
+    let loadTimer: number | null = null;
     let raf = 0, last = 0, elapsed = 0;
     let rising: Pose[] = [], walking: Pose[] = [];
     let standingExitSize = 1;
@@ -171,6 +174,35 @@ export function HeroCharacter() {
       last = performance.now();
       raf = requestAnimationFrame(tick);
     };
+    const beginLoad = () => {
+      if (disposed || loadStarted || preference.matches) return;
+      loadStarted = true;
+      Promise.all([
+        loadImage('/images/kayla-close-sprites-v3.webp'),
+        loadImage('/images/kayla-rise-sprites-v2.webp'),
+        loadImage('/images/kayla-walk-sprites-v2.webp'),
+        loadImage('/images/kayla-close-corrections-v4.webp'),
+        loadImage('/images/kayla-lid-corrections-v5.webp'),
+      ]).then(([closeSheet, riseSheet, walkSheet, correctionSheet, lidSheet]) => {
+        if (disposed) return;
+        closingSheet = closeSheet;
+        closingCorrections = correctionSheet;
+        lidCorrections = lidSheet;
+        rising = measurePoses(riseSheet, riseRegions, riseHeadHeights);
+        const walkW = Math.floor(walkSheet.width / 4), walkH = Math.floor(walkSheet.height / 3);
+        const walkRegions: Region[] = Array.from({ length: 12 }, (_, i) =>
+          [i % 4 * walkW, Math.floor(i / 4) * walkH, walkW, walkH]);
+        walking = measurePoses(walkSheet, walkRegions, Array(12).fill(70));
+        // The final upright drawing was smaller than both the preceding rise
+        // pose and the enlarged walk. Match its crown-to-floor height exactly
+        // to the first walk pose while retaining the shared ground baseline.
+        const upright = rising[rising.length - 1];
+        standingExitSize = (walking[0].box[3] / walking[0].headHeight * walkingSize)
+          / (upright.box[3] / upright.headHeight);
+        loaded = true;
+        syncPlayback();
+      }).catch(() => { /* Retain the static poster if animation assets cannot load. */ });
+    };
     const onPreference = () => {
       if (preference.matches) {
         elapsed = 0;
@@ -178,6 +210,11 @@ export function HeroCharacter() {
         setMoving(false);
         ctx.clearRect(0, 0, 1000, 1000);
         canvas.style.transform = '';
+      } else {
+        elapsed = 0;
+        finished = false;
+        stage.dataset.animationPhase = 'waiting';
+        beginLoad();
       }
       syncPlayback();
     };
@@ -188,36 +225,26 @@ export function HeroCharacter() {
     observer.observe(stage);
     preference.addEventListener('change', onPreference);
     document.addEventListener('visibilitychange', syncPlayback);
-
-    Promise.all([
-      loadImage('/images/kayla-close-sprites-v3.png'),
-      loadImage('/images/kayla-rise-sprites-v2.png'),
-      loadImage('/images/kayla-walk-sprites-v2.png'),
-      loadImage('/images/kayla-close-corrections-v4.png'),
-      loadImage('/images/kayla-lid-corrections-v5.png'),
-    ]).then(([closeSheet, riseSheet, walkSheet, correctionSheet, lidSheet]) => {
-      if (disposed) return;
-      closingSheet = closeSheet;
-      closingCorrections = correctionSheet;
-      lidCorrections = lidSheet;
-      rising = measurePoses(riseSheet, riseRegions, riseHeadHeights);
-      const walkW = Math.floor(walkSheet.width / 4), walkH = Math.floor(walkSheet.height / 3);
-      const walkRegions: Region[] = Array.from({ length: 12 }, (_, i) =>
-        [i % 4 * walkW, Math.floor(i / 4) * walkH, walkW, walkH]);
-      walking = measurePoses(walkSheet, walkRegions, Array(12).fill(70));
-      // The final upright drawing was smaller than both the preceding rise
-      // pose and the enlarged walk. Match its crown-to-floor height exactly
-      // to the first walk pose while retaining the shared ground baseline.
-      const upright = rising[rising.length - 1];
-      standingExitSize = (walking[0].box[3] / walking[0].headHeight * walkingSize)
-        / (upright.box[3] / upright.headHeight);
-      loaded = true;
-      syncPlayback();
-    }).catch(() => { /* Retain the original if an animation asset cannot load. */ });
+    if (!preference.matches) {
+      const idleWindow = window as Window & {
+        requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+        cancelIdleCallback?: (handle: number) => void;
+      };
+      if (idleWindow.requestIdleCallback) {
+        idleRequest = idleWindow.requestIdleCallback(beginLoad, { timeout: 800 });
+      } else {
+        loadTimer = window.setTimeout(beginLoad, 300);
+      }
+    }
 
     return () => {
       disposed = true;
       cancelAnimationFrame(raf);
+      if (idleRequest !== null) {
+        (window as Window & { cancelIdleCallback?: (handle: number) => void })
+          .cancelIdleCallback?.(idleRequest);
+      }
+      if (loadTimer !== null) window.clearTimeout(loadTimer);
       observer.disconnect();
       preference.removeEventListener('change', onPreference);
       document.removeEventListener('visibilitychange', syncPlayback);

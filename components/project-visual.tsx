@@ -1,4 +1,5 @@
 import type { Project } from '@/lib/projects';
+import Image from 'next/image';
 
 export function ProjectVisual({ project }: { project: Project }) {
   if (project.visual === 'care') {
@@ -24,7 +25,22 @@ export function ProjectVisual({ project }: { project: Project }) {
     return (
       <div className="project-visual visual-discovery visual-discovery-art"
         aria-label="Lowe’s intelligent product discovery system, from natural voice request through AI interpretation to relevant results">
-        <img className="discovery-overview-image" src="/images/product-discovery-overview-v2.png" alt="" />
+        <picture>
+          <source
+            srcSet="/images/product-discovery-overview-v2-768.webp 768w, /images/product-discovery-overview-v2-1152.webp 1152w, /images/product-discovery-overview-v2.webp 1536w"
+            sizes="(max-width: 900px) 92vw, 42vw"
+            type="image/webp"
+          />
+          <Image
+            className="discovery-overview-image"
+            src="/images/product-discovery-overview-v2.webp"
+            alt=""
+            width={1536}
+            height={1024}
+            sizes="(max-width: 900px) 92vw, 42vw"
+            unoptimized
+          />
+        </picture>
         <span className="discovery-client-mark" aria-hidden="true">
           <img src="/experience-logos/lowes.png" alt="" />
         </span>

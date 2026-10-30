@@ -88,7 +88,7 @@
   border: max(1px, 0.65cqw) solid #41251e;
   background-color: #fa8677;
   /* A coral-only portion of the approved illustration supplies the texture. */
-  background-image: url('/images/projects-laptop.png');
+  background-image: url('/images/projects-laptop.webp');
   background-size: 240% 230%;
   background-position: 65% 42%;
   box-shadow:

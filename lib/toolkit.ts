@@ -1,4 +1,4 @@
-// Shared by the About toolkit and the Work-room laptop.
+// Toolkit data for the Work Room laptop.
 export const tools = [
   {
     name: 'Figma',

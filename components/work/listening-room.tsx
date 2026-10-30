@@ -799,14 +799,22 @@ function RoomOutline() {
 function RecordPlayer() {
   return (
     <span className={styles.playerArt} aria-hidden="true">
-      <Image
-        className={styles.player}
-        src="/images/record-console-empty-v3.png"
-        alt=""
-        width={1536}
-        height={1024}
-        unoptimized
-      />
+      <picture className={styles.playerPicture}>
+        <source
+          srcSet="/images/record-console-empty-v3-768.webp 768w, /images/record-console-empty-v3-1152.webp 1152w, /images/record-console-empty-v3.webp 1536w"
+          sizes="(max-width: 700px) 72vw, 42vw"
+          type="image/webp"
+        />
+        <Image
+          className={styles.player}
+          src="/images/record-console-empty-v3.webp"
+          alt=""
+          width={1536}
+          height={1024}
+          sizes="(max-width: 700px) 72vw, 42vw"
+          unoptimized
+        />
+      </picture>
       <span className={styles.platterTarget} data-platter />
     </span>
   );

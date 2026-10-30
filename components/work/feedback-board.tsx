@@ -116,14 +116,22 @@ export function FeedbackBoard() {
         }}
       >
         <span className={styles.surface}>
-          <Image
-            className={styles.boardArt}
-            src="/images/feedback-corkboard-v2.png"
-            alt=""
-            width={1327}
-            height={1185}
-            unoptimized
-          />
+          <picture className={styles.boardPicture}>
+            <source
+              srcSet="/images/feedback-corkboard-v2-400.webp 400w, /images/feedback-corkboard-v2-800.webp 800w, /images/feedback-corkboard-v2.webp 1327w"
+              sizes="(max-width: 700px) 30vw, 14vw"
+              type="image/webp"
+            />
+            <Image
+              className={styles.boardArt}
+              src="/images/feedback-corkboard-v2.webp"
+              alt=""
+              width={1327}
+              height={1185}
+              sizes="(max-width: 700px) 30vw, 14vw"
+              unoptimized
+            />
+          </picture>
           <span className={styles.papers} aria-hidden="true">
             {wallNotes.map(({ index, excerpt }) => (
               <span

@@ -81,6 +81,9 @@
   width: 28%;
   z-index: 1;
 }
+.standingCharacterPicture {
+  display: block;
+}
 .standingCharacterPoster {
   display: block;
   height: auto;
@@ -573,6 +576,10 @@
 .playerArt {
   display: block;
   position: relative;
+  width: 100%;
+}
+.playerPicture {
+  display: block;
   width: 100%;
 }
 .player {

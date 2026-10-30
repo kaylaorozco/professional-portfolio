@@ -125,7 +125,11 @@ export function KaylaCharacter({ paused }: { paused: boolean }) {
       ready = false;
       sync();
     };
-    artwork.src = '/images/kayla-work-standing-v6.png';
+    artwork.src = window.innerWidth <= 640
+      ? '/images/kayla-work-standing-v6-512.webp'
+      : window.innerWidth <= 1200
+        ? '/images/kayla-work-standing-v6-768.webp'
+        : '/images/kayla-work-standing-v6.webp';
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -151,15 +155,23 @@ export function KaylaCharacter({ paused }: { paused: boolean }) {
 
   return (
     <div ref={characterRef} className={styles.standingCharacter} aria-hidden="true">
-      <Image
-        className={styles.standingCharacterPoster}
-        src="/images/kayla-work-standing-v6.png"
-        alt=""
-        width={WIDTH}
-        height={HEIGHT}
-        unoptimized
-        priority
-      />
+      <picture className={styles.standingCharacterPicture}>
+        <source
+          srcSet="/images/kayla-work-standing-v6-512.webp 512w, /images/kayla-work-standing-v6-768.webp 768w, /images/kayla-work-standing-v6.webp 1024w"
+          sizes="(max-width: 700px) 34vw, 28vw"
+          type="image/webp"
+        />
+        <Image
+          className={styles.standingCharacterPoster}
+          src="/images/kayla-work-standing-v6.webp"
+          alt=""
+          width={WIDTH}
+          height={HEIGHT}
+          sizes="(max-width: 700px) 34vw, 28vw"
+          unoptimized
+          priority
+        />
+      </picture>
       <canvas
         className={styles.standingCharacterCanvas}
         ref={canvasRef}

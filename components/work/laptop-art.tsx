@@ -95,7 +95,7 @@ export function LaptopArt({
             </span>
             <Image
               className={`${styles.personal} ${styles.paws}`}
-              src="/images/stickers/fur-babies.png"
+              src="/images/stickers/fur-babies-512.webp"
               alt=""
               width={1254}
               height={1254}
@@ -103,7 +103,7 @@ export function LaptopArt({
             />
             <Image
               className={`${styles.personal} ${styles.motorcycle}`}
-              src="/images/stickers/motorcycle-sage.png"
+              src="/images/stickers/motorcycle-sage-512.webp"
               alt=""
               width={1254}
               height={1254}
@@ -111,7 +111,7 @@ export function LaptopArt({
             />
             <Image
               className={`${styles.personal} ${styles.texas}`}
-              src="/images/stickers/texas-brownsville.png"
+              src="/images/stickers/texas-brownsville-512.webp"
               alt=""
               width={1254}
               height={1254}
