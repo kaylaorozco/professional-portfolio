@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { HiCharacter } from '@/components/hi-character';
 
@@ -6,6 +7,14 @@ export const metadata: Metadata = {
   title: 'Hi, I’m Kayla — Design Engineer',
   description: 'Design engineer for web, mobile, and conversational experiences.',
 };
+
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 12h14M14 7l5 5-5 5" />
+    </svg>
+  );
+}
 
 export default function HiPage() {
   return (
@@ -35,14 +44,14 @@ export default function HiPage() {
               <span className="hi-link-title">Book a session</span>
               <span className="hi-link-description">1:1 product design and AI strategy</span>
             </span>
-            <span className="hi-link-arrow" aria-hidden="true">→</span>
+            <span className="hi-link-arrow"><ArrowIcon /></span>
           </Link>
           <Link className="hi-link-card" href="/work">
             <span className="hi-link-copy">
               <span className="hi-link-title">Explore my work</span>
               <span className="hi-link-description">Web, mobile, and AI-powered experiences</span>
             </span>
-            <span className="hi-link-arrow" aria-hidden="true">→</span>
+            <span className="hi-link-arrow"><ArrowIcon /></span>
           </Link>
           <a
             className="hi-link-card hi-link-card-studio"
@@ -54,9 +63,43 @@ export default function HiPage() {
               <span className="hi-link-title">Visit my studio</span>
               <span className="hi-link-description">Mesquite &amp; Thorn Digital · my product studio</span>
             </span>
-            <span className="hi-link-arrow" aria-hidden="true">↗</span>
+            <span className="hi-link-arrow"><ArrowIcon /></span>
           </a>
         </nav>
+
+        <section className="hi-apps" aria-labelledby="hi-apps-heading">
+          <h2 id="hi-apps-heading"><span>Apps I&apos;ve built</span></h2>
+          <div className="hi-app-list">
+            <a
+              className="hi-app-card"
+              href="https://handsful.app"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit the Handsful app website"
+            >
+              <Image src="/images/hi/handsful-icon.png" alt="" width="180" height="180" />
+              <span className="hi-app-copy">
+                <strong>Handsful</strong>
+                <span>For new parents with their hands full.</span>
+              </span>
+              <span className="hi-app-action"><ArrowIcon /></span>
+            </a>
+            <a
+              className="hi-app-card"
+              href="https://www.schoolsupplied.app/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit the School Supplied app website"
+            >
+              <Image src="/images/hi/school-supplied-icon.png" alt="" width="180" height="180" />
+              <span className="hi-app-copy">
+                <strong>School Supplied</strong>
+                <span>Every kid&apos;s school year, organized.</span>
+              </span>
+              <span className="hi-app-action"><ArrowIcon /></span>
+            </a>
+          </div>
+        </section>
 
         <aside className="hi-socials" aria-labelledby="hi-socials-heading">
           <p id="hi-socials-heading">Find me elsewhere</p>
