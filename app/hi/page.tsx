@@ -40,7 +40,7 @@ export default function HiPage() {
           <Link className="hi-link-card" href="/work">
             <span className="hi-link-copy">
               <span className="hi-link-title">Explore my work</span>
-              <span className="hi-link-description">Product design, AI, and shipped experiences</span>
+              <span className="hi-link-description">Web, mobile, and AI-powered experiences</span>
             </span>
             <span className="hi-link-arrow" aria-hidden="true">→</span>
           </Link>
