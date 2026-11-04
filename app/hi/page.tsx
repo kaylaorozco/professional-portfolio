@@ -79,7 +79,7 @@ export default function HiPage() {
               rel="noreferrer"
               aria-label="Visit the Handsful app website"
             >
-              <Image src="/images/hi/handsful-icon.png" alt="" width="180" height="180" />
+              <Image src="/images/hi/handsful-icon.png" alt="" width="180" height="180" unoptimized />
               <span className="hi-app-copy">
                 <strong>Handsful</strong>
                 <span>For new parents with their hands full.</span>
@@ -93,7 +93,7 @@ export default function HiPage() {
               rel="noreferrer"
               aria-label="Visit the School Supplied app website"
             >
-              <Image src="/images/hi/school-supplied-icon.png" alt="" width="180" height="180" />
+              <Image src="/images/hi/school-supplied-icon.png" alt="" width="180" height="180" unoptimized />
               <span className="hi-app-copy">
                 <strong>School Supplied</strong>
                 <span>Every kid&apos;s school year, organized.</span>
@@ -113,7 +113,7 @@ export default function HiPage() {
               rel="noreferrer"
               aria-label="Listen to Kayla on App Minded on Spotify"
             >
-              <Image src="/images/hi/app-minded-cover.jpg" alt="" width="300" height="300" />
+              <Image src="/images/hi/app-minded-cover.jpg" alt="" width="300" height="300" unoptimized />
               <span className="hi-podcast-copy">
                 <small>Guest on App Minded</small>
                 <strong>How to Build Your First App With AI: A School Supply List App</strong>
@@ -127,7 +127,7 @@ export default function HiPage() {
               rel="noreferrer"
               aria-label="Listen to Kayla on Own Your Next on Spotify"
             >
-              <Image src="/images/hi/own-your-next-cover.jpg" alt="" width="300" height="300" />
+              <Image src="/images/hi/own-your-next-cover.jpg" alt="" width="300" height="300" unoptimized />
               <span className="hi-podcast-copy">
                 <small>Guest on Own Your Next</small>
                 <strong>Nobody&apos;s Ready for What AI Can Build, with Kayla Orozco</strong>
