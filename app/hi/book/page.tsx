@@ -11,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function BookPage() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <main className="hi-book-page">
       <div className="hi-book-shell">
@@ -51,6 +53,12 @@ export default function BookPage() {
           />
         </section>
 
+        <p className="hi-book-privacy-note">
+          Please review the <Link href="/privacy">Privacy policy</Link> before booking.
+          Don&apos;t include passwords, payment card details, health information, or other
+          sensitive personal information in your responses.
+        </p>
+
         <p className="hi-book-help">
           Have a question before booking?{' '}
           <a href="mailto:kayla@mesquiteandthorn.digital?subject=Strategy%20session%20question">
@@ -58,6 +66,11 @@ export default function BookPage() {
           </a>
           .
         </p>
+
+        <footer className="hi-book-footer">
+          <p>© 2020–{currentYear} Kayla Orozco</p>
+          <Link href="/privacy">Privacy</Link>
+        </footer>
 
         <span className="hi-spark hi-book-spark-one" aria-hidden="true">✦</span>
         <span className="hi-spark hi-book-spark-two" aria-hidden="true">✦</span>

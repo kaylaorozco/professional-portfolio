@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
@@ -21,6 +23,7 @@ export function SiteFooter() {
       </nav>
       <div className="footer-meta">
         <p>© 2020–{currentYear} Kayla Orozco</p>
+        <Link href="/privacy">Privacy</Link>
       </div>
     </footer>
   );

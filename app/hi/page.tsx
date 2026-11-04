@@ -201,6 +201,7 @@ export default function HiPage() {
 
         <footer className="hi-footer">
           <p>© 2020–{currentYear} Kayla Orozco</p>
+          <Link href="/privacy">Privacy</Link>
         </footer>
 
         <span className="hi-spark hi-spark-one" aria-hidden="true">✦</span>
