@@ -5,7 +5,7 @@ import { HiCharacter } from '@/components/hi-character';
 
 export const metadata: Metadata = {
   title: 'Hi, I’m Kayla — Design Engineer',
-  description: 'Design engineer for web, mobile, and conversational experiences.',
+  description: 'Design engineer for web, mobile, and AI-powered experiences.',
 };
 
 function ArrowIcon() {
@@ -17,6 +17,8 @@ function ArrowIcon() {
 }
 
 export default function HiPage() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <main className="hi-page">
       <section className="hi-intro" aria-labelledby="hi-heading">
@@ -101,6 +103,40 @@ export default function HiPage() {
           </div>
         </section>
 
+        <section className="hi-podcasts" aria-labelledby="hi-podcasts-heading">
+          <h2 id="hi-podcasts-heading"><span>Hear me talk</span></h2>
+          <div className="hi-podcast-list">
+            <a
+              className="hi-podcast-card"
+              href="https://open.spotify.com/episode/77byjVTa3NOYF7HUdWtGKv"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Listen to Kayla on App Minded on Spotify"
+            >
+              <Image src="/images/hi/app-minded-cover.jpg" alt="" width="300" height="300" />
+              <span className="hi-podcast-copy">
+                <small>Guest on App Minded</small>
+                <strong>How to Build Your First App With AI: A School Supply List App</strong>
+              </span>
+              <span className="hi-app-action"><ArrowIcon /></span>
+            </a>
+            <a
+              className="hi-podcast-card"
+              href="https://open.spotify.com/episode/4be018H4t0FrUStDHo7F7o"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Listen to Kayla on Own Your Next on Spotify"
+            >
+              <Image src="/images/hi/own-your-next-cover.jpg" alt="" width="300" height="300" />
+              <span className="hi-podcast-copy">
+                <small>Guest on Own Your Next</small>
+                <strong>Nobody&apos;s Ready for What AI Can Build, with Kayla Orozco</strong>
+              </span>
+              <span className="hi-app-action"><ArrowIcon /></span>
+            </a>
+          </div>
+        </section>
+
         <aside className="hi-socials" aria-labelledby="hi-socials-heading">
           <p id="hi-socials-heading">Find me elsewhere</p>
           <div className="hi-social-links">
@@ -151,6 +187,10 @@ export default function HiPage() {
             </a>
           </div>
         </aside>
+
+        <footer className="hi-footer">
+          <p>© 2020–{currentYear} Kayla Orozco</p>
+        </footer>
 
         <span className="hi-spark hi-spark-one" aria-hidden="true">✦</span>
         <span className="hi-spark hi-spark-two" aria-hidden="true">✦</span>
