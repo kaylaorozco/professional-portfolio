@@ -51,8 +51,8 @@ export default function HiPage() {
             rel="noreferrer"
           >
             <span className="hi-link-copy">
-              <span className="hi-link-title">Mesquite &amp; Thorn Digital</span>
-              <span className="hi-link-description">Visit my independent product studio</span>
+              <span className="hi-link-title">Visit my studio</span>
+              <span className="hi-link-description">Mesquite &amp; Thorn Digital · my product studio</span>
             </span>
             <span className="hi-link-arrow" aria-hidden="true">↗</span>
           </a>

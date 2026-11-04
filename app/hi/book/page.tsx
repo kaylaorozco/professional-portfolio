@@ -23,7 +23,7 @@ export default function BookPage() {
           <p className="hi-book-eyebrow">1:1 design session</p>
           <h1>work with me.</h1>
           <p className="hi-book-price">
-            $150 <span>/ hour</span>
+            $125 <span>/ hour</span>
           </p>
           <p className="hi-book-summary">
             A focused working session for websites, mobile products, or
