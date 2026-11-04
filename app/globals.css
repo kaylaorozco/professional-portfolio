@@ -239,6 +239,200 @@ body:has(.hi-page) .sound-toggle { display: none; }
   .hi-spark { animation: none; }
 }
 
+/* Personal booking page */
+.hi-book-page {
+  --hi-cream: #f8f1e7;
+  --hi-cream-light: #fffaf3;
+  --hi-ink: #2f1711;
+  --hi-muted: #725b52;
+  --hi-clay: #bd542e;
+  --hi-clay-dark: #8c361e;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(230, 163, 76, 0.2), transparent 24rem),
+    radial-gradient(circle at 92% 52%, rgba(185, 83, 45, 0.12), transparent 28rem),
+    var(--hi-cream);
+  color: var(--hi-ink);
+  min-height: 100svh;
+  padding: clamp(1rem, 3vw, 2rem) 1rem clamp(4rem, 8vw, 6rem);
+}
+
+body:has(.hi-book-page) .sound-toggle { display: none; }
+
+.hi-book-shell {
+  isolation: isolate;
+  margin: 0 auto;
+  position: relative;
+  width: min(100%, 58rem);
+}
+
+.hi-book-back {
+  align-items: center;
+  border-radius: 999px;
+  color: var(--hi-muted);
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 0.8rem;
+  position: relative;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+  z-index: 2;
+}
+
+.hi-book-back:hover,
+.hi-book-back:focus-visible {
+  background: rgba(255, 250, 243, 0.72);
+  color: var(--hi-clay-dark);
+  transform: translateX(-2px);
+}
+
+.hi-book-back:focus-visible { outline: 2px solid var(--hi-clay); outline-offset: 2px; }
+
+.hi-book-hero {
+  margin: clamp(1.75rem, 5vw, 3.5rem) auto clamp(1.75rem, 4vw, 2.5rem);
+  max-width: 40rem;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.hi-book-eyebrow {
+  color: var(--hi-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+  margin: 0 0 0.7rem;
+  text-transform: uppercase;
+}
+
+.hi-book-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.hi-book-price {
+  color: var(--hi-clay);
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  line-height: 1;
+  margin: 1.1rem 0 0;
+}
+
+.hi-book-price span { font-size: 0.72em; }
+
+.hi-book-summary {
+  color: var(--hi-muted);
+  font-size: clamp(0.98rem, 2vw, 1.08rem);
+  line-height: 1.6;
+  margin: 1.1rem auto 0;
+  max-width: 35rem;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+.hi-book-calendar {
+  background: var(--hi-cream-light);
+  border: 1px solid rgba(47, 23, 17, 0.13);
+  border-radius: clamp(1.35rem, 3vw, 2rem);
+  box-shadow: 0 1.4rem 3.5rem rgba(80, 38, 25, 0.1);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.hi-book-calendar-heading {
+  align-items: center;
+  border-bottom: 1px solid rgba(47, 23, 17, 0.1);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1.15rem clamp(1rem, 3vw, 1.6rem);
+}
+
+.hi-book-calendar-label {
+  color: var(--hi-clay-dark);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
+}
+
+.hi-book-calendar-heading h2 {
+  font-family: var(--display);
+  font-size: clamp(1.12rem, 3vw, 1.45rem);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.hi-book-calendar-heading > span {
+  border: 1px solid rgba(189, 84, 46, 0.3);
+  border-radius: 999px;
+  color: var(--hi-clay-dark);
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.42rem 0.68rem;
+}
+
+.hi-book-iframe {
+  background: #fff;
+  border: 0;
+  display: block;
+  height: clamp(47.5rem, 82vh, 56rem);
+  width: 100%;
+}
+
+.hi-book-help {
+  color: var(--hi-muted);
+  font-size: 0.82rem;
+  margin: 1.25rem 0 0;
+  text-align: center;
+}
+
+.hi-book-help a {
+  color: var(--hi-clay-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.hi-book-spark-one {
+  animation-delay: -1.2s;
+  font-size: clamp(2.3rem, 6vw, 4rem);
+  right: 2%;
+  top: 3.5rem;
+}
+
+.hi-book-spark-two {
+  animation-delay: -3.6s;
+  color: var(--hi-clay);
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
+  left: 3%;
+  top: 11rem;
+}
+
+@media (max-width: 640px) {
+  .hi-book-page { padding: 0.75rem 0.7rem 4rem; }
+  .hi-book-hero { margin: 1.5rem auto 2.25rem; }
+  .hi-book-hero h1 { font-size: clamp(2.75rem, 13vw, 3.5rem); }
+  .hi-book-calendar-heading { align-items: flex-start; flex-direction: column; }
+  .hi-book-iframe { height: 52rem; }
+  .hi-book-spark-one { right: 2%; top: 4.5rem; }
+  .hi-book-spark-two { left: 1%; top: 12rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hi-book-back { transition: none; }
+}
+
 .site-header {
   align-items: center;
   backdrop-filter: blur(12px);

@@ -25,21 +25,18 @@ export default function HiPage() {
           <p className="hi-kicker">
             Design engineer for web, mobile,
             <br />
-            and conversational experiences.
+            and AI-powered experiences.
           </p>
         </div>
 
         <nav className="hi-links" aria-label="Featured links">
-          <a
-            className="hi-link-card hi-link-card-primary"
-            href="mailto:kaylamarieorozco@gmail.com?subject=Project%20inquiry"
-          >
+          <Link className="hi-link-card hi-link-card-primary" href="/hi/book">
             <span className="hi-link-copy">
               <span className="hi-link-title">Work with me</span>
-              <span className="hi-link-description">Website and mobile product consulting</span>
+              <span className="hi-link-description">Book a 1:1 product design or AI strategy session</span>
             </span>
-            <span className="hi-link-arrow" aria-hidden="true">↗</span>
-          </a>
+            <span className="hi-link-arrow" aria-hidden="true">→</span>
+          </Link>
           <Link className="hi-link-card" href="/work">
             <span className="hi-link-copy">
               <span className="hi-link-title">Explore my work</span>
