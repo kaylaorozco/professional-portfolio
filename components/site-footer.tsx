@@ -9,7 +9,7 @@ export function SiteFooter() {
         <h2>Have something interesting in mind? Let&apos;s connect.</h2>
       </div>
       <nav className="footer-links" aria-label="Contact">
-        <a href="mailto:kaylamarieorozco@gmail.com">Email</a>
+        <a href="mailto:hello@kaylaorozco.com">Email</a>
         <a
           href="https://www.linkedin.com/in/kaylaorozco/"
           target="_blank"
