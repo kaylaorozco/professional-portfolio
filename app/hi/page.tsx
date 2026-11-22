@@ -187,7 +187,7 @@ export default function HiPage() {
               </svg>
             </a>
             <a
-              href="mailto:kayla@mesquiteandthorn.digital"
+              href="mailto:hello@kaylaorozco.com"
               aria-label="Email Kayla"
               title="Email"
             >
